@@ -152,21 +152,22 @@ export const ProductDetailPage = ({
     .slice(0, 4);
 
   return (
-    <div className="w-full bg-[#fafafa] py-6 sm:py-10">
-      <div className="max-w-7xl mx-auto px-4 lg:px-8 space-y-10">
+    <div className="w-full bg-[#fafafa] py-3.5 sm:py-10">
+      <div className="max-w-7xl mx-auto px-4 lg:px-8 space-y-4 sm:space-y-8">
         <nav className="flex items-center gap-2 text-xs text-neutral-muted">
           <button
             type="button"
             onClick={onBackToStore}
-            className="hover:text-primary transition-colors cursor-pointer flex items-center gap-1 font-bold"
+            className="w-9 h-9 sm:w-auto sm:h-auto rounded-full sm:rounded-none bg-white sm:bg-transparent border border-neutral-200 sm:border-0 hover:text-primary transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-1 font-bold shadow-2xs sm:shadow-none"
+            aria-label="Volver a la tienda"
           >
-            <span className="material-symbols-outlined text-base">arrow_back</span>
-            <span>Volver a la Tienda</span>
+            <span className="material-symbols-outlined text-lg sm:text-base">arrow_back</span>
+            <span className="hidden sm:inline">Volver a la Tienda</span>
           </button>
-          <span>/</span>
-          <span className="capitalize">{productItem.productCategoryName}</span>
-          <span>/</span>
-          <span className="text-neutral-dark font-bold truncate">{productItem.productTitle}</span>
+          <span className="hidden sm:inline">/</span>
+          <span className="capitalize hidden sm:inline">{productItem.productCategoryName}</span>
+          <span className="hidden sm:inline">/</span>
+          <span className="text-neutral-dark font-bold truncate hidden sm:inline">{productItem.productTitle}</span>
         </nav>
 
         <div className="bg-white rounded-2xl sm:rounded-3xl border border-neutral-border p-5 sm:p-8 lg:p-10 shadow-xs grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
