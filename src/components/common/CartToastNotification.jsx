@@ -53,12 +53,6 @@ export const CartToastNotification = () => {
           <h4 className="text-xs font-bold text-neutral-dark truncate mt-0.5">
             {activeToastNotification.productTitle}
           </h4>
-
-          {activeToastNotification.selectedCutOption && (
-            <span className="text-[10px] font-semibold text-neutral-muted block">
-              Corte: {activeToastNotification.selectedCutOption}
-            </span>
-          )}
         </div>
 
         <div className="flex flex-col gap-1.5 shrink-0">

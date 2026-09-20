@@ -113,7 +113,7 @@ export const CartDrawerModal = () => {
                 <div className="divide-y divide-neutral-border/60">
                   {cartItemList.map((cartEntryItem) => (
                     <CartItemRow
-                      key={`${cartEntryItem.productIdentifier}-${cartEntryItem.selectedCutOption}`}
+                      key={cartEntryItem.productIdentifier}
                       cartItemEntry={cartEntryItem}
                     />
                   ))}

@@ -17,8 +17,10 @@ export const buildWhatsAppOrderUrl = ({
 
   const orderLinesText = cartItemList.map((cartEntryItem) => {
     const itemSubtotalUsd = (cartEntryItem.productPriceUsd * cartEntryItem.selectedQuantity).toFixed(2);
-    const cutSpecification = cartEntryItem.selectedCutOption ? ` [Corte: ${cartEntryItem.selectedCutOption}]` : '';
-    return `• ${cartEntryItem.selectedQuantity}x ${cartEntryItem.productTitle}${cutSpecification} ($${itemSubtotalUsd})`;
+    const itemNoteText = cartEntryItem.customItemNote && cartEntryItem.customItemNote.trim()
+      ? `\n   ↳ 📝 Nota: ${cartEntryItem.customItemNote.trim()}`
+      : '';
+    return `• ${cartEntryItem.selectedQuantity}x ${cartEntryItem.productTitle} ($${itemSubtotalUsd})${itemNoteText}`;
   }).join('\n');
 
   const customerDetailSection = customerFullName ? `\n*Cliente:* ${customerFullName}` : '';

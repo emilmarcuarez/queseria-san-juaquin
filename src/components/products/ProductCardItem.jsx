@@ -4,12 +4,6 @@ import { useShoppingCart } from '../../hooks/useShoppingCart';
 export const ProductCardItem = ({ productItem, onSelectProduct }) => {
   const { addProductToCart, exchangeRateBcv } = useShoppingCart();
 
-  const [selectedCutChoice, setSelectedCutChoice] = useState(() => {
-    return productItem.availableCutOptions && productItem.availableCutOptions.length > 0
-      ? productItem.availableCutOptions[0]
-      : '';
-  });
-
   const [addedFeedbackActive, setAddedFeedbackActive] = useState(false);
 
   const priceBcvEquivalent = (productItem.productPriceUsd * exchangeRateBcv).toLocaleString('es-VE', {
@@ -19,7 +13,7 @@ export const ProductCardItem = ({ productItem, onSelectProduct }) => {
 
   const handleAddToCartClick = (clickEvent) => {
     clickEvent.stopPropagation();
-    addProductToCart(productItem, selectedCutChoice, 1);
+    addProductToCart(productItem, 1);
     setAddedFeedbackActive(true);
     setTimeout(() => {
       setAddedFeedbackActive(false);
@@ -71,25 +65,6 @@ export const ProductCardItem = ({ productItem, onSelectProduct }) => {
         <p className="text-xs text-neutral-muted mt-1 mb-3 line-clamp-2 leading-relaxed">
           {productItem.productDescription}
         </p>
-
-        {productItem.availableCutOptions && productItem.availableCutOptions.length > 1 && (
-          <div className="mb-3" onClick={(clickEvent) => clickEvent.stopPropagation()}>
-            <label className="text-[10px] font-bold uppercase tracking-wider text-neutral-muted block mb-1">
-              Preferencia de Corte:
-            </label>
-            <select
-              value={selectedCutChoice}
-              onChange={(changeEvent) => setSelectedCutChoice(changeEvent.target.value)}
-              className="w-full text-xs font-semibold bg-surface-alt border border-neutral-border rounded-md px-2 py-1.5 text-neutral-dark focus:outline-none focus:ring-1 focus:ring-primary cursor-pointer"
-            >
-              {productItem.availableCutOptions.map((cutOptionItem) => (
-                <option key={cutOptionItem} value={cutOptionItem}>
-                  {cutOptionItem}
-                </option>
-              ))}
-            </select>
-          </div>
-        )}
 
         <div className="mt-auto pt-3 border-t border-neutral-border/70 flex items-center justify-between gap-2">
           <div>

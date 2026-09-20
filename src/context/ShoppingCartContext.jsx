@@ -19,7 +19,6 @@ export const ShoppingCartProvider = ({ children }) => {
     isVisible: false,
     productTitle: '',
     productImage: '',
-    selectedCutOption: '',
     productPriceUsd: 0
   });
 
@@ -66,11 +65,14 @@ export const ShoppingCartProvider = ({ children }) => {
     }));
   };
 
-  const addProductToCart = (productItem, selectedCutOption = '', quantityToAdd = 1) => {
+  const addProductToCart = (productItem, quantityOrParameter = 1, fallbackQuantity = 1) => {
+    const quantityToAdd = typeof quantityOrParameter === 'number'
+      ? quantityOrParameter
+      : (typeof fallbackQuantity === 'number' ? fallbackQuantity : 1);
+
     setCartItemList((previousItemList) => {
       const existingItemIndex = previousItemList.findIndex((elementItem) => {
-        return elementItem.productIdentifier === productItem.productIdentifier &&
-          elementItem.selectedCutOption === selectedCutOption;
+        return elementItem.productIdentifier === productItem.productIdentifier;
       });
 
       if (existingItemIndex > -1) {
@@ -90,8 +92,8 @@ export const ShoppingCartProvider = ({ children }) => {
         productPriceUsd: productItem.productPriceUsd,
         productPriceUnit: productItem.productPriceUnit,
         productImage: productItem.productImage,
-        selectedCutOption: selectedCutOption,
-        selectedQuantity: quantityToAdd
+        selectedQuantity: quantityToAdd,
+        customItemNote: ''
       };
 
       return [...previousItemList, newCartEntry];
@@ -101,21 +103,19 @@ export const ShoppingCartProvider = ({ children }) => {
       isVisible: true,
       productTitle: productItem.productTitle,
       productImage: productItem.productImage,
-      selectedCutOption: selectedCutOption,
       productPriceUsd: productItem.productPriceUsd
     });
   };
 
-  const updateItemQuantity = (productIdentifier, selectedCutOption, newQuantity) => {
+  const updateItemQuantity = (productIdentifier, newQuantity) => {
     if (newQuantity <= 0) {
-      removeProductFromCart(productIdentifier, selectedCutOption);
+      removeProductFromCart(productIdentifier);
       return;
     }
 
     setCartItemList((previousItemList) => {
       return previousItemList.map((elementItem) => {
-        if (elementItem.productIdentifier === productIdentifier &&
-            elementItem.selectedCutOption === selectedCutOption) {
+        if (elementItem.productIdentifier === productIdentifier) {
           return {
             ...elementItem,
             selectedQuantity: newQuantity
@@ -126,11 +126,24 @@ export const ShoppingCartProvider = ({ children }) => {
     });
   };
 
-  const removeProductFromCart = (productIdentifier, selectedCutOption) => {
+  const removeProductFromCart = (productIdentifier) => {
     setCartItemList((previousItemList) => {
       return previousItemList.filter((elementItem) => {
-        return !(elementItem.productIdentifier === productIdentifier &&
-          elementItem.selectedCutOption === selectedCutOption);
+        return elementItem.productIdentifier !== productIdentifier;
+      });
+    });
+  };
+
+  const updateCartItemNote = (productIdentifier, noteText) => {
+    setCartItemList((previousItemList) => {
+      return previousItemList.map((elementItem) => {
+        if (elementItem.productIdentifier === productIdentifier) {
+          return {
+            ...elementItem,
+            customItemNote: noteText
+          };
+        }
+        return elementItem;
       });
     });
   };
@@ -159,6 +172,7 @@ export const ShoppingCartProvider = ({ children }) => {
     addProductToCart,
     updateItemQuantity,
     removeProductFromCart,
+    updateCartItemNote,
     clearCartItems,
     totalItemsCount,
     totalCartAmountUsd,

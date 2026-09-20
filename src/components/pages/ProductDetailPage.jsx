@@ -9,11 +9,7 @@ export const ProductDetailPage = ({
 }) => {
   const { addProductToCart, exchangeRateBcv } = useShoppingCart();
 
-  const [selectedCutChoice, setSelectedCutChoice] = useState(() => {
-    return productItem?.availableCutOptions && productItem.availableCutOptions.length > 0
-      ? productItem.availableCutOptions[0]
-      : '';
-  });
+
 
   const [productQuantity, setProductQuantity] = useState(1);
   const [addedFeedbackActive, setAddedFeedbackActive] = useState(false);
@@ -25,9 +21,7 @@ export const ProductDetailPage = ({
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    if (productItem?.availableCutOptions && productItem.availableCutOptions.length > 0) {
-      setSelectedCutChoice(productItem.availableCutOptions[0]);
-    }
+
     setProductQuantity(1);
     setIsImageZoomModalOpen(false);
     setZoomMagnificationFactor(1);
@@ -75,7 +69,7 @@ export const ProductDetailPage = ({
   };
 
   const handleAddToCart = () => {
-    addProductToCart(productItem, selectedCutChoice, productQuantity);
+    addProductToCart(productItem, productQuantity);
     setAddedFeedbackActive(true);
     setTimeout(() => {
       setAddedFeedbackActive(false);
@@ -150,7 +144,7 @@ export const ProductDetailPage = ({
   };
 
   const directProductWhatsAppUrl = `https://wa.me/${cleanDestinationNumber}?text=${encodeURIComponent(
-    `Hola Quesería San Joaquín! Quisiera ordenar: ${productQuantity}x ${productItem.productTitle} (${selectedCutChoice || 'Presentación estándar'}). Total: $${totalCalculatedUsd} (Bs. ${totalCalculatedBcv}).`
+    `Hola Quesería San Joaquín! Quisiera ordenar: ${productQuantity}x ${productItem.productTitle}. Total: $${totalCalculatedUsd} (Bs. ${totalCalculatedBcv}).`
   )}`;
 
   const relatedProductsList = productsCatalogData
@@ -264,32 +258,7 @@ export const ProductDetailPage = ({
               </div>
             </div>
 
-            {productItem.availableCutOptions && productItem.availableCutOptions.length > 0 && (
-              <div className="space-y-2">
-                <label className="block text-xs font-extrabold text-neutral-dark uppercase tracking-wider">
-                  Selecciona Preferencia de Corte / Presentación:
-                </label>
-                <div className="flex flex-wrap gap-2">
-                  {productItem.availableCutOptions.map((cutOptionItem) => {
-                    const isOptionSelected = selectedCutChoice === cutOptionItem;
-                    const optionButtonClasses = isOptionSelected
-                      ? 'bg-primary text-white font-bold border-primary shadow-xs'
-                      : 'bg-white text-neutral-dark border-neutral-border hover:bg-surface-alt font-medium';
 
-                    return (
-                      <button
-                        key={cutOptionItem}
-                        type="button"
-                        onClick={() => setSelectedCutChoice(cutOptionItem)}
-                        className={`px-3.5 py-2 text-xs rounded-xl border transition-all cursor-pointer ${optionButtonClasses}`}
-                      >
-                        {cutOptionItem}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
 
             <div className="space-y-2">
               <label className="block text-xs font-extrabold text-neutral-dark uppercase tracking-wider">
