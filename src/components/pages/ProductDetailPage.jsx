@@ -90,7 +90,11 @@ export const ProductDetailPage = ({
     const buttonBoundingRect = clickEvent?.currentTarget?.getBoundingClientRect();
     const originCoordinates = buttonBoundingRect ? {
       coordinateX: buttonBoundingRect.left + buttonBoundingRect.width / 2,
-      coordinateY: buttonBoundingRect.top + buttonBoundingRect.height / 2
+      coordinateY: buttonBoundingRect.top + buttonBoundingRect.height / 2,
+      cardStartX: buttonBoundingRect.left - 40,
+      cardStartY: buttonBoundingRect.top - 60,
+      cardWidth: Math.max(buttonBoundingRect.width, 220),
+      cardHeight: 280
     } : null;
     addProductToCart(productItem, productQuantity, productQuantity, originCoordinates, productInstructionNote);
     setAddedFeedbackActive(true);

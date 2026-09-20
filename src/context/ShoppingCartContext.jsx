@@ -115,9 +115,17 @@ export const ShoppingCartProvider = ({ children }) => {
       const animationUniqueKey = `${Date.now()}_${Math.random()}`;
       const newFlyingItem = {
         uniqueKey: animationUniqueKey,
+        productTitle: productItem.productTitle,
         productImage: productItem.productImage,
+        productPriceUsd: productItem.productPriceUsd,
+        productPriceUnit: productItem.productPriceUnit,
+        productCategoryName: productItem.productCategoryName,
         startingX: originCoordinates.coordinateX,
-        startingY: originCoordinates.coordinateY
+        startingY: originCoordinates.coordinateY,
+        cardStartX: originCoordinates.cardStartX || originCoordinates.coordinateX - 80,
+        cardStartY: originCoordinates.cardStartY || originCoordinates.coordinateY - 120,
+        cardWidth: originCoordinates.cardWidth || 160,
+        cardHeight: originCoordinates.cardHeight || 220
       };
       setFlyingCartAnimationList((previousList) => [...previousList, newFlyingItem]);
 
@@ -125,27 +133,67 @@ export const ShoppingCartProvider = ({ children }) => {
         setIsCartBumpingActive(true);
         setTimeout(() => {
           setIsCartBumpingActive(false);
-        }, 450);
-      }, 550);
+        }, 500);
+      }, 650);
 
       setTimeout(() => {
         setFlyingCartAnimationList((previousList) => {
           return previousList.filter((flyingItem) => flyingItem.uniqueKey !== animationUniqueKey);
         });
-      }, 700);
+      }, 820);
     } else {
       setIsCartBumpingActive(true);
       setTimeout(() => {
         setIsCartBumpingActive(false);
-      }, 450);
+      }, 500);
     }
 
     setActiveToastNotification({
       isVisible: true,
+      productIdentifier: productItem.productIdentifier,
       productTitle: productItem.productTitle,
       productImage: productItem.productImage,
-      productPriceUsd: productItem.productPriceUsd
+      productPriceUsd: productItem.productPriceUsd,
+      quantityAdded: quantityToAdd,
+      toastTimestampKey: Date.now()
     });
+  };
+
+  const undoLastCartAddition = () => {
+    if (!activeToastNotification.productIdentifier) {
+      return;
+    }
+
+    const targetIdentifier = activeToastNotification.productIdentifier;
+    const quantityToDeduct = activeToastNotification.quantityAdded || 1;
+
+    setCartItemList((previousItemList) => {
+      const existingItem = previousItemList.find(
+        (elementItem) => elementItem.productIdentifier === targetIdentifier
+      );
+
+      if (!existingItem) {
+        return previousItemList;
+      }
+
+      if (existingItem.selectedQuantity <= quantityToDeduct) {
+        return previousItemList.filter(
+          (elementItem) => elementItem.productIdentifier !== targetIdentifier
+        );
+      }
+
+      return previousItemList.map((elementItem) => {
+        if (elementItem.productIdentifier === targetIdentifier) {
+          return {
+            ...elementItem,
+            selectedQuantity: elementItem.selectedQuantity - quantityToDeduct
+          };
+        }
+        return elementItem;
+      });
+    });
+
+    hideToastNotification();
   };
 
   const updateItemQuantity = (productIdentifier, newQuantity) => {
@@ -213,6 +261,7 @@ export const ShoppingCartProvider = ({ children }) => {
     closeCartDrawer,
     hideToastNotification,
     addProductToCart,
+    undoLastCartAddition,
     updateItemQuantity,
     removeProductFromCart,
     updateCartItemNote,
