@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useShoppingCart } from '../../hooks/useShoppingCart';
 
 export const MainHeaderNavigation = ({
@@ -10,7 +10,6 @@ export const MainHeaderNavigation = ({
   const { totalItemsCount, openCartDrawer } = useShoppingCart();
   const [isMobileMenuDrawerOpen, setIsMobileMenuDrawerOpen] = useState(false);
   const mobileMenuDrawerRef = useRef(null);
-  const [drawerBottomPosition, setDrawerBottomPosition] = useState(null);
 
   useEffect(() => {
     if (isMobileMenuDrawerOpen) {
@@ -22,25 +21,6 @@ export const MainHeaderNavigation = ({
     return () => {
       document.body.style.overflow = '';
     };
-  }, [isMobileMenuDrawerOpen]);
-
-  useLayoutEffect(() => {
-    if (isMobileMenuDrawerOpen) {
-      const updateDrawerPosition = () => {
-        if (mobileMenuDrawerRef.current) {
-          const drawerBoundingRectangle = mobileMenuDrawerRef.current.getBoundingClientRect();
-          setDrawerBottomPosition(drawerBoundingRectangle.bottom);
-        }
-      };
-
-      updateDrawerPosition();
-      window.addEventListener('resize', updateDrawerPosition);
-      return () => {
-        window.removeEventListener('resize', updateDrawerPosition);
-      };
-    } else {
-      setDrawerBottomPosition(null);
-    }
   }, [isMobileMenuDrawerOpen]);
 
   const configuredPhoneNumber = import.meta.env.VITE_WHATSAPP_PHONE_NUMBER || '584146770016';
@@ -85,11 +65,11 @@ export const MainHeaderNavigation = ({
             <button
               type="button"
               onClick={() => setIsMobileMenuDrawerOpen(!isMobileMenuDrawerOpen)}
-              className="lg:hidden inline-flex items-center justify-center w-10 h-10 rounded-xl border border-neutral-200 text-neutral-800 hover:bg-neutral-50 transition-colors cursor-pointer"
+              className="lg:hidden inline-flex items-center justify-center w-10 h-10 rounded-xl border border-neutral-200 text-neutral-800 hover:bg-neutral-50 transition-all duration-300 cursor-pointer active:scale-95"
               aria-label="Alternar menú de navegación"
               aria-expanded={isMobileMenuDrawerOpen}
             >
-              <span className="material-symbols-outlined text-2xl">
+              <span className={`material-symbols-outlined text-2xl transition-transform duration-300 ${isMobileMenuDrawerOpen ? 'rotate-90 text-[#114B2B]' : 'rotate-0'}`}>
                 {isMobileMenuDrawerOpen ? 'close' : 'menu'}
               </span>
             </button>
@@ -211,57 +191,60 @@ export const MainHeaderNavigation = ({
         </div>
       </nav>
 
-      {isMobileMenuDrawerOpen && (
-        <div className="lg:hidden">
-          <div
-            ref={mobileMenuDrawerRef}
-            className="relative z-50 bg-[#114B2B] text-white shadow-2xl border-t border-[#0d3b22]"
-          >
-            <div className="px-5 py-4 space-y-3">
-              <span className="text-[11px] font-bold text-white/70 uppercase tracking-widest block">
-                Navegación
-              </span>
-              <div className="flex flex-col gap-2">
-                {navigationMenuItems.map((menuItem) => {
-                  const isItemActive = activePageIdentifier === menuItem.pageKey;
-                  return (
-                    <button
-                      key={menuItem.pageKey}
-                      onClick={() => handleNavigationSelect(menuItem.pageKey)}
-                      className={`flex items-center justify-between text-left py-2 px-3 rounded-lg text-sm font-bold transition-colors cursor-pointer ${
-                        isItemActive ? 'bg-white/15 text-white' : 'text-white/85 hover:bg-white/10'
-                      }`}
-                    >
-                      <span>{menuItem.labelText}</span>
-                      <span className="material-symbols-outlined text-sm">arrow_forward</span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            <div className="p-4 bg-white flex flex-col gap-2.5">
-              <a
-                href={directWhatsAppHelpUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-xs"
-              >
-                <span className="material-symbols-outlined text-base">chat</span>
-                <span>Asistencia WhatsApp</span>
-              </a>
+      <div
+        className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+          isMobileMenuDrawerOpen
+            ? 'max-h-[500px] opacity-100'
+            : 'max-h-0 opacity-0 pointer-events-none'
+        }`}
+      >
+        <div
+          ref={mobileMenuDrawerRef}
+          className="relative z-50 bg-[#114B2B] text-white shadow-2xl border-t border-[#0d3b22]"
+        >
+          <div className="px-5 py-4 space-y-3">
+            <span className="text-[11px] font-bold text-white/70 uppercase tracking-widest block">
+              Navegación
+            </span>
+            <div className="flex flex-col gap-2">
+              {navigationMenuItems.map((menuItem) => {
+                const isItemActive = activePageIdentifier === menuItem.pageKey;
+                return (
+                  <button
+                    key={menuItem.pageKey}
+                    onClick={() => handleNavigationSelect(menuItem.pageKey)}
+                    className={`flex items-center justify-between text-left py-2.5 px-3 rounded-lg text-sm font-bold transition-all duration-200 cursor-pointer ${
+                      isItemActive ? 'bg-white/15 text-white translate-x-1' : 'text-white/85 hover:bg-white/10 hover:translate-x-1'
+                    }`}
+                  >
+                    <span>{menuItem.labelText}</span>
+                    <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                  </button>
+                );
+              })}
             </div>
           </div>
 
-          {drawerBottomPosition !== null && (
-            <div
-              onClick={() => setIsMobileMenuDrawerOpen(false)}
-              className="fixed inset-x-0 bottom-0 bg-black/60 backdrop-blur-md z-40 cursor-pointer"
-              style={{ top: `${drawerBottomPosition}px` }}
-            />
-          )}
+          <div className="p-4 bg-white flex flex-col gap-2.5">
+            <a
+              href={directWhatsAppHelpUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-xs transition-colors"
+            >
+              <span className="material-symbols-outlined text-base">chat</span>
+              <span>Asistencia WhatsApp</span>
+            </a>
+          </div>
         </div>
-      )}
+      </div>
+
+      <div
+        onClick={() => setIsMobileMenuDrawerOpen(false)}
+        className={`fixed inset-0 bg-black/50 backdrop-blur-xs z-30 transition-opacity duration-300 lg:hidden ${
+          isMobileMenuDrawerOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}
+      />
     </div>
   );
 };

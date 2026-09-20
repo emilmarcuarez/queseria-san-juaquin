@@ -23,8 +23,8 @@ export const TopAnnouncementBar = () => {
       </div>
 
       <div className="bg-[#0b331c] text-white border-b border-emerald-950/50 py-1.5 px-4 text-xs font-medium">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
-          <div className="flex items-center gap-1.5 text-white/80 hover:text-white transition-colors truncate">
+        <div className="max-w-7xl mx-auto flex items-center justify-center md:justify-between gap-3">
+          <div className="hidden md:flex items-center gap-1.5 text-white/80 hover:text-white transition-colors truncate">
             <span className="material-symbols-outlined text-[15px] text-emerald-400 shrink-0">location_on</span>
             <span className="truncate">{STORE_OFFICIAL_DATA.shortAddress}</span>
           </div>
