@@ -20,9 +20,12 @@ export const ShoppingCartProvider = ({ children }) => {
 
   const [activeToastNotification, setActiveToastNotification] = useState({
     isVisible: false,
+    productIdentifier: '',
     productTitle: '',
     productImage: '',
-    productPriceUsd: 0
+    productPriceUsd: 0,
+    quantityAdded: 1,
+    portionLabel: ''
   });
 
   const [exchangeRateBcv, setExchangeRateBcv] = useState(() => {
@@ -73,17 +76,29 @@ export const ShoppingCartProvider = ({ children }) => {
     quantityOrParameter = 1,
     fallbackQuantity = 1,
     originCoordinates = null,
-    itemCustomNote = ''
+    itemCustomNote = '',
+    customOptions = {}
   ) => {
     const quantityToAdd = typeof quantityOrParameter === 'number'
       ? quantityOrParameter
       : (typeof fallbackQuantity === 'number' ? fallbackQuantity : 1);
 
     const sanitizedNote = typeof itemCustomNote === 'string' ? itemCustomNote.trim() : '';
+    const weightFraction = customOptions?.weightFraction || null;
+    const selectedCut = customOptions?.selectedCut || '';
+
+    const fractionKey = weightFraction ? weightFraction.fractionKey : 'std';
+    const cutKey = selectedCut ? selectedCut.replace(/\s+/g, '-').toLowerCase() : 'std';
+    const itemCartKey = `${productItem.productIdentifier}__${fractionKey}__${cutKey}`;
+
+    const effectiveFactor = weightFraction?.factor || 1;
+    const effectivePriceUsd = productItem.productPriceUsd * effectiveFactor;
+    const portionLabel = weightFraction ? weightFraction.label : (productItem.productPriceUnit === 'kg' ? '1 Kg' : '');
 
     setCartItemList((previousItemList) => {
       const existingItemIndex = previousItemList.findIndex((elementItem) => {
-        return elementItem.productIdentifier === productItem.productIdentifier;
+        const currentKey = elementItem.cartItemKey || elementItem.productIdentifier;
+        return currentKey === itemCartKey;
       });
 
       if (existingItemIndex > -1) {
@@ -98,10 +113,14 @@ export const ShoppingCartProvider = ({ children }) => {
       }
 
       const newCartEntry = {
+        cartItemKey: itemCartKey,
         productIdentifier: productItem.productIdentifier,
         productTitle: productItem.productTitle,
         productCategoryName: productItem.productCategoryName,
-        productPriceUsd: productItem.productPriceUsd,
+        productPriceUsd: effectivePriceUsd,
+        basePriceUsd: productItem.productPriceUsd,
+        portionLabel: portionLabel,
+        selectedCut: selectedCut,
         productPriceUnit: productItem.productPriceUnit,
         productImage: productItem.productImage,
         selectedQuantity: quantityToAdd,
@@ -113,7 +132,7 @@ export const ShoppingCartProvider = ({ children }) => {
 
     if (originCoordinates && typeof originCoordinates.coordinateX === 'number') {
       const animationUniqueKey = `${Date.now()}_${Math.random()}`;
-      const calculatedBcvEquivalent = (productItem.productPriceUsd * exchangeRateBcv).toLocaleString('es-VE', {
+      const calculatedBcvEquivalent = (effectivePriceUsd * exchangeRateBcv).toLocaleString('es-VE', {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
       });
@@ -122,7 +141,7 @@ export const ShoppingCartProvider = ({ children }) => {
         uniqueKey: animationUniqueKey,
         productTitle: productItem.productTitle,
         productImage: productItem.productImage,
-        productPriceUsd: productItem.productPriceUsd,
+        productPriceUsd: effectivePriceUsd,
         productPriceUnit: productItem.productPriceUnit,
         productCategoryName: productItem.productCategoryName,
         productDescription: productItem.productDescription,
@@ -159,26 +178,28 @@ export const ShoppingCartProvider = ({ children }) => {
 
     setActiveToastNotification({
       isVisible: true,
+      cartItemKey: itemCartKey,
       productIdentifier: productItem.productIdentifier,
       productTitle: productItem.productTitle,
+      portionLabel: portionLabel,
       productImage: productItem.productImage,
-      productPriceUsd: productItem.productPriceUsd,
+      productPriceUsd: effectivePriceUsd,
       quantityAdded: quantityToAdd,
       toastTimestampKey: Date.now()
     });
   };
 
   const undoLastCartAddition = () => {
-    if (!activeToastNotification.productIdentifier) {
+    if (!activeToastNotification.cartItemKey && !activeToastNotification.productIdentifier) {
       return;
     }
 
-    const targetIdentifier = activeToastNotification.productIdentifier;
+    const targetKey = activeToastNotification.cartItemKey || activeToastNotification.productIdentifier;
     const quantityToDeduct = activeToastNotification.quantityAdded || 1;
 
     setCartItemList((previousItemList) => {
       const existingItem = previousItemList.find(
-        (elementItem) => elementItem.productIdentifier === targetIdentifier
+        (elementItem) => (elementItem.cartItemKey || elementItem.productIdentifier) === targetKey
       );
 
       if (!existingItem) {
@@ -187,12 +208,12 @@ export const ShoppingCartProvider = ({ children }) => {
 
       if (existingItem.selectedQuantity <= quantityToDeduct) {
         return previousItemList.filter(
-          (elementItem) => elementItem.productIdentifier !== targetIdentifier
+          (elementItem) => (elementItem.cartItemKey || elementItem.productIdentifier) !== targetKey
         );
       }
 
       return previousItemList.map((elementItem) => {
-        if (elementItem.productIdentifier === targetIdentifier) {
+        if ((elementItem.cartItemKey || elementItem.productIdentifier) === targetKey) {
           return {
             ...elementItem,
             selectedQuantity: elementItem.selectedQuantity - quantityToDeduct
@@ -205,15 +226,16 @@ export const ShoppingCartProvider = ({ children }) => {
     hideToastNotification();
   };
 
-  const updateItemQuantity = (productIdentifier, newQuantity) => {
+  const updateItemQuantity = (itemIdentifierOrKey, newQuantity) => {
     if (newQuantity <= 0) {
-      removeProductFromCart(productIdentifier);
+      removeProductFromCart(itemIdentifierOrKey);
       return;
     }
 
     setCartItemList((previousItemList) => {
       return previousItemList.map((elementItem) => {
-        if (elementItem.productIdentifier === productIdentifier) {
+        const currentKey = elementItem.cartItemKey || elementItem.productIdentifier;
+        if (currentKey === itemIdentifierOrKey) {
           return {
             ...elementItem,
             selectedQuantity: newQuantity
@@ -224,18 +246,20 @@ export const ShoppingCartProvider = ({ children }) => {
     });
   };
 
-  const removeProductFromCart = (productIdentifier) => {
+  const removeProductFromCart = (itemIdentifierOrKey) => {
     setCartItemList((previousItemList) => {
       return previousItemList.filter((elementItem) => {
-        return elementItem.productIdentifier !== productIdentifier;
+        const currentKey = elementItem.cartItemKey || elementItem.productIdentifier;
+        return currentKey !== itemIdentifierOrKey;
       });
     });
   };
 
-  const updateCartItemNote = (productIdentifier, noteText) => {
+  const updateCartItemNote = (itemIdentifierOrKey, noteText) => {
     setCartItemList((previousItemList) => {
       return previousItemList.map((elementItem) => {
-        if (elementItem.productIdentifier === productIdentifier) {
+        const currentKey = elementItem.cartItemKey || elementItem.productIdentifier;
+        if (currentKey === itemIdentifierOrKey) {
           return {
             ...elementItem,
             customItemNote: noteText

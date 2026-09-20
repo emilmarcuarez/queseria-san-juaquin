@@ -12,6 +12,8 @@ export const CartItemRow = ({ cartItemEntry }) => {
   const [isNoteModalOpen, setIsNoteModalOpen] = useState(false);
   const [draftNoteText, setDraftNoteText] = useState(cartItemEntry.customItemNote || '');
 
+  const itemKey = cartItemEntry.cartItemKey || cartItemEntry.productIdentifier;
+
   const itemSubtotalUsd = (cartItemEntry.productPriceUsd * cartItemEntry.selectedQuantity).toFixed(2);
   const itemSubtotalBcv = (
     cartItemEntry.productPriceUsd *
@@ -23,21 +25,15 @@ export const CartItemRow = ({ cartItemEntry }) => {
   });
 
   const handleDecreaseQuantity = () => {
-    updateItemQuantity(
-      cartItemEntry.productIdentifier,
-      cartItemEntry.selectedQuantity - 1
-    );
+    updateItemQuantity(itemKey, cartItemEntry.selectedQuantity - 1);
   };
 
   const handleIncreaseQuantity = () => {
-    updateItemQuantity(
-      cartItemEntry.productIdentifier,
-      cartItemEntry.selectedQuantity + 1
-    );
+    updateItemQuantity(itemKey, cartItemEntry.selectedQuantity + 1);
   };
 
   const handleRemoveItem = () => {
-    removeProductFromCart(cartItemEntry.productIdentifier);
+    removeProductFromCart(itemKey);
   };
 
   const handleOpenNoteModal = () => {
@@ -51,12 +47,12 @@ export const CartItemRow = ({ cartItemEntry }) => {
   };
 
   const handleSaveNote = () => {
-    updateCartItemNote(cartItemEntry.productIdentifier, draftNoteText.trim());
+    updateCartItemNote(itemKey, draftNoteText.trim());
     setIsNoteModalOpen(false);
   };
 
   const handleClearNote = () => {
-    updateCartItemNote(cartItemEntry.productIdentifier, '');
+    updateCartItemNote(itemKey, '');
     setDraftNoteText('');
     setIsNoteModalOpen(false);
   };
@@ -75,6 +71,21 @@ export const CartItemRow = ({ cartItemEntry }) => {
             <h4 className="text-xs font-bold text-neutral-dark truncate leading-tight">
               {cartItemEntry.productTitle}
             </h4>
+
+            {/* Badges de Porción y Corte */}
+            <div className="flex flex-wrap items-center gap-1.5 mt-1">
+              {cartItemEntry.portionLabel && (
+                <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-extrabold bg-primary/10 text-primary border border-primary/20">
+                  {cartItemEntry.portionLabel}
+                </span>
+              )}
+              {cartItemEntry.selectedCut && (
+                <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-amber-50 text-amber-800 border border-amber-200">
+                  <span className="material-symbols-outlined text-[11px]">content_cut</span>
+                  <span>{cartItemEntry.selectedCut}</span>
+                </span>
+              )}
+            </div>
 
             <div className="flex items-center gap-2 mt-1">
               <span className="text-xs font-black text-neutral-dark">

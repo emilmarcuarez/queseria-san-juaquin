@@ -2,6 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useShoppingCart } from '../../hooks/useShoppingCart';
 import productsCatalogData from '../../data/productsCatalogData.json';
 
+const WEIGHT_FRACTIONS = [
+  { fractionKey: '250g', label: '250g (1/4 Kg)', factor: 0.25, shortLabel: '250g' },
+  { fractionKey: '500g', label: '500g (1/2 Kg)', factor: 0.50, shortLabel: '500g' },
+  { fractionKey: '1kg', label: '1 Kg (Entero)', factor: 1.00, shortLabel: '1 Kg' }
+];
+
 export const ProductDetailPage = ({
   productItem,
   onBackToStore,
@@ -9,8 +15,10 @@ export const ProductDetailPage = ({
 }) => {
   const { addProductToCart, exchangeRateBcv } = useShoppingCart();
 
+  const isWeightBasedProduct = productItem?.productPriceUnit?.toLowerCase() === 'kg';
 
-
+  const [selectedWeightFraction, setSelectedWeightFraction] = useState(WEIGHT_FRACTIONS[2]);
+  const [selectedCutOption, setSelectedCutOption] = useState(productItem?.availableCutOptions?.[0] || '');
   const [productQuantity, setProductQuantity] = useState(1);
   const [productInstructionNote, setProductInstructionNote] = useState('');
   const [addedFeedbackActive, setAddedFeedbackActive] = useState(false);
@@ -28,6 +36,8 @@ export const ProductDetailPage = ({
     setIsImageZoomModalOpen(false);
     setZoomMagnificationFactor(1);
     setPanTranslatePosition({ horizontalCoordinate: 0, verticalCoordinate: 0 });
+    setSelectedWeightFraction(WEIGHT_FRACTIONS[2]);
+    setSelectedCutOption(productItem?.availableCutOptions?.[0] || '');
   }, [productItem]);
 
   useEffect(() => {
@@ -48,16 +58,20 @@ export const ProductDetailPage = ({
     return null;
   }
 
-  const configuredPhoneNumber = import.meta.env.VITE_WHATSAPP_PHONE_NUMBER || '584147675878';
+  const configuredPhoneNumber = import.meta.env.VITE_WHATSAPP_PHONE_NUMBER || '584146770016';
   const cleanDestinationNumber = configuredPhoneNumber.replace(/[^\d]/g, '');
 
-  const priceBcvEquivalent = (productItem.productPriceUsd * exchangeRateBcv).toLocaleString('es-VE', {
+  const effectiveUnitPriceUsd = isWeightBasedProduct
+    ? productItem.productPriceUsd * selectedWeightFraction.factor
+    : productItem.productPriceUsd;
+
+  const priceBcvEquivalent = (effectiveUnitPriceUsd * exchangeRateBcv).toLocaleString('es-VE', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2
   });
 
-  const totalCalculatedUsd = (productItem.productPriceUsd * productQuantity).toFixed(2);
-  const totalCalculatedBcv = (productItem.productPriceUsd * productQuantity * exchangeRateBcv).toLocaleString('es-VE', {
+  const totalCalculatedUsd = (effectiveUnitPriceUsd * productQuantity).toFixed(2);
+  const totalCalculatedBcv = (effectiveUnitPriceUsd * productQuantity * exchangeRateBcv).toLocaleString('es-VE', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2
   });
@@ -80,7 +94,19 @@ export const ProductDetailPage = ({
       cardWidth: Math.max(buttonBoundingRect.width, 220),
       cardHeight: 280
     } : null;
-    addProductToCart(productItem, productQuantity, productQuantity, originCoordinates, productInstructionNote);
+
+    addProductToCart(
+      productItem,
+      productQuantity,
+      productQuantity,
+      originCoordinates,
+      productInstructionNote,
+      {
+        weightFraction: isWeightBasedProduct ? selectedWeightFraction : null,
+        selectedCut: selectedCutOption
+      }
+    );
+
     setAddedFeedbackActive(true);
     setTimeout(() => {
       setAddedFeedbackActive(false);
@@ -154,9 +180,11 @@ export const ProductDetailPage = ({
     setIsDraggingImage(false);
   };
 
+  const portionDesc = isWeightBasedProduct ? ` [${selectedWeightFraction.label}]` : '';
+  const cutDesc = selectedCutOption ? ` (Corte: ${selectedCutOption})` : '';
   const formattedNoteSuffix = productInstructionNote.trim() ? ` (Nota: ${productInstructionNote.trim()})` : '';
   const directProductWhatsAppUrl = `https://wa.me/${cleanDestinationNumber}?text=${encodeURIComponent(
-    `Hola Quesería San Joaquín! Quisiera ordenar: ${productQuantity}x ${productItem.productTitle}${formattedNoteSuffix}. Total: $${totalCalculatedUsd} (Bs. ${totalCalculatedBcv}).`
+    `Hola Quesería San Joaquín! Quisiera ordenar: ${productQuantity}x ${productItem.productTitle}${portionDesc}${cutDesc}${formattedNoteSuffix}. Total: $${totalCalculatedUsd} (Bs. ${totalCalculatedBcv}).`
   )}`;
 
   const relatedProductsList = productsCatalogData
@@ -241,7 +269,7 @@ export const ProductDetailPage = ({
             </div>
           </div>
 
-          <div className="lg:col-span-6 flex flex-col space-y-6">
+          <div className="lg:col-span-6 flex flex-col space-y-5">
             <div>
               <span className="text-xs font-extrabold text-primary uppercase tracking-widest block mb-1">
                 {productItem.productCategoryName}
@@ -254,11 +282,14 @@ export const ProductDetailPage = ({
               </p>
             </div>
 
+            {/* Tarjeta de Precio Dinámica */}
             <div className="p-4 rounded-2xl bg-surface-alt border border-neutral-border flex items-center justify-between gap-4">
               <div>
-                <span className="text-[11px] text-neutral-muted uppercase font-bold block">Precio por {productItem.productPriceUnit}</span>
+                <span className="text-[11px] text-neutral-muted uppercase font-bold block">
+                  {isWeightBasedProduct ? `Precio por ${selectedWeightFraction.shortLabel}` : `Precio por ${productItem.productPriceUnit}`}
+                </span>
                 <div className="text-2xl sm:text-3xl font-black text-neutral-dark leading-tight">
-                  ${productItem.productPriceUsd.toFixed(2)}{' '}
+                  ${effectiveUnitPriceUsd.toFixed(2)}{' '}
                   <span className="text-xs font-normal text-neutral-muted">USD</span>
                 </div>
               </div>
@@ -271,8 +302,78 @@ export const ProductDetailPage = ({
               </div>
             </div>
 
+            {/* Selector de Peso Fraccionado (250g / 500g / 1 Kg) */}
+            {isWeightBasedProduct && (
+              <div className="space-y-2 p-3.5 bg-emerald-50/40 border border-emerald-100 rounded-2xl">
+                <div className="flex items-center justify-between">
+                  <label className="text-xs font-extrabold text-neutral-dark uppercase tracking-wider flex items-center gap-1.5">
+                    <span className="material-symbols-outlined text-base text-primary">scale</span>
+                    <span>Porción o Peso Deseado:</span>
+                  </label>
+                  <span className="text-xs font-black text-primary">{selectedWeightFraction.label}</span>
+                </div>
 
+                <div className="grid grid-cols-3 gap-2">
+                  {WEIGHT_FRACTIONS.map((fraction) => {
+                    const isSelected = selectedWeightFraction.fractionKey === fraction.fractionKey;
+                    const fractionPrice = (productItem.productPriceUsd * fraction.factor).toFixed(2);
+                    return (
+                      <button
+                        key={fraction.fractionKey}
+                        type="button"
+                        onClick={() => setSelectedWeightFraction(fraction)}
+                        className={`py-2 px-2 rounded-xl border text-center transition-all cursor-pointer ${
+                          isSelected
+                            ? 'bg-primary text-white border-primary shadow-xs ring-2 ring-primary/20'
+                            : 'bg-white text-neutral-700 border-neutral-200 hover:border-primary/50 hover:bg-neutral-50'
+                        }`}
+                      >
+                        <span className="block text-xs font-black">{fraction.shortLabel}</span>
+                        <span className={`block text-[10px] mt-0.5 font-semibold ${isSelected ? 'text-white/80' : 'text-neutral-500'}`}>
+                          ${fractionPrice}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
 
+            {/* Selector de Opciones de Corte (availableCutOptions) */}
+            {productItem.availableCutOptions && productItem.availableCutOptions.length > 0 && (
+              <div className="space-y-2 p-3.5 bg-amber-50/40 border border-amber-100 rounded-2xl">
+                <div className="flex items-center justify-between">
+                  <label className="text-xs font-extrabold text-neutral-dark uppercase tracking-wider flex items-center gap-1.5">
+                    <span className="material-symbols-outlined text-base text-amber-700">content_cut</span>
+                    <span>Corte o Presentación al Gusto:</span>
+                  </label>
+                  <span className="text-xs font-black text-amber-900">{selectedCutOption || 'Estándar'}</span>
+                </div>
+
+                <div className="flex flex-wrap gap-2">
+                  {productItem.availableCutOptions.map((cutOption) => {
+                    const isCutSelected = selectedCutOption === cutOption;
+                    return (
+                      <button
+                        key={cutOption}
+                        type="button"
+                        onClick={() => setSelectedCutOption(cutOption)}
+                        className={`px-3 py-1.5 rounded-lg text-xs font-bold border transition-all cursor-pointer flex items-center gap-1.5 ${
+                          isCutSelected
+                            ? 'bg-amber-600 text-white border-amber-600 shadow-xs'
+                            : 'bg-white text-neutral-700 border-neutral-200 hover:border-amber-400 hover:bg-amber-50/40'
+                        }`}
+                      >
+                        {isCutSelected && <span className="material-symbols-outlined text-sm">check</span>}
+                        <span>{cutOption}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* Selector de Cantidad */}
             <div className="space-y-2">
               <label className="block text-xs font-extrabold text-neutral-dark uppercase tracking-wider">
                 Cantidad a pedir:
@@ -307,6 +408,7 @@ export const ProductDetailPage = ({
               </div>
             </div>
 
+            {/* Nota Especial */}
             <div className="space-y-1.5 pt-2 border-t border-neutral-100">
               <div className="flex items-center justify-between">
                 <label className="text-[11px] font-extrabold uppercase tracking-wider text-neutral-600 block">
@@ -327,11 +429,12 @@ export const ProductDetailPage = ({
                 type="text"
                 value={productInstructionNote}
                 onChange={(inputEvent) => setProductInstructionNote(inputEvent.target.value)}
-                placeholder="Ej: punto de sal, empaque especial, etc."
+                placeholder="Ej: punto de sal, empaque sellado, etc."
                 className="w-full text-xs bg-neutral-50 border border-neutral-200 rounded-xl px-3 py-2 text-neutral-800 placeholder:text-neutral-400 focus:outline-none focus:ring-1 focus:ring-[#114B2B]"
               />
             </div>
 
+            {/* Botones de Acción */}
             <div className="space-y-3 pt-2">
               <button
                 type="button"
@@ -361,6 +464,7 @@ export const ProductDetailPage = ({
           </div>
         </div>
 
+        {/* Productos Relacionados */}
         {relatedProductsList.length > 0 && (
           <div className="space-y-6 pt-6">
             <div className="flex items-center justify-between">
@@ -380,22 +484,22 @@ export const ProductDetailPage = ({
                   key={relatedItem.productIdentifier}
                   type="button"
                   onClick={() => onSelectProduct(relatedItem)}
-                  className="bg-white rounded-xl border border-neutral-border p-4 flex flex-col text-left shadow-xs hover:shadow-md transition-all cursor-pointer group"
+                  className="bg-white rounded-2xl border border-neutral-200 p-4 text-left hover:shadow-md transition-all group cursor-pointer"
                 >
-                  <div className="w-full aspect-[4/3] rounded-lg bg-surface-alt overflow-hidden mb-3">
+                  <div className="w-full aspect-square rounded-xl bg-surface-alt overflow-hidden mb-3">
                     <img
                       src={relatedItem.productImage}
                       alt={relatedItem.productTitle}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                   </div>
-                  <span className="text-[10px] font-bold text-primary uppercase">
+                  <span className="text-[10px] font-bold text-primary uppercase block mb-1">
                     {relatedItem.productCategoryName}
                   </span>
-                  <h4 className="text-sm font-bold text-neutral-dark group-hover:text-primary transition-colors mt-0.5 line-clamp-1">
+                  <h4 className="text-xs sm:text-sm font-bold text-neutral-dark line-clamp-1 group-hover:text-primary transition-colors">
                     {relatedItem.productTitle}
                   </h4>
-                  <div className="text-base font-black text-neutral-dark mt-2">
+                  <div className="mt-2 text-sm font-black text-neutral-dark">
                     ${relatedItem.productPriceUsd.toFixed(2)}{' '}
                     <span className="text-[10px] font-normal text-neutral-muted">/ {relatedItem.productPriceUnit}</span>
                   </div>
@@ -406,38 +510,66 @@ export const ProductDetailPage = ({
         )}
       </div>
 
+      {/* Modal de Zoom */}
       {isImageZoomModalOpen && (
         <div
           onClick={handleCloseZoomModal}
-          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex flex-col items-center justify-between p-4 sm:p-6 select-none animate-fadeIn"
+          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex flex-col items-center justify-between p-4 sm:p-6"
         >
-          <div className="w-full flex items-center justify-between z-10">
-            <div className="text-white">
-              <h3 className="text-base sm:text-lg font-bold truncate max-w-xs sm:max-w-md">
-                {productItem.productTitle}
-              </h3>
-              <p className="text-xs text-white/70">
-                Zoom interactivo: {Math.round(zoomMagnificationFactor * 100)}% • Clic o arrastra para explorar
-              </p>
+          <div className="w-full max-w-5xl flex items-center justify-between text-white pb-3">
+            <div className="flex items-center gap-2 truncate">
+              <span className="material-symbols-outlined text-xl text-emerald-400">zoom_in</span>
+              <h3 className="text-xs sm:text-sm font-bold truncate">{productItem.productTitle}</h3>
             </div>
 
-            <button
-              type="button"
-              onClick={handleCloseZoomModal}
-              className="w-11 h-11 rounded-full bg-white/20 hover:bg-white/30 text-white flex items-center justify-center transition-all cursor-pointer active:scale-95"
-              aria-label="Cerrar zoom"
-            >
-              <span className="material-symbols-outlined text-2xl">close</span>
-            </button>
+            <div className="flex items-center gap-2 shrink-0">
+              <div className="flex items-center bg-white/10 rounded-xl p-1 border border-white/20">
+                <button
+                  type="button"
+                  onClick={(e) => { e.stopPropagation(); handleZoomOutAction(); }}
+                  className="w-8 h-8 flex items-center justify-center text-white hover:bg-white/20 rounded-lg cursor-pointer transition-colors"
+                  aria-label="Alejar"
+                >
+                  <span className="material-symbols-outlined text-lg">remove</span>
+                </button>
+                <span className="text-[11px] font-bold px-2 text-white/90">
+                  {Math.round(zoomMagnificationFactor * 100)}%
+                </span>
+                <button
+                  type="button"
+                  onClick={(e) => { e.stopPropagation(); handleZoomInAction(); }}
+                  className="w-8 h-8 flex items-center justify-center text-white hover:bg-white/20 rounded-lg cursor-pointer transition-colors"
+                  aria-label="Acercar"
+                >
+                  <span className="material-symbols-outlined text-lg">add</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={(e) => { e.stopPropagation(); handleResetZoomAction(); }}
+                  className="px-2 py-1 text-[10px] font-bold text-white/80 hover:text-white hover:bg-white/20 rounded-lg ml-1 cursor-pointer transition-colors"
+                >
+                  Reset
+                </button>
+              </div>
+
+              <button
+                type="button"
+                onClick={handleCloseZoomModal}
+                className="w-9 h-9 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center cursor-pointer transition-colors"
+                aria-label="Cerrar zoom"
+              >
+                <span className="material-symbols-outlined text-xl">close</span>
+              </button>
+            </div>
           </div>
 
           <div
-            onClick={(clickEvent) => clickEvent.stopPropagation()}
+            onClick={(e) => e.stopPropagation()}
             onMouseDown={handleMouseDownOnImage}
             onMouseMove={handleMouseMoveOnImage}
             onMouseUp={handleMouseUpOnImage}
             onMouseLeave={handleMouseUpOnImage}
-            className={`relative flex-1 w-full flex items-center justify-center overflow-hidden my-4 ${
+            className={`w-full max-w-5xl flex-1 flex items-center justify-center overflow-hidden select-none ${
               zoomMagnificationFactor > 1 ? (isDraggingImage ? 'cursor-grabbing' : 'cursor-grab') : 'cursor-zoom-in'
             }`}
           >
@@ -446,51 +578,16 @@ export const ProductDetailPage = ({
               alt={productItem.productTitle}
               onClick={handleToggleZoomOnClick}
               style={{
-                transform: `scale(${zoomMagnificationFactor}) translate(${panTranslatePosition.horizontalCoordinate / zoomMagnificationFactor}px, ${panTranslatePosition.verticalCoordinate / zoomMagnificationFactor}px)`,
-                transition: isDraggingImage ? 'none' : 'transform 0.25s ease-out'
+                transform: `translate(${panTranslatePosition.horizontalCoordinate}px, ${panTranslatePosition.verticalCoordinate}px) scale(${zoomMagnificationFactor})`,
+                transition: isDraggingImage ? 'none' : 'transform 200ms ease-out'
               }}
-              className="max-h-[82vh] max-w-full object-contain rounded-xl shadow-2xl pointer-events-auto"
+              className="max-w-full max-h-[75vh] object-contain rounded-xl shadow-2xl pointer-events-auto"
+              draggable={false}
             />
           </div>
 
-          <div
-            onClick={(clickEvent) => clickEvent.stopPropagation()}
-            className="bg-black/70 backdrop-blur-md border border-white/20 rounded-2xl px-4 py-2 flex items-center gap-3 text-white shadow-2xl z-10"
-          >
-            <button
-              type="button"
-              onClick={handleZoomOutAction}
-              disabled={zoomMagnificationFactor <= 1}
-              className="w-9 h-9 rounded-xl bg-white/10 hover:bg-white/20 disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center transition-all active:scale-95 cursor-pointer"
-              aria-label="Reducir zoom"
-            >
-              <span className="material-symbols-outlined text-xl">zoom_out</span>
-            </button>
-
-            <span className="text-xs font-mono font-bold w-14 text-center">
-              {Math.round(zoomMagnificationFactor * 100)}%
-            </span>
-
-            <button
-              type="button"
-              onClick={handleZoomInAction}
-              disabled={zoomMagnificationFactor >= 3.5}
-              className="w-9 h-9 rounded-xl bg-white/10 hover:bg-white/20 disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center transition-all active:scale-95 cursor-pointer"
-              aria-label="Aumentar zoom"
-            >
-              <span className="material-symbols-outlined text-xl">zoom_in</span>
-            </button>
-
-            <div className="w-px h-6 bg-white/20 mx-1"></div>
-
-            <button
-              type="button"
-              onClick={handleResetZoomAction}
-              className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold transition-all active:scale-95 cursor-pointer flex items-center gap-1"
-            >
-              <span className="material-symbols-outlined text-base">restart_alt</span>
-              <span>100%</span>
-            </button>
+          <div className="text-white/60 text-[11px] pt-2 text-center">
+            Haz clic para ampliar • Arrastra para mover la imagen cuando tenga zoom activo
           </div>
         </div>
       )}

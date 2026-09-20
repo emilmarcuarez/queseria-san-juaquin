@@ -1,10 +1,9 @@
 import React from 'react';
+import { STORE_OFFICIAL_DATA } from '../../services/storeScheduleService';
 
 export const MainFooterSection = () => {
-  const configuredPhoneNumber = import.meta.env.VITE_WHATSAPP_PHONE_NUMBER || '584147675878';
-  const cleanDestinationNumber = configuredPhoneNumber.replace(/[^\d]/g, '');
+  const cleanDestinationNumber = STORE_OFFICIAL_DATA.phoneNumber.replace(/[^\d]/g, '');
   const directWhatsAppUrl = `https://wa.me/${cleanDestinationNumber}?text=${encodeURIComponent('Hola Quesería San Joaquín! Quisiera más información sobre sus productos y envíos.')}`;
-  const storeScheduleText = import.meta.env.VITE_STORE_SCHEDULE || 'Lunes a Domingo: 8:00 AM - 8:00 PM';
 
   return (
     <footer className="w-full bg-white border-t border-neutral-border pt-12 pb-16 lg:pb-8 text-neutral-dark">
@@ -21,24 +20,24 @@ export const MainFooterSection = () => {
             </div>
             <p className="text-xs font-semibold text-accent uppercase tracking-wider">Mercado &amp; Charcutería</p>
             <p className="text-xs text-neutral-muted leading-relaxed">
-              Tu supermercado moderno de confianza para víveres, charcutería y quesos seleccionados con despacho puntual y garantía total de frescura.
+              Tu supermercado moderno de confianza para víveres, charcutería fresca y quesos seleccionados con despacho puntual y garantía total de frescura en Maracaibo.
             </p>
           </div>
 
           <div className="space-y-3">
-            <h4 className="text-sm font-bold text-neutral-dark uppercase tracking-wider">Horarios &amp; Tienda</h4>
+            <h4 className="text-sm font-bold text-neutral-dark uppercase tracking-wider">Horarios &amp; Sede</h4>
             <div className="space-y-2 text-xs text-neutral-muted">
               <p className="flex items-start gap-2">
-                <span className="material-symbols-outlined text-primary text-base">location_on</span>
-                <span>Sede Principal: Tienda y Despacho Express en Maracaibo.</span>
+                <span className="material-symbols-outlined text-primary text-base shrink-0 mt-0.5">location_on</span>
+                <span>{STORE_OFFICIAL_DATA.fullAddress}</span>
+              </p>
+              <p className="flex items-start gap-2">
+                <span className="material-symbols-outlined text-primary text-base shrink-0 mt-0.5">schedule</span>
+                <span>{STORE_OFFICIAL_DATA.scheduleSummary}</span>
               </p>
               <p className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-primary text-base">schedule</span>
-                <span>{storeScheduleText}</span>
-              </p>
-              <p className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-primary text-base">moped</span>
-                <span>Entregas a domicilio garantizadas el mismo día.</span>
+                <span className="material-symbols-outlined text-primary text-base shrink-0">moped</span>
+                <span>Entregas express y pick-up en tienda el mismo día.</span>
               </p>
             </div>
           </div>
@@ -68,7 +67,7 @@ export const MainFooterSection = () => {
           <div className="space-y-3">
             <h4 className="text-sm font-bold text-neutral-dark uppercase tracking-wider">Atención WhatsApp</h4>
             <p className="text-xs text-neutral-muted">
-              Haz tu pedido o consulta disponibilidad en tiempo real con nuestros charcuteros.
+              Haz tu pedido o consulta disponibilidad en tiempo real con nuestros charcuteros al {STORE_OFFICIAL_DATA.formattedPhone}.
             </p>
             <a
               className="inline-flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-xs transition-colors"
@@ -77,13 +76,13 @@ export const MainFooterSection = () => {
               target="_blank"
             >
               <span className="material-symbols-outlined text-base">chat</span>
-              <span>Escribir al WhatsApp</span>
+              <span>Escribir al {STORE_OFFICIAL_DATA.formattedPhone}</span>
             </a>
           </div>
         </div>
 
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-muted">
-          <p>© 2026 Quesería San Joaquín - Mercado &amp; Charcutería. Todos los derechos reservados.</p>
+          <p>© 2026 Quesería San Joaquín - Mercado &amp; Charcutería. Maracaibo, Zulia.</p>
           <div className="flex items-center gap-4">
             <a className="hover:text-primary transition-colors" href="#destacados">Precios &amp; BCV</a>
             <a className="hover:text-primary transition-colors" href="#destacados">Envíos y Cobertura</a>

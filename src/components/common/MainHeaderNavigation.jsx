@@ -43,7 +43,7 @@ export const MainHeaderNavigation = ({
     }
   }, [isMobileMenuDrawerOpen]);
 
-  const configuredPhoneNumber = import.meta.env.VITE_WHATSAPP_PHONE_NUMBER || '584147675878';
+  const configuredPhoneNumber = import.meta.env.VITE_WHATSAPP_PHONE_NUMBER || '584146770016';
   const cleanDestinationNumber = configuredPhoneNumber.replace(/[^\d]/g, '');
   const directWhatsAppHelpUrl = `https://wa.me/${cleanDestinationNumber}?text=${encodeURIComponent('Hola Quesería San Joaquín! Necesito asistencia con un pedido.')}`;
 

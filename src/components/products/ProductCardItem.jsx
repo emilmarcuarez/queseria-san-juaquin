@@ -108,6 +108,12 @@ export const ProductCardItem = ({ productItem, onSelectProduct }) => {
 
       <div className="mt-auto pt-2.5 border-t border-neutral-100 flex flex-col gap-2">
         <div>
+          {productItem.productPriceUnit === 'kg' && (
+            <div className="mb-1 flex items-center gap-1 text-[10px] font-extrabold text-emerald-800">
+              <span className="material-symbols-outlined text-[12px]">scale</span>
+              <span>Porciones: 250g • 500g • 1 Kg</span>
+            </div>
+          )}
           <div className="text-base sm:text-lg font-black text-neutral-900 leading-tight">
             ${productItem.productPriceUsd.toFixed(2)}{' '}
             <span className="text-[10px] sm:text-xs font-normal text-neutral-400">

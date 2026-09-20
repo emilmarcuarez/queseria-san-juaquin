@@ -61,6 +61,7 @@ export const CartToastNotification = () => {
 
             <h4 className="text-xs font-bold text-neutral-900 truncate mt-0.5">
               {activeToastNotification.productTitle}
+              {activeToastNotification.portionLabel ? ` (${activeToastNotification.portionLabel})` : ''}
             </h4>
 
             <div className="flex items-center gap-2 mt-1.5">
