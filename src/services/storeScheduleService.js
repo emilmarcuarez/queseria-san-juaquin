@@ -17,31 +17,29 @@ export const STORE_OFFICIAL_DATA = {
 
 export const getStoreCurrentScheduleStatus = () => {
   try {
-    const vzlaDateString = new Date().toLocaleString('en-US', {
+    const venezuelaDateString = new Date().toLocaleString('en-US', {
       timeZone: 'America/Caracas'
     });
-    const nowInVzla = new Date(vzlaDateString);
+    const currentDateInVenezuela = new Date(venezuelaDateString);
 
-    const dayOfWeek = nowInVzla.getDay(); // 0 = Domingo, 1 = Lunes, ..., 6 = Sábado
-    const currentHour = nowInVzla.getHours();
-    const currentMinute = nowInVzla.getMinutes();
+    const dayOfWeek = currentDateInVenezuela.getDay();
+    const currentHour = currentDateInVenezuela.getHours();
+    const currentMinute = currentDateInVenezuela.getMinutes();
     const currentTotalMinutes = currentHour * 60 + currentMinute;
 
-    const weekdayOpenMinutes = 7 * 60; // 7:00 AM
-    const weekdayCloseMinutes = 19 * 60; // 7:00 PM
-    const saturdayCloseMinutes = 18 * 60; // 6:00 PM
+    const weekdayOpenMinutes = 7 * 60;
+    const weekdayCloseMinutes = 19 * 60;
+    const saturdayCloseMinutes = 18 * 60;
 
     let isOpen = false;
     let closingTimeText = '';
 
     if (dayOfWeek >= 1 && dayOfWeek <= 5) {
-      // Lunes a Viernes
       if (currentTotalMinutes >= weekdayOpenMinutes && currentTotalMinutes < weekdayCloseMinutes) {
         isOpen = true;
         closingTimeText = '7:00 PM';
       }
     } else if (dayOfWeek === 6) {
-      // Sábado
       if (currentTotalMinutes >= weekdayOpenMinutes && currentTotalMinutes < saturdayCloseMinutes) {
         isOpen = true;
         closingTimeText = '6:00 PM';
@@ -53,7 +51,7 @@ export const getStoreCurrentScheduleStatus = () => {
         isOpen: true,
         statusBadgeText: 'Abierto Ahora',
         statusDetailText: `Atendiendo despachos hasta las ${closingTimeText}`,
-        accentColorClass: 'text-emerald-500',
+        accentColorClass: 'text-emerald-400',
         badgeBgClass: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40',
         dotPulseClass: 'bg-emerald-400'
       };
@@ -76,12 +74,12 @@ export const getStoreCurrentScheduleStatus = () => {
       badgeBgClass: 'bg-amber-500/20 text-amber-300 border-amber-500/40',
       dotPulseClass: 'bg-amber-400'
     };
-  } catch (error) {
+  } catch (scheduleCalculationError) {
     return {
       isOpen: true,
       statusBadgeText: 'Abierto',
       statusDetailText: 'Lun a Vie: 7:00 AM - 7:00 PM | Sáb: 7:00 AM - 6:00 PM',
-      accentColorClass: 'text-emerald-500',
+      accentColorClass: 'text-emerald-400',
       badgeBgClass: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40',
       dotPulseClass: 'bg-emerald-400'
     };

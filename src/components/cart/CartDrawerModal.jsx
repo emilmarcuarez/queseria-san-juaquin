@@ -187,7 +187,6 @@ export const CartDrawerModal = () => {
                     </button>
                   </div>
 
-                  {/* Campos según modalidad */}
                   {fulfillmentType === 'delivery' ? (
                     <div className="space-y-3 p-3 bg-emerald-50/50 border border-emerald-100 rounded-xl">
                       <div>
@@ -196,7 +195,7 @@ export const CartDrawerModal = () => {
                         </label>
                         <select
                           value={selectedZoneId}
-                          onChange={(e) => setSelectedZoneId(e.target.value)}
+                          onChange={(changeEvent) => setSelectedZoneId(changeEvent.target.value)}
                           className="w-full text-xs font-medium bg-white border border-neutral-300 rounded-lg px-2.5 py-2 text-neutral-800 focus:outline-none focus:ring-1 focus:ring-primary"
                         >
                           {MARACAIBO_DELIVERY_ZONES.map((zone) => (
@@ -216,15 +215,15 @@ export const CartDrawerModal = () => {
                           required
                           placeholder="Ej: Av. 5 de Julio, Res. Paraíso, Apto 4B"
                           value={deliveryAddressText}
-                          onChange={(e) => setDeliveryAddressText(e.target.value)}
+                          onChange={(changeEvent) => setDeliveryAddressText(changeEvent.target.value)}
                           className="w-full text-xs bg-white border border-neutral-300 rounded-lg px-3 py-2 text-neutral-dark focus:outline-none focus:ring-1 focus:ring-primary"
                         />
                       </div>
                     </div>
                   ) : (
-                    <div className="space-y-3 p-3 bg-amber-50/70 border border-amber-200/70 rounded-xl">
-                      <div className="flex items-start gap-2 text-amber-900">
-                        <span className="material-symbols-outlined text-lg text-amber-700 mt-0.5 shrink-0">location_on</span>
+                    <div className="space-y-3 p-3 bg-emerald-50/60 border border-emerald-200/80 rounded-xl">
+                      <div className="flex items-start gap-2 text-emerald-950">
+                        <span className="material-symbols-outlined text-lg text-emerald-700 mt-0.5 shrink-0">location_on</span>
                         <div className="text-xs">
                           <strong className="font-bold block text-neutral-900">Sede de Retiro (Gratis):</strong>
                           <span className="text-neutral-700 leading-tight block">
@@ -242,7 +241,7 @@ export const CartDrawerModal = () => {
                         </label>
                         <select
                           value={pickupEstimatedTime}
-                          onChange={(e) => setPickupEstimatedTime(e.target.value)}
+                          onChange={(changeEvent) => setPickupEstimatedTime(changeEvent.target.value)}
                           className="w-full text-xs font-medium bg-white border border-neutral-300 rounded-lg px-2.5 py-2 text-neutral-800 focus:outline-none focus:ring-1 focus:ring-primary"
                         >
                           {PICKUP_TIME_SLOTS.map((slot) => (

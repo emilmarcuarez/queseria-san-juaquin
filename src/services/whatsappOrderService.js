@@ -42,12 +42,12 @@ export const buildWhatsAppOrderUrl = ({
 
   const orderLinesText = cartItemList.map((cartEntryItem) => {
     const itemSubtotalUsd = (cartEntryItem.productPriceUsd * cartEntryItem.selectedQuantity).toFixed(2);
-    const portionPart = cartEntryItem.portionLabel ? ` [${cartEntryItem.portionLabel}]` : '';
-    const cutPart = cartEntryItem.selectedCut ? `\n   ↳ 🔪 Corte: ${cartEntryItem.selectedCut}` : '';
+    const portionPart = cartEntryItem.portionLabel ? ` (${cartEntryItem.portionLabel})` : '';
+    const cutPart = cartEntryItem.selectedCut ? `\n  Corte: ${cartEntryItem.selectedCut}` : '';
     const itemNoteText = cartEntryItem.customItemNote && cartEntryItem.customItemNote.trim()
-      ? `\n   ↳ 📝 Nota: ${cartEntryItem.customItemNote.trim()}`
+      ? `\n  Nota: ${cartEntryItem.customItemNote.trim()}`
       : '';
-    return `• ${cartEntryItem.selectedQuantity}x ${cartEntryItem.productTitle}${portionPart} ($${itemSubtotalUsd})${cutPart}${itemNoteText}`;
+    return `• ${cartEntryItem.selectedQuantity}x ${cartEntryItem.productTitle}${portionPart} - $${itemSubtotalUsd}${cutPart}${itemNoteText}`;
   }).join('\n');
 
   const customerDetailSection = customerFullName && customerFullName.trim()
@@ -57,23 +57,23 @@ export const buildWhatsAppOrderUrl = ({
   let fulfillmentSection = '';
   if (fulfillmentType === 'pickup') {
     fulfillmentSection = [
-      '*MODALIDAD DE ENTREGA:* 🏪 Retiro en Tienda (Pick-up) • ¡Gratis!',
-      '*Sede de Retiro:* Av. 10 con Calle 66, al lado de Ame-Zulia, Maracaibo',
-      `*Hora Estimada de Retiro:* ${pickupEstimatedTime || 'En 30 - 45 minutos'}`
+      '*Modalidad:* Retiro en Sede (Pick-up)',
+      '*Sede:* Av. 10 con Calle 66, Maracaibo',
+      `*Hora estimada:* ${pickupEstimatedTime || 'En 30 - 45 minutos'}`
     ].join('\n');
   } else {
     fulfillmentSection = [
-      '*MODALIDAD DE ENTREGA:* 🛵 Delivery a Domicilio',
-      selectedZone ? `*Zona / Parroquia:* ${selectedZone.zoneName} (+$${appliedDeliveryCost.toFixed(2)})` : '',
-      deliveryAddressText && deliveryAddressText.trim() ? `*Dirección de Entrega:* ${deliveryAddressText.trim()}` : ''
+      '*Modalidad:* Delivery a Domicilio',
+      selectedZone ? `*Zona:* ${selectedZone.zoneName}` : '',
+      deliveryAddressText && deliveryAddressText.trim() ? `*Dirección:* ${deliveryAddressText.trim()}` : ''
     ].filter(Boolean).join('\n');
   }
 
   const paymentDetailSection = selectedPaymentMethod && selectedPaymentMethod.trim()
-    ? `*Método de Pago:* ${selectedPaymentMethod.trim()}`
+    ? `*Método de pago:* ${selectedPaymentMethod.trim()}`
     : '';
   const notesDetailSection = orderNotesText && orderNotesText.trim()
-    ? `*Instrucciones Generales:* ${orderNotesText.trim()}`
+    ? `*Instrucciones:* ${orderNotesText.trim()}`
     : '';
 
   const orderMetadataDetails = [
@@ -85,23 +85,24 @@ export const buildWhatsAppOrderUrl = ({
 
   const breakdownSection = fulfillmentType === 'delivery' && appliedDeliveryCost > 0
     ? [
-        `*Subtotal Productos:* $${totalProductsUsd.toFixed(2)}`,
-        `*Costo de Envío:* $${appliedDeliveryCost.toFixed(2)}`
+        `*Subtotal:* $${totalProductsUsd.toFixed(2)}`,
+        `*Delivery:* $${appliedDeliveryCost.toFixed(2)}`
       ]
     : [];
 
   const fullOrderMessage = [
-    '🧀 *PEDIDO QUESERÍA SAN JOAQUÍN*',
-    'Mercado & Charcutería Fresca',
-    ...(orderMetadataDetails.length > 0 ? ['----------------------------------', ...orderMetadataDetails] : []),
-    '----------------------------------',
-    '*PRODUCTOS SOLICITADOS:*',
+    '*QUESERÍA SAN JOAQUÍN*',
+    'Solicitud de Pedido',
+    '',
+    ...orderMetadataDetails,
+    '',
+    '*Detalle de Productos:*',
     orderLinesText,
-    '----------------------------------',
+    '',
     ...breakdownSection,
-    `*TOTAL USD:* $${finalTotalUsd.toFixed(2)}`,
-    `*TOTAL BCV:* Bs. ${finalTotalBcv.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} (Tasa: Bs. ${exchangeRateBcv.toFixed(2)})`
-  ].join('\n');
+    `*Total USD:* $${finalTotalUsd.toFixed(2)}`,
+    `*Total Ref. BCV:* Bs. ${finalTotalBcv.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} (Tasa: Bs. ${exchangeRateBcv.toFixed(2)})`
+  ].filter(messageLine => messageLine !== null).join('\n');
 
   return `https://wa.me/${cleanDestinationNumber}?text=${encodeURIComponent(fullOrderMessage)}`;
 };
