@@ -113,6 +113,11 @@ export const ShoppingCartProvider = ({ children }) => {
 
     if (originCoordinates && typeof originCoordinates.coordinateX === 'number') {
       const animationUniqueKey = `${Date.now()}_${Math.random()}`;
+      const calculatedBcvEquivalent = (productItem.productPriceUsd * exchangeRateBcv).toLocaleString('es-VE', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+
       const newFlyingItem = {
         uniqueKey: animationUniqueKey,
         productTitle: productItem.productTitle,
@@ -120,6 +125,10 @@ export const ShoppingCartProvider = ({ children }) => {
         productPriceUsd: productItem.productPriceUsd,
         productPriceUnit: productItem.productPriceUnit,
         productCategoryName: productItem.productCategoryName,
+        productDescription: productItem.productDescription,
+        promotionalBadgeText: productItem.promotionalBadgeText,
+        promotionalBadgeStyle: productItem.promotionalBadgeStyle,
+        priceBcvEquivalent: calculatedBcvEquivalent,
         startingX: originCoordinates.coordinateX,
         startingY: originCoordinates.coordinateY,
         cardStartX: originCoordinates.cardStartX || originCoordinates.coordinateX - 80,
