@@ -1,0 +1,524 @@
+[
+  {
+    "productIdentifier": "queso-blanco-llanero-1kg",
+    "productTitle": "Queso Blanco Llanero Especial (1 Kg)",
+    "productCategoryName": "Quesería & Lácteos",
+    "departmentIdentifier": "quesos-lacteos",
+    "productDescription": "Punto óptimo de sal, consistencia ideal para rallar fresco sobre arepas, empanadas, plátano asado y pabellón criollo.",
+    "productPriceUsd": 6.40,
+    "productPriceUnit": "kg",
+    "promotionalBadgeText": "Más Vendido",
+    "promotionalBadgeStyle": "bright",
+    "productImage": "/images/cheese-category-dairy.jpg",
+    "isFeaturedProduct": true,
+    "availableCutOptions": [
+      "En Trozo",
+      "Rallado Grueso",
+      "Rallado Fino"
+    ]
+  },
+  {
+    "productIdentifier": "queso-paisa-pasteurizado-1kg",
+    "productTitle": "Queso Blanco Pasteurizado Paisa (1 Kg)",
+    "productCategoryName": "Quesería & Lácteos",
+    "departmentIdentifier": "quesos-lacteos",
+    "productDescription": "El tradicional queso blanco pasteurizado marca Paisa de Venezuela, textura suave, fresco y con bajo contenido de sal.",
+    "productPriceUsd": 7.20,
+    "productPriceUnit": "kg",
+    "promotionalBadgeText": "Marca Oficial",
+    "promotionalBadgeStyle": "primary",
+    "productImage": "/images/queso-paisa-pasteurizado.jpg",
+    "isFeaturedProduct": true,
+    "availableCutOptions": [
+      "En Barra Entera",
+      "Rebanado Fino",
+      "Rebanado Estándar"
+    ]
+  },
+  {
+    "productIdentifier": "queso-palmizul-zuliano-1kg",
+    "productTitle": "Queso Palmizul Zuliano Tipo Palmita (1 Kg)",
+    "productCategoryName": "Quesería & Lácteos",
+    "departmentIdentifier": "quesos-lacteos",
+    "productDescription": "Auténtico queso zuliano artesanal con sus característicos agujeritos y jugoso suero natural. Perfecto para mandocas y arepas.",
+    "productPriceUsd": 6.80,
+    "productPriceUnit": "kg",
+    "promotionalBadgeText": "Tradición Zuliana",
+    "promotionalBadgeStyle": "accent",
+    "productImage": "/images/queso-palmizul-zuliano.jpg",
+    "isFeaturedProduct": true,
+    "availableCutOptions": [
+      "En Trozo con Suero",
+      "Rebanado Grueso"
+    ]
+  },
+  {
+    "productIdentifier": "queso-de-mano-fresco-pack",
+    "productTitle": "Queso de Mano en Suero (Ruedas Pack 4 Unid)",
+    "productCategoryName": "Quesería & Lácteos",
+    "departmentIdentifier": "quesos-lacteos",
+    "productDescription": "Elaborado artesanalmente del día, textura elástica y jugosa inmejorable para derretir sobre cachapas de maíz y arepas.",
+    "productPriceUsd": 5.80,
+    "productPriceUnit": "pack",
+    "promotionalBadgeText": "Fresco del Día",
+    "promotionalBadgeStyle": "bright",
+    "productImage": "/images/queso-de-mano-fresco.jpg",
+    "isFeaturedProduct": true,
+    "availableCutOptions": [
+      "En Suero Limpio",
+      "Sellado al Vacío"
+    ]
+  },
+  {
+    "productIdentifier": "queso-telita-guayanes-fresco",
+    "productTitle": "Queso Telita Guayanés en Suero (500g)",
+    "productCategoryName": "Quesería & Lácteos",
+    "departmentIdentifier": "quesos-lacteos",
+    "productDescription": "Capas tiernas y elásticas sumergidas en suero pasteurizado fresco. El clásico absoluto de los desayunos criollos.",
+    "productPriceUsd": 4.90,
+    "productPriceUnit": "500g",
+    "promotionalBadgeText": "Artesanal",
+    "promotionalBadgeStyle": "primary",
+    "productImage": "/images/queso-telita-guayanes.jpg",
+    "isFeaturedProduct": false,
+    "availableCutOptions": [
+      "En Suero Pasteurizado"
+    ]
+  },
+  {
+    "productIdentifier": "queso-de-ano-curado-wedge",
+    "productTitle": "Queso de Año Curado Madurado (Cuña 350g)",
+    "productCategoryName": "Quesería & Lácteos",
+    "departmentIdentifier": "quesos-lacteos",
+    "productDescription": "Maduración prolongada con costra tradicional de pimienta negra. Sabor intenso y seco ideal para rallar sobre pastas y arepas.",
+    "productPriceUsd": 5.50,
+    "productPriceUnit": "350g",
+    "promotionalBadgeText": "Madurado",
+    "promotionalBadgeStyle": "accent",
+    "productImage": "/images/queso-de-ano-curado.jpg",
+    "isFeaturedProduct": false,
+    "availableCutOptions": [
+      "En Cuña Entera",
+      "Rallado Polvo Fino",
+      "Rallado en Virutas"
+    ]
+  },
+  {
+    "productIdentifier": "queso-parmesano-curado-250g",
+    "productTitle": "Queso Tipo Parmesano Curado (Cuña 250g)",
+    "productCategoryName": "Quesería & Lácteos",
+    "departmentIdentifier": "quesos-lacteos",
+    "productDescription": "Maduración lenta con notas tostadas y cristalinas para acompañar pastas, salsas italianas, risottos y carpaccios.",
+    "productPriceUsd": 5.90,
+    "productPriceUnit": "250g",
+    "promotionalBadgeText": "Maduración Especial",
+    "promotionalBadgeStyle": "accent",
+    "productImage": "/images/parmesan-cheese-wedge.jpg",
+    "isFeaturedProduct": false,
+    "availableCutOptions": [
+      "En Cuña / Trozo",
+      "Rallado en Virutas",
+      "Rallado Fino"
+    ]
+  },
+  {
+    "productIdentifier": "nata-criolla-venezolana-pote",
+    "productTitle": "Nata Criolla Pasteurizada San Joaquín (350g)",
+    "productCategoryName": "Quesería & Lácteos",
+    "departmentIdentifier": "quesos-lacteos",
+    "productDescription": "Espesa, cremosa y con el punto exacto de sal. El acompañamiento sagrado e infaltable para la arepa caliente recién salida del budare.",
+    "productPriceUsd": 2.90,
+    "productPriceUnit": "envase",
+    "promotionalBadgeText": "Crema Pura",
+    "promotionalBadgeStyle": "primary",
+    "productImage": "/images/nata-criolla-venezolana.jpg",
+    "isFeaturedProduct": true,
+    "availableCutOptions": [
+      "Envase Sellado 350g"
+    ]
+  },
+  {
+    "productIdentifier": "plumrose-tocineta-ahumada-lonjas",
+    "productTitle": "Tocineta Ahumada Especial Plumrose (400g)",
+    "productCategoryName": "Charcutería Selecta",
+    "departmentIdentifier": "jamones-charcuteria",
+    "productDescription": "Tocineta ahumada a la leña marca Plumrose, corte uniforme y crujiente de alta calidad para desayunos, hamburguesas y salsas.",
+    "productPriceUsd": 4.50,
+    "productPriceUnit": "400g",
+    "promotionalBadgeText": "Plumrose Oficial",
+    "promotionalBadgeStyle": "bright",
+    "productImage": "/images/plumrose-tocineta-ahumada.jpg",
+    "isFeaturedProduct": true,
+    "availableCutOptions": [
+      "Lonjas Delgadas Crujientes",
+      "Lonjas Gruesas Jugosas"
+    ]
+  },
+  {
+    "productIdentifier": "plumrose-jamon-cocido-deli",
+    "productTitle": "Jamón Cocido Superior Deli Plumrose (500g)",
+    "productCategoryName": "Charcutería Selecta",
+    "departmentIdentifier": "jamones-charcuteria",
+    "productDescription": "Jamón cocido de pierna de primera calidad Plumrose, rebanado al momento del despacho para garantizar máxima frescura y humedad.",
+    "productPriceUsd": 5.20,
+    "productPriceUnit": "500g",
+    "promotionalBadgeText": "Calidad Superior",
+    "promotionalBadgeStyle": "primary",
+    "productImage": "/images/plumrose-jamon-cocido.jpg",
+    "isFeaturedProduct": true,
+    "availableCutOptions": [
+      "Rebanado Ultrafino",
+      "Rebanado Estándar",
+      "En Trozo"
+    ]
+  },
+  {
+    "productIdentifier": "plumrose-salchichas-wieners",
+    "productTitle": "Salchichas Tipo Frankfurter Plumrose (Pack 250g)",
+    "productCategoryName": "Charcutería Selecta",
+    "departmentIdentifier": "jamones-charcuteria",
+    "productDescription": "Tradicionales salchichas wieners de Plumrose para perros calientes estilo venezolano, jugosas, tiernas y con sazón característica.",
+    "productPriceUsd": 2.60,
+    "productPriceUnit": "paquete",
+    "promotionalBadgeText": "Favorito Familiar",
+    "promotionalBadgeStyle": "accent",
+    "productImage": "/images/salchichas-plumrose-wieners.jpg",
+    "isFeaturedProduct": true,
+    "availableCutOptions": [
+      "Empaque Sellado al Vacío"
+    ]
+  },
+  {
+    "productIdentifier": "mortadela-tapara-venezolana",
+    "productTitle": "Mortadela Especial Tapara Prensada (500g)",
+    "productCategoryName": "Charcutería Selecta",
+    "departmentIdentifier": "jamones-charcuteria",
+    "productDescription": "La emblemática mortadela tapara venezolana con granos de pimienta negra entera y toque ahumado. Rebanada al gusto en tienda.",
+    "productPriceUsd": 3.40,
+    "productPriceUnit": "500g",
+    "promotionalBadgeText": "Sabor Criollo",
+    "promotionalBadgeStyle": "accent",
+    "productImage": "/images/mortadela-tapara-venezolana.jpg",
+    "isFeaturedProduct": true,
+    "availableCutOptions": [
+      "Rebanado Fino",
+      "Rebanado Grueso",
+      "En Trozo Entero"
+    ]
+  },
+  {
+    "productIdentifier": "diablitos-underwood-lata",
+    "productTitle": "Jamón Endiablado Diablitos Underwood (Lata 115g)",
+    "productCategoryName": "Charcutería Selecta",
+    "departmentIdentifier": "jamones-charcuteria",
+    "productDescription": "La mejor forma de comer jamón. El auténtico Diablitos Underwood venezolano con su lata abre fácil, perfecto para arepas y galletas.",
+    "productPriceUsd": 1.65,
+    "productPriceUnit": "lata",
+    "promotionalBadgeText": "Ícono Nacional",
+    "promotionalBadgeStyle": "bright",
+    "productImage": "/images/diablitos-underwood.jpg",
+    "isFeaturedProduct": true,
+    "availableCutOptions": [
+      "Lata Abre Fácil 115g",
+      "Pack x3 Latas"
+    ]
+  },
+  {
+    "productIdentifier": "pechuga-pavo-ahumada-hermo",
+    "productTitle": "Pechuga de Pavo Finamente Ahumada (500g)",
+    "productCategoryName": "Charcutería Selecta",
+    "departmentIdentifier": "jamones-charcuteria",
+    "productDescription": "Corte 98% libre de grasa ahumado al natural con leña selecta. Textura suave y jugosa para desayunos y cenas ligeras.",
+    "productPriceUsd": 5.80,
+    "productPriceUnit": "500g",
+    "promotionalBadgeText": "Bajo en Grasa",
+    "promotionalBadgeStyle": "primary",
+    "productImage": "/images/turkey-breast-slices.jpg",
+    "isFeaturedProduct": false,
+    "availableCutOptions": [
+      "Rebanado Finísimo",
+      "Rebanado Estándar",
+      "En Trozo"
+    ]
+  },
+  {
+    "productIdentifier": "jamon-espalda-ahumada-500g",
+    "productTitle": "Jamón de Espalda Ahumada Delicatessen (500g)",
+    "productCategoryName": "Charcutería Selecta",
+    "departmentIdentifier": "jamones-charcuteria",
+    "productDescription": "Sabor ahumado equilibrado y suave textura, excelente opción para emparedados escolares y tablas de charcutería.",
+    "productPriceUsd": 4.40,
+    "productPriceUnit": "500g",
+    "promotionalBadgeText": "Ahorro Semanal",
+    "promotionalBadgeStyle": "accent",
+    "productImage": "/images/charcuterie-ham-bacon.jpg",
+    "isFeaturedProduct": false,
+    "availableCutOptions": [
+      "Rebanado Estándar",
+      "Rebanado Fino"
+    ]
+  },
+  {
+    "productIdentifier": "harina-pan-blanca-1kg",
+    "productTitle": "Harina de Maíz Blanco Precocida P.A.N. (1 Kg)",
+    "productCategoryName": "Víveres & Despensa",
+    "departmentIdentifier": "viveres-despensa",
+    "productDescription": "La harina número uno del hogar venezolano de Empresas Polar. Maíz 100% puro para lograr arepas suaves, empanadas y hallacas.",
+    "productPriceUsd": 1.30,
+    "productPriceUnit": "kg",
+    "promotionalBadgeText": "Básico Despensa",
+    "promotionalBadgeStyle": "bright",
+    "productImage": "/images/harina-pan-blanca.jpg",
+    "isFeaturedProduct": true,
+    "availableCutOptions": [
+      "Paquete Sellado 1 Kg",
+      "Fardo de 20 Kg"
+    ]
+  },
+  {
+    "productIdentifier": "harina-pan-amarilla-1kg",
+    "productTitle": "Harina de Maíz Amarillo Precocida P.A.N. (1 Kg)",
+    "productCategoryName": "Víveres & Despensa",
+    "departmentIdentifier": "viveres-despensa",
+    "productDescription": "Harina de maíz amarillo seleccionado P.A.N. Empresas Polar, la favorita de las empanaderas venezolanas por su color dorado y crocancia.",
+    "productPriceUsd": 1.35,
+    "productPriceUnit": "kg",
+    "promotionalBadgeText": "Dorado Crocante",
+    "promotionalBadgeStyle": "accent",
+    "productImage": "/images/harina-pan-amarilla.jpg",
+    "isFeaturedProduct": true,
+    "availableCutOptions": [
+      "Paquete Sellado 1 Kg"
+    ]
+  },
+  {
+    "productIdentifier": "harina-juana-blanca-1kg",
+    "productTitle": "Harina de Maíz Blanco Harina Juana (1 Kg)",
+    "productCategoryName": "Víveres & Despensa",
+    "departmentIdentifier": "viveres-despensa",
+    "productDescription": "Tradición harinera venezolana sin gluten. Masa elástica, suave y de excelente rendimiento para todas las comidas de la familia.",
+    "productPriceUsd": 1.25,
+    "productPriceUnit": "kg",
+    "promotionalBadgeText": "Sin Gluten",
+    "promotionalBadgeStyle": "accent",
+    "productImage": "/images/harina-juana-blanca.jpg",
+    "isFeaturedProduct": true,
+    "availableCutOptions": [
+      "Paquete Sellado 1 Kg"
+    ]
+  },
+  {
+    "productIdentifier": "arroz-primor-blanco-1kg",
+    "productTitle": "Arroz Blanco Grano Entero Premium Primor (1 Kg)",
+    "productCategoryName": "Víveres & Despensa",
+    "departmentIdentifier": "viveres-despensa",
+    "productDescription": "Arroz blanco de grano entero seleccionado marca Primor. No se pega ni se empasta, cocción suelta de blancura y sabor impecable.",
+    "productPriceUsd": 1.40,
+    "productPriceUnit": "kg",
+    "promotionalBadgeText": "Grano Entero",
+    "promotionalBadgeStyle": "primary",
+    "productImage": "/images/arroz-primor-blanco.jpg",
+    "isFeaturedProduct": true,
+    "availableCutOptions": [
+      "Paquete Sellado 1 Kg"
+    ]
+  },
+  {
+    "productIdentifier": "pasta-primor-spaghetti-1kg",
+    "productTitle": "Pasta Spaghetti 100% Sémola de Trigo Primor (1 Kg)",
+    "productCategoryName": "Víveres & Despensa",
+    "departmentIdentifier": "viveres-despensa",
+    "productDescription": "Elaborada con 100% sémola de trigo duro importado. Mantiene su consistencia al dente firme y absorbe exquisitamente cualquier salsa.",
+    "productPriceUsd": 1.50,
+    "productPriceUnit": "kg",
+    "promotionalBadgeText": "Al Dente Firme",
+    "promotionalBadgeStyle": "primary",
+    "productImage": "/images/pasta-primor-spaghetti.jpg",
+    "isFeaturedProduct": true,
+    "availableCutOptions": [
+      "Paquete Sellado 1 Kg"
+    ]
+  },
+  {
+    "productIdentifier": "mayonesa-mavesa-frasco-470g",
+    "productTitle": "Mayonesa Clásica Venezolana Mavesa (Frasco 470g)",
+    "productCategoryName": "Víveres & Despensa",
+    "departmentIdentifier": "viveres-despensa",
+    "productDescription": "El inconfundible toque criollo de la Mayonesa Mavesa de Venezuela. Consistencia espesa y cremosa para ensalada de gallina y emparedados.",
+    "productPriceUsd": 2.75,
+    "productPriceUnit": "frasco",
+    "promotionalBadgeText": "Receta Original",
+    "promotionalBadgeStyle": "accent",
+    "productImage": "/images/mayonesa-mavesa.jpg",
+    "isFeaturedProduct": true,
+    "availableCutOptions": [
+      "Frasco Sellado 470g"
+    ]
+  },
+  {
+    "productIdentifier": "salsa-tomate-pampero-397g",
+    "productTitle": "Salsa de Tomate Ketchup Pampero (Botella 397g)",
+    "productCategoryName": "Víveres & Despensa",
+    "departmentIdentifier": "viveres-despensa",
+    "productDescription": "La salsa de tomate ketchup por excelencia de Venezuela. Elaborada con pulpa de tomate maduro concentrado y toque dulce de especias.",
+    "productPriceUsd": 1.85,
+    "productPriceUnit": "botella",
+    "promotionalBadgeText": "Sabor Pampero",
+    "promotionalBadgeStyle": "accent",
+    "productImage": "/images/salsa-tomate-pampero.jpg",
+    "isFeaturedProduct": false,
+    "availableCutOptions": [
+      "Botella Sellada 397g"
+    ]
+  },
+  {
+    "productIdentifier": "cafe-fama-de-america-500g",
+    "productTitle": "Café Tostado y Molido Fama de América (500g)",
+    "productCategoryName": "Víveres & Despensa",
+    "departmentIdentifier": "viveres-despensa",
+    "productDescription": "El café que despierta a Venezuela desde 1887. Tueste medio oscuro con notas achocolatadas, ideal para colar en greca o manga de tela.",
+    "productPriceUsd": 4.60,
+    "productPriceUnit": "500g",
+    "promotionalBadgeText": "Aroma Nacional",
+    "promotionalBadgeStyle": "bright",
+    "productImage": "/images/cafe-fama-de-america.jpg",
+    "isFeaturedProduct": true,
+    "availableCutOptions": [
+      "Molido Medio para Greca",
+      "Molido Fino para Cafetera"
+    ]
+  },
+  {
+    "productIdentifier": "aceite-maiz-dorado-1l",
+    "productTitle": "Aceite Puro de Maíz Dorado (Botella 1 Litro)",
+    "productCategoryName": "Víveres & Despensa",
+    "departmentIdentifier": "viveres-despensa",
+    "productDescription": "Aceite vegetal 100% puro de maíz con alta resistencia térmica para freír empanadas y tequeños sin quemarse ni dejar olores pesados.",
+    "productPriceUsd": 3.40,
+    "productPriceUnit": "litro",
+    "promotionalBadgeText": "100% Maíz",
+    "promotionalBadgeStyle": "primary",
+    "productImage": "/images/cooking-oil-bottle.jpg",
+    "isFeaturedProduct": false,
+    "availableCutOptions": [
+      "Botella Sellada 1 Litro"
+    ]
+  },
+  {
+    "productIdentifier": "margarina-mavesa-pote-1kg",
+    "productTitle": "Margarina con Sal Mavesa (Pote 1 Kg)",
+    "productCategoryName": "Panadería & Desayuno",
+    "departmentIdentifier": "panaderia-desayuno",
+    "productDescription": "La tradicional margarina de Venezuela. Deliciosa textura suave y cremosa que se derrite al instante sobre la arepa caliente recién abierta.",
+    "productPriceUsd": 3.80,
+    "productPriceUnit": "pote",
+    "promotionalBadgeText": "La Tradicional",
+    "promotionalBadgeStyle": "bright",
+    "productImage": "/images/margarina-mavesa.jpg",
+    "isFeaturedProduct": true,
+    "availableCutOptions": [
+      "Pote Familiar 1 Kg",
+      "Pote 500g"
+    ]
+  },
+  {
+    "productIdentifier": "pan-de-jamon-artesanal-tradicional",
+    "productTitle": "Pan de Jamón Artesanal San Joaquín (Pieza Grande)",
+    "productCategoryName": "Panadería & Desayuno",
+    "departmentIdentifier": "panaderia-desayuno",
+    "productDescription": "Elaborado a diario en nuestro horno con masa suave y dorada, cargado con abundante jamón ahumado, tocineta crujiente, aceitunas y pasas.",
+    "productPriceUsd": 9.50,
+    "productPriceUnit": "pieza",
+    "promotionalBadgeText": "Especial del Horno",
+    "promotionalBadgeStyle": "accent",
+    "productImage": "/images/pan-de-jamon-artesanal.jpg",
+    "isFeaturedProduct": true,
+    "availableCutOptions": [
+      "Pieza Entera Horneada",
+      "Rebanado en Bandeja"
+    ]
+  },
+  {
+    "productIdentifier": "pirulin-lata-avellana-300g",
+    "productTitle": "Pirulin Barquillos de Avellana y Cacao (Lata 300g)",
+    "productCategoryName": "Panadería & Desayuno",
+    "departmentIdentifier": "panaderia-desayuno",
+    "productDescription": "El dulce venezolano más codiciado. Finos y crujientes barquillos de oblea rellenos de abundante crema de avellana con cacao criollo.",
+    "productPriceUsd": 4.90,
+    "productPriceUnit": "lata",
+    "promotionalBadgeText": "Antojo Dulce",
+    "promotionalBadgeStyle": "bright",
+    "productImage": "/images/pirulin-lata-chocolate.jpg",
+    "isFeaturedProduct": true,
+    "availableCutOptions": [
+      "Lata Metálica 300g"
+    ]
+  },
+  {
+    "productIdentifier": "maltin-polar-botella-pack",
+    "productTitle": "Maltín Polar Sabor Original Bien Fría (Botella 287ml)",
+    "productCategoryName": "Panadería & Desayuno",
+    "departmentIdentifier": "panaderia-desayuno",
+    "productDescription": "La auténtica bebida de malta venezolana de Empresas Polar. Energizante, espumosa y servida a temperatura glaciar para tus meriendas.",
+    "productPriceUsd": 1.20,
+    "productPriceUnit": "botella",
+    "promotionalBadgeText": "Bien Helada",
+    "promotionalBadgeStyle": "accent",
+    "productImage": "/images/maltin-polar-botella.jpg",
+    "isFeaturedProduct": true,
+    "availableCutOptions": [
+      "Botella Individual Fría",
+      "Six Pack Empacado"
+    ]
+  },
+  {
+    "productIdentifier": "galletas-susy-maria-pack",
+    "productTitle": "Galletas Dulces Susy y María Puig (Combo Merienda)",
+    "productCategoryName": "Panadería & Desayuno",
+    "departmentIdentifier": "panaderia-desayuno",
+    "productDescription": "Los dos clásicos de la merienda venezolana: galletas wafer rellenas de chocolate Susy y crujientes galletas dulces redondas María Puig.",
+    "productPriceUsd": 2.10,
+    "productPriceUnit": "combo",
+    "promotionalBadgeText": "Combo Merienda",
+    "promotionalBadgeStyle": "primary",
+    "productImage": "/images/galletas-susy-maria.jpg",
+    "isFeaturedProduct": true,
+    "availableCutOptions": [
+      "Pack Combo Familiar"
+    ]
+  },
+  {
+    "productIdentifier": "pan-sandwich-artesanal-rebanado",
+    "productTitle": "Pan de Sandwich Artesanal Rústico (Hogaza Rebanada)",
+    "productCategoryName": "Panadería & Desayuno",
+    "departmentIdentifier": "panaderia-desayuno",
+    "productDescription": "Horneado del día con corteza ligeramente dorada y miga suave y resistente. El soporte perfecto para sándwiches con jamón Plumrose y queso Paisa.",
+    "productPriceUsd": 2.50,
+    "productPriceUnit": "hogaza",
+    "promotionalBadgeText": "Horneado Diario",
+    "promotionalBadgeStyle": "accent",
+    "productImage": "/images/artisan-sandwich-bread.jpg",
+    "isFeaturedProduct": false,
+    "availableCutOptions": [
+      "Rebanado Estándar",
+      "Rebanado Grueso",
+      "Pieza Entera sin Rebanar"
+    ]
+  },
+  {
+    "productIdentifier": "nata-criolla-pasteurizada-450g",
+    "productTitle": "Nata Criolla Tradicional Pasteurizada (Envase 450g)",
+    "productCategoryName": "Panadería & Desayuno",
+    "departmentIdentifier": "panaderia-desayuno",
+    "productDescription": "Delicada textura untable y suero natural equilibrado. Ideal para desayunos zulianos con arepas asadas o mandocas calientes.",
+    "productPriceUsd": 2.80,
+    "productPriceUnit": "envase",
+    "promotionalBadgeText": "Frescura Diaria",
+    "promotionalBadgeStyle": "primary",
+    "productImage": "/images/breakfast-butter-cream.jpg",
+    "isFeaturedProduct": false,
+    "availableCutOptions": [
+      "Envase Sellado 450g"
+    ]
+  }
+]

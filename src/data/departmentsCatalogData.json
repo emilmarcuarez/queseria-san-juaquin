@@ -1,0 +1,34 @@
+[
+  {
+    "departmentIdentifier": "quesos-lacteos",
+    "departmentTitle": "Quesos & Lácteos",
+    "departmentDescription": "Queso blanco llanero, telita, de mano, paisa, palmizul y natas frescas.",
+    "departmentBadge": "Fresco Diario",
+    "departmentImage": "/images/queso-palmizul-zuliano.jpg",
+    "badgeStyle": "primary"
+  },
+  {
+    "departmentIdentifier": "jamones-charcuteria",
+    "departmentTitle": "Jamones & Charcutería",
+    "departmentDescription": "Jamón cocido Plumrose, tocineta ahumada, mortadela tapara y embutidos.",
+    "departmentBadge": "Corte al Gusto",
+    "departmentImage": "/images/plumrose-tocineta-ahumada.jpg",
+    "badgeStyle": "primary"
+  },
+  {
+    "departmentIdentifier": "viveres-despensa",
+    "departmentTitle": "Víveres & Despensa",
+    "departmentDescription": "Harina P.A.N., Harina Juana, arroz Primor, pasta, mayonesa y café criollo.",
+    "departmentBadge": "Marcas Líderes",
+    "departmentImage": "/images/harina-pan-blanca.jpg",
+    "badgeStyle": "accent"
+  },
+  {
+    "departmentIdentifier": "panaderia-desayuno",
+    "departmentTitle": "Panadería & Desayuno",
+    "departmentDescription": "Margarina Mavesa, nata criolla, pan de jamón, Maltín Polar y Pirulin.",
+    "departmentBadge": "Sabor Criollo",
+    "departmentImage": "/images/margarina-mavesa.jpg",
+    "badgeStyle": "dark"
+  }
+]
