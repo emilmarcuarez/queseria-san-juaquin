@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useShoppingCart } from '../../hooks/useShoppingCart';
 import productsCatalogData from '../../data/productsCatalogData.json';
 
-const WEIGHT_FRACTIONS = [
-  { fractionKey: '250g', label: '250g (1/4 Kg)', factor: 0.25, shortLabel: '250g' },
-  { fractionKey: '500g', label: '500g (1/2 Kg)', factor: 0.50, shortLabel: '500g' },
-  { fractionKey: '1kg', label: '1 Kg (Entero)', factor: 1.00, shortLabel: '1 Kg' }
+const PRESET_WEIGHTS = [
+  { key: '250g', label: '250g (1/4 Kg)', grams: 250, factor: 0.25, shortLabel: '250g' },
+  { key: '500g', label: '500g (1/2 Kg)', grams: 500, factor: 0.50, shortLabel: '500g' },
+  { key: '1kg', label: '1 Kg (Entero)', grams: 1000, factor: 1.00, shortLabel: '1 Kg' },
+  { key: 'custom', label: 'Personalizado', grams: 350, factor: 0.35, shortLabel: 'Personalizado' }
 ];
 
 export const ProductDetailPage = ({
@@ -17,8 +18,8 @@ export const ProductDetailPage = ({
 
   const isWeightBasedProduct = productItem?.productPriceUnit?.toLowerCase() === 'kg';
 
-  const [selectedWeightFraction, setSelectedWeightFraction] = useState(WEIGHT_FRACTIONS[2]);
-  const [selectedCutOption, setSelectedCutOption] = useState(productItem?.availableCutOptions?.[0] || '');
+  const [selectedPresetKey, setSelectedPresetKey] = useState('500g');
+  const [customGramsInput, setCustomGramsInput] = useState(350);
   const [productQuantity, setProductQuantity] = useState(1);
   const [productInstructionNote, setProductInstructionNote] = useState('');
   const [addedFeedbackActive, setAddedFeedbackActive] = useState(false);
@@ -36,8 +37,8 @@ export const ProductDetailPage = ({
     setIsImageZoomModalOpen(false);
     setZoomMagnificationFactor(1);
     setPanTranslatePosition({ horizontalCoordinate: 0, verticalCoordinate: 0 });
-    setSelectedWeightFraction(WEIGHT_FRACTIONS[2]);
-    setSelectedCutOption(productItem?.availableCutOptions?.[0] || '');
+    setSelectedPresetKey('500g');
+    setCustomGramsInput(350);
   }, [productItem]);
 
   useEffect(() => {
@@ -61,8 +62,23 @@ export const ProductDetailPage = ({
   const configuredPhoneNumber = import.meta.env.VITE_WHATSAPP_PHONE_NUMBER || '584146770016';
   const cleanDestinationNumber = configuredPhoneNumber.replace(/[^\d]/g, '');
 
+  const isCustomActive = selectedPresetKey === 'custom';
+  const effectiveGrams = isCustomActive
+    ? Math.max(50, Math.min(customGramsInput || 100, 10000))
+    : (PRESET_WEIGHTS.find((p) => p.key === selectedPresetKey)?.grams || 500);
+
+  const effectiveFactor = isWeightBasedProduct ? effectiveGrams / 1000 : 1;
+
+  const portionLabel = isWeightBasedProduct
+    ? (isCustomActive
+        ? (effectiveGrams >= 1000 ? `${(effectiveGrams / 1000).toFixed(2)} Kg (Personalizado)` : `${effectiveGrams}g (Personalizado)`)
+        : (PRESET_WEIGHTS.find((p) => p.key === selectedPresetKey)?.label || `${effectiveGrams}g`))
+    : '';
+
+  const fractionKey = isCustomActive ? `custom_${effectiveGrams}g` : selectedPresetKey;
+
   const effectiveUnitPriceUsd = isWeightBasedProduct
-    ? productItem.productPriceUsd * selectedWeightFraction.factor
+    ? productItem.productPriceUsd * effectiveFactor
     : productItem.productPriceUsd;
 
   const priceBcvEquivalent = (effectiveUnitPriceUsd * exchangeRateBcv).toLocaleString('es-VE', {
@@ -84,6 +100,14 @@ export const ProductDetailPage = ({
     setProductQuantity((previousQuantity) => (previousQuantity > 1 ? previousQuantity - 1 : 1));
   };
 
+  const handleDecreaseCustomGrams = () => {
+    setCustomGramsInput((prev) => Math.max(50, (prev || 350) - 50));
+  };
+
+  const handleIncreaseCustomGrams = () => {
+    setCustomGramsInput((prev) => Math.min(10000, (prev || 350) + 50));
+  };
+
   const handleAddToCart = (clickEvent) => {
     const buttonBoundingRect = clickEvent?.currentTarget?.getBoundingClientRect();
     const originCoordinates = buttonBoundingRect ? {
@@ -95,6 +119,13 @@ export const ProductDetailPage = ({
       cardHeight: 280
     } : null;
 
+    const weightFraction = isWeightBasedProduct ? {
+      fractionKey,
+      label: portionLabel,
+      factor: effectiveFactor,
+      grams: effectiveGrams
+    } : null;
+
     addProductToCart(
       productItem,
       productQuantity,
@@ -102,8 +133,7 @@ export const ProductDetailPage = ({
       originCoordinates,
       productInstructionNote,
       {
-        weightFraction: isWeightBasedProduct ? selectedWeightFraction : null,
-        selectedCut: selectedCutOption
+        weightFraction
       }
     );
 
@@ -180,11 +210,10 @@ export const ProductDetailPage = ({
     setIsDraggingImage(false);
   };
 
-  const portionDesc = isWeightBasedProduct ? ` [${selectedWeightFraction.label}]` : '';
-  const cutDesc = selectedCutOption ? ` (Corte: ${selectedCutOption})` : '';
+  const portionDesc = isWeightBasedProduct ? ` [${portionLabel}]` : '';
   const formattedNoteSuffix = productInstructionNote.trim() ? ` (Nota: ${productInstructionNote.trim()})` : '';
   const directProductWhatsAppUrl = `https://wa.me/${cleanDestinationNumber}?text=${encodeURIComponent(
-    `Hola Quesería San Joaquín! Quisiera ordenar: ${productQuantity}x ${productItem.productTitle}${portionDesc}${cutDesc}${formattedNoteSuffix}. Total: $${totalCalculatedUsd} (Bs. ${totalCalculatedBcv}).`
+    `Hola Quesería San Joaquín! Quisiera ordenar: ${productQuantity}x ${productItem.productTitle}${portionDesc}${formattedNoteSuffix}. Total: $${totalCalculatedUsd} (Bs. ${totalCalculatedBcv}).`
   )}`;
 
   const relatedProductsList = productsCatalogData
@@ -286,7 +315,7 @@ export const ProductDetailPage = ({
             <div className="p-4 rounded-2xl bg-surface-alt border border-neutral-border flex items-center justify-between gap-4">
               <div>
                 <span className="text-[11px] text-neutral-muted uppercase font-bold block">
-                  {isWeightBasedProduct ? `Precio por ${selectedWeightFraction.shortLabel}` : `Precio por ${productItem.productPriceUnit}`}
+                  {isWeightBasedProduct ? `Precio por ${portionLabel}` : `Precio por ${productItem.productPriceUnit}`}
                 </span>
                 <div className="text-2xl sm:text-3xl font-black text-neutral-dark leading-tight">
                   ${effectiveUnitPriceUsd.toFixed(2)}{' '}
@@ -302,78 +331,116 @@ export const ProductDetailPage = ({
               </div>
             </div>
 
-            {/* Selector de Peso Fraccionado (250g / 500g / 1 Kg) */}
+            {/* Selector de Peso Fraccionado + Personalizado */}
             {isWeightBasedProduct && (
-              <div className="space-y-2 p-3.5 bg-emerald-50/40 border border-emerald-100 rounded-2xl">
+              <div className="space-y-3 p-4 bg-emerald-50/50 border border-emerald-200/80 rounded-2xl">
                 <div className="flex items-center justify-between">
-                  <label className="text-xs font-extrabold text-neutral-dark uppercase tracking-wider flex items-center gap-1.5">
+                  <label className="text-xs font-black text-neutral-dark uppercase tracking-wider flex items-center gap-1.5">
                     <span className="material-symbols-outlined text-base text-primary">scale</span>
-                    <span>Porción o Peso Deseado:</span>
+                    <span>Elige tu Porción o Personaliza:</span>
                   </label>
-                  <span className="text-xs font-black text-primary">{selectedWeightFraction.label}</span>
+                  <span className="text-xs font-black text-primary">{portionLabel}</span>
                 </div>
 
-                <div className="grid grid-cols-3 gap-2">
-                  {WEIGHT_FRACTIONS.map((fraction) => {
-                    const isSelected = selectedWeightFraction.fractionKey === fraction.fractionKey;
-                    const fractionPrice = (productItem.productPriceUsd * fraction.factor).toFixed(2);
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                  {PRESET_WEIGHTS.map((preset) => {
+                    const isSelected = selectedPresetKey === preset.key;
+                    const presetPrice = preset.key === 'custom'
+                      ? null
+                      : (productItem.productPriceUsd * preset.factor).toFixed(2);
+
                     return (
                       <button
-                        key={fraction.fractionKey}
+                        key={preset.key}
                         type="button"
-                        onClick={() => setSelectedWeightFraction(fraction)}
-                        className={`py-2 px-2 rounded-xl border text-center transition-all cursor-pointer ${
+                        onClick={() => setSelectedPresetKey(preset.key)}
+                        className={`py-2.5 px-2 rounded-xl border text-center transition-all cursor-pointer flex flex-col items-center justify-center gap-0.5 ${
                           isSelected
-                            ? 'bg-primary text-white border-primary shadow-xs ring-2 ring-primary/20'
+                            ? 'bg-primary text-white border-primary shadow-xs ring-2 ring-primary/20 scale-[1.02]'
                             : 'bg-white text-neutral-700 border-neutral-200 hover:border-primary/50 hover:bg-neutral-50'
                         }`}
                       >
-                        <span className="block text-xs font-black">{fraction.shortLabel}</span>
-                        <span className={`block text-[10px] mt-0.5 font-semibold ${isSelected ? 'text-white/80' : 'text-neutral-500'}`}>
-                          ${fractionPrice}
-                        </span>
+                        <span className="block text-xs font-black leading-tight">{preset.shortLabel}</span>
+                        {presetPrice ? (
+                          <span className={`block text-[10px] mt-0.5 font-semibold ${isSelected ? 'text-white/80' : 'text-neutral-500'}`}>
+                            ${presetPrice}
+                          </span>
+                        ) : (
+                          <span className={`block text-[10px] mt-0.5 font-semibold ${isSelected ? 'text-amber-300' : 'text-primary'}`}>
+                            Al gramo
+                          </span>
+                        )}
                       </button>
                     );
                   })}
                 </div>
-              </div>
-            )}
 
-            {/* Selector de Opciones de Corte (availableCutOptions) */}
-            {productItem.availableCutOptions && productItem.availableCutOptions.length > 0 && (
-              <div className="space-y-2 p-3.5 bg-amber-50/40 border border-amber-100 rounded-2xl">
-                <div className="flex items-center justify-between">
-                  <label className="text-xs font-extrabold text-neutral-dark uppercase tracking-wider flex items-center gap-1.5">
-                    <span className="material-symbols-outlined text-base text-amber-700">content_cut</span>
-                    <span>Corte o Presentación al Gusto:</span>
-                  </label>
-                  <span className="text-xs font-black text-amber-900">{selectedCutOption || 'Estándar'}</span>
-                </div>
+                {/* Input para gramos personalizados */}
+                {isCustomActive && (
+                  <div className="p-3 bg-white border border-emerald-300 rounded-xl space-y-2 animate-fadeIn">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="font-black text-emerald-950">Escribe los gramos que deseas:</span>
+                      <span className="font-extrabold text-emerald-700">
+                        {effectiveGrams >= 1000 ? `${(effectiveGrams / 1000).toFixed(2)} Kg` : `${effectiveGrams}g`}
+                      </span>
+                    </div>
 
-                <div className="flex flex-wrap gap-2">
-                  {productItem.availableCutOptions.map((cutOption) => {
-                    const isCutSelected = selectedCutOption === cutOption;
-                    return (
+                    <div className="flex items-center gap-2">
                       <button
-                        key={cutOption}
                         type="button"
-                        onClick={() => setSelectedCutOption(cutOption)}
-                        className={`px-3 py-1.5 rounded-lg text-xs font-bold border transition-all cursor-pointer flex items-center gap-1.5 ${
-                          isCutSelected
-                            ? 'bg-amber-600 text-white border-amber-600 shadow-xs'
-                            : 'bg-white text-neutral-700 border-neutral-200 hover:border-amber-400 hover:bg-amber-50/40'
-                        }`}
+                        onClick={handleDecreaseCustomGrams}
+                        className="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 font-bold hover:bg-emerald-100 flex items-center justify-center cursor-pointer transition-colors shadow-2xs"
                       >
-                        {isCutSelected && <span className="material-symbols-outlined text-sm">check</span>}
-                        <span>{cutOption}</span>
+                        -50g
                       </button>
-                    );
-                  })}
-                </div>
+
+                      <div className="flex-1 relative">
+                        <input
+                          type="number"
+                          min="50"
+                          max="10000"
+                          step="10"
+                          value={customGramsInput}
+                          onChange={(e) => {
+                            const val = parseInt(e.target.value, 10);
+                            setCustomGramsInput(isNaN(val) ? '' : val);
+                          }}
+                          className="w-full bg-surface-alt border-2 border-emerald-400 rounded-xl py-2 px-3 text-center text-sm font-black text-neutral-900 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                          placeholder="350"
+                        />
+                        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-neutral-400 pointer-events-none">
+                          gramos
+                        </span>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={handleIncreaseCustomGrams}
+                        className="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 font-bold hover:bg-emerald-100 flex items-center justify-center cursor-pointer transition-colors shadow-2xs"
+                      >
+                        +50g
+                      </button>
+                    </div>
+
+                    {/* Botones de acceso rápido */}
+                    <div className="flex items-center justify-center gap-1.5 flex-wrap pt-1">
+                      {[150, 300, 350, 400, 750, 1500].map((quickGrams) => (
+                        <button
+                          key={quickGrams}
+                          type="button"
+                          onClick={() => setCustomGramsInput(quickGrams)}
+                          className="px-2 py-0.5 rounded-md bg-emerald-50 border border-emerald-200 text-[10px] font-bold text-emerald-900 hover:bg-emerald-100 cursor-pointer"
+                        >
+                          {quickGrams >= 1000 ? `${quickGrams / 1000}kg` : `${quickGrams}g`}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             )}
 
-            {/* Selector de Cantidad */}
+            {/* Selector de Cantidad de Paquetes */}
             <div className="space-y-2">
               <label className="block text-xs font-extrabold text-neutral-dark uppercase tracking-wider">
                 Cantidad a pedir:
