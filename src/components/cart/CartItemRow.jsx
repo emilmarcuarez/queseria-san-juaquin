@@ -72,20 +72,15 @@ export const CartItemRow = ({ cartItemEntry }) => {
               {cartItemEntry.productTitle}
             </h4>
 
-            {/* Badges de Porción y Corte */}
-            <div className="flex flex-wrap items-center gap-1.5 mt-1">
-              {cartItemEntry.portionLabel && (
-                <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-extrabold bg-primary/10 text-primary border border-primary/20">
-                  {cartItemEntry.portionLabel}
+            {/* Badge de Peso / Porción */}
+            {cartItemEntry.portionLabel && (
+              <div className="mt-1">
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10.5px] font-black bg-emerald-50 text-emerald-800 border border-emerald-200">
+                  <span className="material-symbols-outlined text-[12px]">scale</span>
+                  <span>Peso: {cartItemEntry.portionLabel}</span>
                 </span>
-              )}
-              {cartItemEntry.selectedCut && (
-                <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-amber-50 text-amber-800 border border-amber-200">
-                  <span className="material-symbols-outlined text-[11px]">content_cut</span>
-                  <span>{cartItemEntry.selectedCut}</span>
-                </span>
-              )}
-            </div>
+              </div>
+            )}
 
             <div className="flex items-center gap-2 mt-1">
               <span className="text-xs font-black text-neutral-dark">

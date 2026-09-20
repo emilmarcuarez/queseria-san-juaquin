@@ -85,11 +85,9 @@ export const ShoppingCartProvider = ({ children }) => {
 
     const sanitizedNote = typeof itemCustomNote === 'string' ? itemCustomNote.trim() : '';
     const weightFraction = customOptions?.weightFraction || null;
-    const selectedCut = customOptions?.selectedCut || '';
 
     const fractionKey = weightFraction ? weightFraction.fractionKey : 'std';
-    const cutKey = selectedCut ? selectedCut.replace(/\s+/g, '-').toLowerCase() : 'std';
-    const itemCartKey = `${productItem.productIdentifier}__${fractionKey}__${cutKey}`;
+    const itemCartKey = `${productItem.productIdentifier}__${fractionKey}`;
 
     const effectiveFactor = weightFraction?.factor || 1;
     const effectivePriceUsd = productItem.productPriceUsd * effectiveFactor;
@@ -120,7 +118,6 @@ export const ShoppingCartProvider = ({ children }) => {
         productPriceUsd: effectivePriceUsd,
         basePriceUsd: productItem.productPriceUsd,
         portionLabel: portionLabel,
-        selectedCut: selectedCut,
         productPriceUnit: productItem.productPriceUnit,
         productImage: productItem.productImage,
         selectedQuantity: quantityToAdd,

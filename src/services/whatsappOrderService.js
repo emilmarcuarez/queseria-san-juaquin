@@ -42,12 +42,11 @@ export const buildWhatsAppOrderUrl = ({
 
   const orderLinesText = cartItemList.map((cartEntryItem) => {
     const itemSubtotalUsd = (cartEntryItem.productPriceUsd * cartEntryItem.selectedQuantity).toFixed(2);
-    const portionPart = cartEntryItem.portionLabel ? ` (${cartEntryItem.portionLabel})` : '';
-    const cutPart = cartEntryItem.selectedCut ? `\n  Corte: ${cartEntryItem.selectedCut}` : '';
+    const portionPart = cartEntryItem.portionLabel ? ` [${cartEntryItem.portionLabel}]` : '';
     const itemNoteText = cartEntryItem.customItemNote && cartEntryItem.customItemNote.trim()
       ? `\n  Nota: ${cartEntryItem.customItemNote.trim()}`
       : '';
-    return `• ${cartEntryItem.selectedQuantity}x ${cartEntryItem.productTitle}${portionPart} - $${itemSubtotalUsd}${cutPart}${itemNoteText}`;
+    return `• ${cartEntryItem.selectedQuantity}x ${cartEntryItem.productTitle}${portionPart} ($${itemSubtotalUsd})${itemNoteText}`;
   }).join('\n');
 
   const customerDetailSection = customerFullName && customerFullName.trim()
@@ -85,9 +84,9 @@ export const buildWhatsAppOrderUrl = ({
 
   const breakdownSection = fulfillmentType === 'delivery' && appliedDeliveryCost > 0
     ? [
-        `*Subtotal:* $${totalProductsUsd.toFixed(2)}`,
-        `*Delivery:* $${appliedDeliveryCost.toFixed(2)}`
-      ]
+      `*Subtotal:* $${totalProductsUsd.toFixed(2)}`,
+      `*Delivery:* $${appliedDeliveryCost.toFixed(2)}`
+    ]
     : [];
 
   const fullOrderMessage = [
