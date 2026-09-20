@@ -133,14 +133,14 @@ export const ShoppingCartProvider = ({ children }) => {
         setIsCartBumpingActive(true);
         setTimeout(() => {
           setIsCartBumpingActive(false);
-        }, 360);
-      }, 370);
+        }, 400);
+      }, 530);
 
       setTimeout(() => {
         setFlyingCartAnimationList((previousList) => {
           return previousList.filter((flyingItem) => flyingItem.uniqueKey !== animationUniqueKey);
         });
-      }, 460);
+      }, 620);
     } else {
       setIsCartBumpingActive(true);
       setTimeout(() => {
