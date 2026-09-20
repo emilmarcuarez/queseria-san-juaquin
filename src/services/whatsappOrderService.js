@@ -41,9 +41,7 @@ export const buildWhatsAppOrderUrl = ({
     orderLinesText,
     '----------------------------------',
     `*TOTAL USD:* $${totalAmountUsd.toFixed(2)}`,
-    `*TOTAL BCV:* Bs. ${totalAmountBcv.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} (Tasa: Bs. ${exchangeRateBcv.toFixed(2)})`,
-    '----------------------------------',
-    'Por favor confirmar recepción y pesaje exacto para el despacho. ¡Muchas gracias!'
+    `*TOTAL BCV:* Bs. ${totalAmountBcv.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} (Tasa: Bs. ${exchangeRateBcv.toFixed(2)})`
   ].filter(Boolean).join('\n');
 
   return `https://wa.me/${cleanDestinationNumber}?text=${encodeURIComponent(fullOrderMessage)}`;
