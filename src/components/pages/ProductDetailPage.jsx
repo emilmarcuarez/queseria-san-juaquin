@@ -157,8 +157,8 @@ export const ProductDetailPage = ({
     .slice(0, 4);
 
   return (
-    <div className="w-full bg-[#fafafa] py-3.5 sm:py-10">
-      <div className="max-w-7xl mx-auto px-4 lg:px-8 space-y-4 sm:space-y-8">
+    <div className="w-full bg-[#fafafa] pt-2 pb-6 sm:py-10">
+      <div className="max-w-7xl mx-auto px-4 lg:px-8 space-y-2 sm:space-y-8">
         <nav className="flex items-center gap-2 text-xs text-neutral-muted">
           <button
             type="button"

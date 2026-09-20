@@ -106,8 +106,8 @@ const StorefrontContent = () => {
     window.location.hash = 'tienda';
   };
 
-  const mainTopPaddingClass = activePageIdentifier === 'tienda'
-    ? 'pt-[118px] sm:pt-[136px] lg:pt-[159px]'
+  const mainTopPaddingClass = (activePageIdentifier === 'tienda' || activePageIdentifier === 'producto')
+    ? 'pt-[116px] sm:pt-[136px] lg:pt-[159px]'
     : 'pt-[162px] sm:pt-[150px] lg:pt-[159px]';
 
   return (
