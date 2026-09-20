@@ -3,7 +3,7 @@ import { useShoppingCart } from '../../hooks/useShoppingCart';
 
 export const CartItemRow = ({ cartItemEntry }) => {
   const {
-    updateCartItemQuantity,
+    updateItemQuantity,
     removeProductFromCart,
     updateCartItemNote,
     exchangeRateBcv
@@ -12,22 +12,28 @@ export const CartItemRow = ({ cartItemEntry }) => {
   const [isNoteModalOpen, setIsNoteModalOpen] = useState(false);
   const [draftNoteText, setDraftNoteText] = useState(cartItemEntry.customItemNote || '');
 
-  const itemSubtotalUsd = (cartItemEntry.productPriceUsd * cartItemEntry.itemQuantity).toFixed(2);
+  const itemSubtotalUsd = (cartItemEntry.productPriceUsd * cartItemEntry.selectedQuantity).toFixed(2);
   const itemSubtotalBcv = (
     cartItemEntry.productPriceUsd *
-    cartItemEntry.itemQuantity *
+    cartItemEntry.selectedQuantity *
     exchangeRateBcv
   ).toLocaleString('es-VE', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2
   });
 
-  const handleIncrementQuantity = () => {
-    updateCartItemQuantity(cartItemEntry.productIdentifier, cartItemEntry.itemQuantity + 1);
+  const handleDecreaseQuantity = () => {
+    updateItemQuantity(
+      cartItemEntry.productIdentifier,
+      cartItemEntry.selectedQuantity - 1
+    );
   };
 
-  const handleDecrementQuantity = () => {
-    updateCartItemQuantity(cartItemEntry.productIdentifier, cartItemEntry.itemQuantity - 1);
+  const handleIncreaseQuantity = () => {
+    updateItemQuantity(
+      cartItemEntry.productIdentifier,
+      cartItemEntry.selectedQuantity + 1
+    );
   };
 
   const handleRemoveItem = () => {
