@@ -36,6 +36,7 @@ export const MobileStickyActionBar = () => {
         </svg>
 
         <button
+          id="mobile-floating-cart-button"
           onClick={openCartDrawer}
           className={`relative w-[52px] h-[52px] rounded-full bg-gradient-to-tr from-[#0d3b22] via-[#114B2B] to-[#165a34] text-white flex items-center justify-center shadow-2xl shadow-emerald-950/60 border-2 border-white/90 transition-all duration-300 active:scale-90 cursor-pointer ${
             isCartBumpingActive

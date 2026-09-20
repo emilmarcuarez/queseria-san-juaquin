@@ -12,6 +12,7 @@ export const ProductDetailPage = ({
 
 
   const [productQuantity, setProductQuantity] = useState(1);
+  const [productInstructionNote, setProductInstructionNote] = useState('');
   const [addedFeedbackActive, setAddedFeedbackActive] = useState(false);
   const [isImageZoomModalOpen, setIsImageZoomModalOpen] = useState(false);
   const [zoomMagnificationFactor, setZoomMagnificationFactor] = useState(1);
@@ -23,6 +24,7 @@ export const ProductDetailPage = ({
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
     setProductQuantity(1);
+    setProductInstructionNote('');
     setIsImageZoomModalOpen(false);
     setZoomMagnificationFactor(1);
     setPanTranslatePosition({ horizontalCoordinate: 0, verticalCoordinate: 0 });
@@ -68,13 +70,29 @@ export const ProductDetailPage = ({
     setProductQuantity((previousQuantity) => (previousQuantity > 1 ? previousQuantity - 1 : 1));
   };
 
+  const handleToggleSuggestion = (suggestionText) => {
+    setProductInstructionNote((previousText) => {
+      if (!previousText.trim()) {
+        return suggestionText;
+      }
+      if (previousText.includes(suggestionText)) {
+        return previousText
+          .split(',')
+          .map((instructionElement) => instructionElement.trim())
+          .filter((instructionElement) => instructionElement !== suggestionText)
+          .join(', ');
+      }
+      return `${previousText.trim()}, ${suggestionText}`;
+    });
+  };
+
   const handleAddToCart = (clickEvent) => {
     const buttonBoundingRect = clickEvent?.currentTarget?.getBoundingClientRect();
     const originCoordinates = buttonBoundingRect ? {
       coordinateX: buttonBoundingRect.left + buttonBoundingRect.width / 2,
       coordinateY: buttonBoundingRect.top + buttonBoundingRect.height / 2
     } : null;
-    addProductToCart(productItem, productQuantity, productQuantity, originCoordinates);
+    addProductToCart(productItem, productQuantity, productQuantity, originCoordinates, productInstructionNote);
     setAddedFeedbackActive(true);
     setTimeout(() => {
       setAddedFeedbackActive(false);
@@ -148,8 +166,9 @@ export const ProductDetailPage = ({
     setIsDraggingImage(false);
   };
 
+  const formattedNoteSuffix = productInstructionNote.trim() ? ` (Nota: ${productInstructionNote.trim()})` : '';
   const directProductWhatsAppUrl = `https://wa.me/${cleanDestinationNumber}?text=${encodeURIComponent(
-    `Hola Quesería San Joaquín! Quisiera ordenar: ${productQuantity}x ${productItem.productTitle}. Total: $${totalCalculatedUsd} (Bs. ${totalCalculatedBcv}).`
+    `Hola Quesería San Joaquín! Quisiera ordenar: ${productQuantity}x ${productItem.productTitle}${formattedNoteSuffix}. Total: $${totalCalculatedUsd} (Bs. ${totalCalculatedBcv}).`
   )}`;
 
   const relatedProductsList = productsCatalogData
@@ -298,6 +317,58 @@ export const ProductDetailPage = ({
                   <strong className="text-neutral-dark">${totalCalculatedUsd}</strong> (Bs. {totalCalculatedBcv})
                 </div>
               </div>
+            </div>
+
+            <div className="space-y-2 pt-2 border-t border-neutral-100">
+              <div className="flex items-center justify-between">
+                <label className="text-[11px] font-extrabold uppercase tracking-wider text-neutral-600 block">
+                  Sugerencias Rápidas:
+                </label>
+                {productInstructionNote && (
+                  <button
+                    type="button"
+                    onClick={() => setProductInstructionNote('')}
+                    className="text-[10px] text-red-600 font-bold hover:underline cursor-pointer"
+                  >
+                    Borrar
+                  </button>
+                )}
+              </div>
+
+              <div className="flex flex-wrap gap-1.5">
+                {[
+                  'Rebanado fino',
+                  'Rebanado estándar',
+                  'En trozo entero',
+                  'Empacar por separado',
+                  'Bien fresco'
+                ].map((suggestionItem) => {
+                  const isSuggestionActive = productInstructionNote.includes(suggestionItem);
+
+                  return (
+                    <button
+                      key={suggestionItem}
+                      type="button"
+                      onClick={() => handleToggleSuggestion(suggestionItem)}
+                      className={`text-xs px-3 py-1.5 rounded-xl font-semibold transition-all cursor-pointer border ${
+                        isSuggestionActive
+                          ? 'bg-[#114B2B] text-white border-[#114B2B] shadow-2xs font-bold'
+                          : 'bg-neutral-50 hover:bg-neutral-100 text-neutral-700 border-neutral-200'
+                      }`}
+                    >
+                      + {suggestionItem}
+                    </button>
+                  );
+                })}
+              </div>
+
+              <input
+                type="text"
+                value={productInstructionNote}
+                onChange={(inputEvent) => setProductInstructionNote(inputEvent.target.value)}
+                placeholder="O escribe una nota personalizada (opcional)..."
+                className="w-full text-xs bg-neutral-50 border border-neutral-200 rounded-xl px-3 py-2 text-neutral-800 placeholder:text-neutral-400 focus:outline-none focus:ring-1 focus:ring-[#114B2B]"
+              />
             </div>
 
             <div className="space-y-3 pt-2">

@@ -72,11 +72,14 @@ export const ShoppingCartProvider = ({ children }) => {
     productItem,
     quantityOrParameter = 1,
     fallbackQuantity = 1,
-    originCoordinates = null
+    originCoordinates = null,
+    itemCustomNote = ''
   ) => {
     const quantityToAdd = typeof quantityOrParameter === 'number'
       ? quantityOrParameter
       : (typeof fallbackQuantity === 'number' ? fallbackQuantity : 1);
+
+    const sanitizedNote = typeof itemCustomNote === 'string' ? itemCustomNote.trim() : '';
 
     setCartItemList((previousItemList) => {
       const existingItemIndex = previousItemList.findIndex((elementItem) => {
@@ -88,7 +91,8 @@ export const ShoppingCartProvider = ({ children }) => {
         const currentTargetItem = updatedList[existingItemIndex];
         updatedList[existingItemIndex] = {
           ...currentTargetItem,
-          selectedQuantity: currentTargetItem.selectedQuantity + quantityToAdd
+          selectedQuantity: currentTargetItem.selectedQuantity + quantityToAdd,
+          customItemNote: sanitizedNote || currentTargetItem.customItemNote
         };
         return updatedList;
       }
@@ -101,7 +105,7 @@ export const ShoppingCartProvider = ({ children }) => {
         productPriceUnit: productItem.productPriceUnit,
         productImage: productItem.productImage,
         selectedQuantity: quantityToAdd,
-        customItemNote: ''
+        customItemNote: sanitizedNote
       };
 
       return [...previousItemList, newCartEntry];

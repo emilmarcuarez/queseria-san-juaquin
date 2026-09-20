@@ -147,6 +147,7 @@ export const MainHeaderNavigation = ({
 
           <div className="hidden sm:flex items-center gap-2 sm:gap-3 shrink-0">
             <button
+              id="desktop-header-cart-button"
               onClick={openCartDrawer}
               className="relative inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-[#114B2B] hover:bg-[#0d3b22] text-white text-xs sm:text-sm font-bold transition-all shadow-sm cursor-pointer active:scale-95"
               aria-label="Abrir mi lista de compras"

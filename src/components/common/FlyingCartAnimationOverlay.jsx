@@ -8,13 +8,31 @@ export const FlyingCartAnimationOverlay = () => {
     return null;
   }
 
-  const targetCoordinateX = typeof window !== 'undefined'
-    ? (window.innerWidth < 1024 ? window.innerWidth - 40 : window.innerWidth - 48)
-    : 0;
+  const getTargetCoordinates = () => {
+    if (typeof window === 'undefined') {
+      return { targetCoordinateX: 0, targetCoordinateY: 0 };
+    }
 
-  const targetCoordinateY = typeof window !== 'undefined'
-    ? (window.innerWidth < 1024 ? window.innerHeight - 44 : window.innerHeight - 48)
-    : 0;
+    const mobileCartElement = document.getElementById('mobile-floating-cart-button');
+    const desktopCartElement = document.getElementById('desktop-header-cart-button');
+
+    const preferredCartElement = (window.innerWidth < 1024 ? mobileCartElement : desktopCartElement) || mobileCartElement || desktopCartElement;
+
+    if (preferredCartElement) {
+      const elementBoundingBox = preferredCartElement.getBoundingClientRect();
+      return {
+        targetCoordinateX: elementBoundingBox.left + elementBoundingBox.width / 2,
+        targetCoordinateY: elementBoundingBox.top + elementBoundingBox.height / 2
+      };
+    }
+
+    return {
+      targetCoordinateX: window.innerWidth < 1024 ? window.innerWidth - 42 : window.innerWidth - 50,
+      targetCoordinateY: window.innerWidth < 1024 ? window.innerHeight - 46 : 50
+    };
+  };
+
+  const { targetCoordinateX, targetCoordinateY } = getTargetCoordinates();
 
   return (
     <div className="fixed inset-0 pointer-events-none z-[9999] overflow-hidden">
@@ -31,12 +49,13 @@ export const FlyingCartAnimationOverlay = () => {
               '--target-horizontal-delta': `${deltaHorizontal}px`,
               '--target-vertical-delta': `${deltaVertical}px`
             }}
-            className="absolute w-12 h-12 rounded-full p-1 bg-white border-2 border-emerald-500 shadow-2xl overflow-hidden flex items-center justify-center animate-flyToCart"
+            className="absolute w-14 h-14 p-1 rounded-2xl bg-white border-2 border-emerald-500 shadow-2xl overflow-hidden flex items-center justify-center animate-aladdinGenie"
           >
+            <div className="absolute inset-0 bg-gradient-to-tr from-amber-400/20 via-emerald-500/20 to-transparent pointer-events-none" />
             <img
               src={flyingAnimationItem.productImage}
               alt=""
-              className="w-full h-full object-cover rounded-full"
+              className="w-full h-full object-cover rounded-xl"
             />
           </div>
         );
