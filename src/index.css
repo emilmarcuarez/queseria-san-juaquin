@@ -50,70 +50,37 @@
   animation: toastProgressBarCountdown 4.5s linear forwards;
 }
 
-@keyframes macGenieSuction {
+@keyframes macAppleGlide {
   0% {
-    transform: translate(0, 0) scale(1, 1);
+    transform: translate(0, 0) scale(1);
     opacity: 0.95;
-    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
-    filter: drop-shadow(0 8px 16px rgba(16, 185, 129, 0.25));
+    filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.15));
   }
-  20% {
-    transform: translate(calc(var(--target-horizontal-delta) * 0.18), calc(var(--target-vertical-delta) * 0.08 - 25px)) scale(0.88, 1.06);
+  25% {
+    transform: translate(calc(var(--target-horizontal-delta) * 0.22), calc(var(--target-vertical-delta) * 0.12 - 22px)) scale(0.92);
     opacity: 0.95;
-    clip-path: polygon(4% 0%, 96% 0%, 86% 100%, 14% 100%);
-    filter: drop-shadow(0 10px 20px rgba(16, 185, 129, 0.35));
+    filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.12));
   }
-  45% {
-    transform: translate(calc(var(--target-horizontal-delta) * 0.48), calc(var(--target-vertical-delta) * 0.38 - 15px)) scale(0.62, 0.85);
-    opacity: 0.88;
-    clip-path: polygon(14% 0%, 86% 0%, 68% 100%, 32% 100%);
-    filter: drop-shadow(0 8px 16px rgba(245, 158, 11, 0.45));
-  }
-  70% {
-    transform: translate(calc(var(--target-horizontal-delta) * 0.78), calc(var(--target-vertical-delta) * 0.72)) scale(0.32, 0.55);
-    opacity: 0.75;
-    clip-path: polygon(28% 0%, 72% 0%, 55% 100%, 45% 100%);
-    filter: drop-shadow(0 4px 12px rgba(16, 185, 129, 0.5));
+  65% {
+    transform: translate(calc(var(--target-horizontal-delta) * 0.72), calc(var(--target-vertical-delta) * 0.65 - 8px)) scale(0.55);
+    opacity: 0.85;
+    filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.08));
   }
   90% {
-    transform: translate(calc(var(--target-horizontal-delta) * 0.95), calc(var(--target-vertical-delta) * 0.94)) scale(0.1, 0.2);
-    opacity: 0.4;
-    clip-path: polygon(42% 0%, 58% 0%, 51% 100%, 49% 100%);
+    transform: translate(calc(var(--target-horizontal-delta) * 0.95), calc(var(--target-vertical-delta) * 0.94)) scale(0.18);
+    opacity: 0.35;
   }
   100% {
-    transform: translate(var(--target-horizontal-delta), var(--target-vertical-delta)) scale(0.01, 0.01);
+    transform: translate(var(--target-horizontal-delta), var(--target-vertical-delta)) scale(0.05);
     opacity: 0;
-    clip-path: polygon(50% 0%, 50% 0%, 50% 100%, 50% 100%);
+    filter: drop-shadow(0 0 0 rgba(0, 0, 0, 0));
   }
 }
 
-.animate-macGenie {
-  animation: macGenieSuction 0.54s cubic-bezier(0.18, 0.88, 0.32, 1) forwards;
-  will-change: transform, clip-path, opacity, filter;
-  transform-origin: bottom center;
-}
-
-@keyframes genieDustVortex {
-  0% {
-    transform: translate(0, 0) scale(0.8);
-    opacity: 0;
-  }
-  15% {
-    opacity: 0.85;
-  }
-  55% {
-    transform: translate(calc(var(--dust-delta-horizontal) * 0.5 + var(--dust-jitter-x)), calc(var(--dust-delta-vertical) * 0.42 + var(--dust-jitter-y))) scale(1.1);
-    opacity: 0.8;
-  }
-  100% {
-    transform: translate(var(--dust-delta-horizontal), var(--dust-delta-vertical)) scale(0.1);
-    opacity: 0;
-  }
-}
-
-.animate-genieDust {
-  animation: genieDustVortex 0.52s cubic-bezier(0.18, 0.88, 0.32, 1) forwards;
-  will-change: transform, opacity;
+.animate-macAppleGlide {
+  animation: macAppleGlide 0.44s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  will-change: transform, opacity, filter;
+  transform-origin: center center;
 }
 
 @keyframes radarGlowPulse {
