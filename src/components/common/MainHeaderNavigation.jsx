@@ -229,9 +229,6 @@ export const MainHeaderNavigation = ({
           </div>
 
           <div className="px-3 py-4 space-y-1">
-            <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest px-3 block mb-2">
-              Secciones
-            </span>
             {navigationMenuItems.map((menuItem) => {
               const isItemActive = activePageIdentifier === menuItem.pageKey;
               return (
