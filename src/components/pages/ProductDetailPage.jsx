@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useShoppingCart } from '../../hooks/useShoppingCart';
 import productsCatalogData from '../../data/productsCatalogData.json';
-import { getProductTailoredSuggestions } from '../../utils/productSuggestionsService';
 
 export const ProductDetailPage = ({
   productItem,
@@ -69,22 +68,6 @@ export const ProductDetailPage = ({
 
   const handleDecrementQuantity = () => {
     setProductQuantity((previousQuantity) => (previousQuantity > 1 ? previousQuantity - 1 : 1));
-  };
-
-  const handleToggleSuggestion = (suggestionText) => {
-    setProductInstructionNote((previousText) => {
-      if (!previousText.trim()) {
-        return suggestionText;
-      }
-      if (previousText.includes(suggestionText)) {
-        return previousText
-          .split(',')
-          .map((instructionElement) => instructionElement.trim())
-          .filter((instructionElement) => instructionElement !== suggestionText)
-          .join(', ');
-      }
-      return `${previousText.trim()}, ${suggestionText}`;
-    });
   };
 
   const handleAddToCart = (clickEvent) => {
@@ -324,10 +307,10 @@ export const ProductDetailPage = ({
               </div>
             </div>
 
-            <div className="space-y-2 pt-2 border-t border-neutral-100">
+            <div className="space-y-1.5 pt-2 border-t border-neutral-100">
               <div className="flex items-center justify-between">
                 <label className="text-[11px] font-extrabold uppercase tracking-wider text-neutral-600 block">
-                  Sugerencias Rápidas:
+                  Instrucción o indicación especial (opcional):
                 </label>
                 {productInstructionNote && (
                   <button
@@ -339,43 +322,12 @@ export const ProductDetailPage = ({
                   </button>
                 )}
               </div>
- 
-              {(() => {
-                const tailoredSuggestions = getProductTailoredSuggestions(productItem);
-
-                if (!tailoredSuggestions || tailoredSuggestions.length === 0) {
-                  return null;
-                }
-
-                return (
-                  <div className="flex flex-wrap gap-1.5">
-                    {tailoredSuggestions.map((suggestionItem) => {
-                      const isSuggestionActive = productInstructionNote.includes(suggestionItem);
-
-                      return (
-                        <button
-                          key={suggestionItem}
-                          type="button"
-                          onClick={() => handleToggleSuggestion(suggestionItem)}
-                          className={`text-xs px-3 py-1.5 rounded-xl font-semibold transition-all cursor-pointer border ${
-                            isSuggestionActive
-                              ? 'bg-[#114B2B] text-white border-[#114B2B] shadow-2xs font-bold'
-                              : 'bg-neutral-50 hover:bg-neutral-100 text-neutral-700 border-neutral-200'
-                          }`}
-                        >
-                          + {suggestionItem}
-                        </button>
-                      );
-                    })}
-                  </div>
-                );
-              })()}
 
               <input
                 type="text"
                 value={productInstructionNote}
                 onChange={(inputEvent) => setProductInstructionNote(inputEvent.target.value)}
-                placeholder="O escribe una nota personalizada (opcional)..."
+                placeholder="Ej: punto de sal, empaque especial, etc."
                 className="w-full text-xs bg-neutral-50 border border-neutral-200 rounded-xl px-3 py-2 text-neutral-800 placeholder:text-neutral-400 focus:outline-none focus:ring-1 focus:ring-[#114B2B]"
               />
             </div>

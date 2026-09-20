@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { useShoppingCart } from '../../hooks/useShoppingCart';
-import { getProductTailoredSuggestions } from '../../utils/productSuggestionsService';
 
 export const CartItemRow = ({ cartItemEntry }) => {
   const {
-    updateItemQuantity,
+    updateCartItemQuantity,
     removeProductFromCart,
     updateCartItemNote,
     exchangeRateBcv
@@ -13,24 +12,22 @@ export const CartItemRow = ({ cartItemEntry }) => {
   const [isNoteModalOpen, setIsNoteModalOpen] = useState(false);
   const [draftNoteText, setDraftNoteText] = useState(cartItemEntry.customItemNote || '');
 
-  const itemSubtotalUsd = (cartItemEntry.productPriceUsd * cartItemEntry.selectedQuantity).toFixed(2);
-  const itemSubtotalBcv = (cartItemEntry.productPriceUsd * cartItemEntry.selectedQuantity * exchangeRateBcv).toLocaleString('es-VE', {
+  const itemSubtotalUsd = (cartItemEntry.productPriceUsd * cartItemEntry.itemQuantity).toFixed(2);
+  const itemSubtotalBcv = (
+    cartItemEntry.productPriceUsd *
+    cartItemEntry.itemQuantity *
+    exchangeRateBcv
+  ).toLocaleString('es-VE', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2
   });
 
-  const handleDecreaseQuantity = () => {
-    updateItemQuantity(
-      cartItemEntry.productIdentifier,
-      cartItemEntry.selectedQuantity - 1
-    );
+  const handleIncrementQuantity = () => {
+    updateCartItemQuantity(cartItemEntry.productIdentifier, cartItemEntry.itemQuantity + 1);
   };
 
-  const handleIncreaseQuantity = () => {
-    updateItemQuantity(
-      cartItemEntry.productIdentifier,
-      cartItemEntry.selectedQuantity + 1
-    );
+  const handleDecrementQuantity = () => {
+    updateCartItemQuantity(cartItemEntry.productIdentifier, cartItemEntry.itemQuantity - 1);
   };
 
   const handleRemoveItem = () => {
@@ -43,6 +40,7 @@ export const CartItemRow = ({ cartItemEntry }) => {
   };
 
   const handleCloseNoteModal = () => {
+    setDraftNoteText(cartItemEntry.customItemNote || '');
     setIsNoteModalOpen(false);
   };
 
@@ -56,17 +54,6 @@ export const CartItemRow = ({ cartItemEntry }) => {
     setDraftNoteText('');
     setIsNoteModalOpen(false);
   };
-
-  const handleQuickNotePreset = (presetText) => {
-    setDraftNoteText((previousText) => {
-      if (!previousText.trim()) {
-        return presetText;
-      }
-      return `${previousText.trim()}, ${presetText}`;
-    });
-  };
-
-  const notePresetOptions = getProductTailoredSuggestions(cartItemEntry);
 
   return (
     <>
@@ -213,24 +200,6 @@ export const CartItemRow = ({ cartItemEntry }) => {
                 <span className="text-[10px] text-neutral-400 font-medium">
                   {draftNoteText.length} / 140
                 </span>
-              </div>
-            </div>
-
-            <div>
-              <span className="text-[10px] font-bold text-neutral-muted uppercase tracking-wider block mb-1.5">
-                Sugerencias rápidas:
-              </span>
-              <div className="flex flex-wrap gap-1.5">
-                {notePresetOptions.map((presetItem) => (
-                  <button
-                    key={presetItem}
-                    type="button"
-                    onClick={() => handleQuickNotePreset(presetItem)}
-                    className="text-[10px] font-semibold bg-neutral-100 hover:bg-neutral-200 text-neutral-700 px-2 py-1 rounded-md transition-colors cursor-pointer"
-                  >
-                    + {presetItem}
-                  </button>
-                ))}
               </div>
             </div>
 
