@@ -17,7 +17,7 @@ export const CartDrawerModal = () => {
 
   const [customerFullName, setCustomerFullName] = useState('');
   const [deliveryAddressText, setDeliveryAddressText] = useState('');
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('Pago Móvil');
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
   const [orderNotesText, setOrderNotesText] = useState('');
 
   const handleSendOrderToWhatsApp = (submitEvent) => {
@@ -161,6 +161,7 @@ export const CartDrawerModal = () => {
                       onChange={(selectEvent) => setSelectedPaymentMethod(selectEvent.target.value)}
                       className="w-full text-xs font-semibold bg-surface-alt border border-neutral-border rounded-lg px-3 py-2 text-neutral-dark focus:outline-none focus:ring-1 focus:ring-primary"
                     >
+                      <option value="">Seleccionar método (opcional)</option>
                       <option value="Pago Móvil">Pago Móvil (Tasa BCV)</option>
                       <option value="Zelle">Zelle</option>
                       <option value="Efectivo USD">Efectivo USD</option>

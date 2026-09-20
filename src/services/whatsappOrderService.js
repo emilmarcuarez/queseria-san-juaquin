@@ -23,26 +23,29 @@ export const buildWhatsAppOrderUrl = ({
     return `• ${cartEntryItem.selectedQuantity}x ${cartEntryItem.productTitle} ($${itemSubtotalUsd})${itemNoteText}`;
   }).join('\n');
 
-  const customerDetailSection = customerFullName ? `\n*Cliente:* ${customerFullName}` : '';
-  const deliveryDetailSection = deliveryAddressText ? `\n*Dirección de Entrega:* ${deliveryAddressText}` : '';
-  const paymentDetailSection = selectedPaymentMethod ? `\n*Método de Pago:* ${selectedPaymentMethod}` : '';
-  const notesDetailSection = orderNotesText ? `\n*Nota Adicional:* ${orderNotesText}` : '';
+  const customerDetailSection = customerFullName && customerFullName.trim() ? `*Cliente:* ${customerFullName.trim()}` : '';
+  const deliveryDetailSection = deliveryAddressText && deliveryAddressText.trim() ? `*Dirección de Entrega:* ${deliveryAddressText.trim()}` : '';
+  const paymentDetailSection = selectedPaymentMethod && selectedPaymentMethod.trim() ? `*Método de Pago:* ${selectedPaymentMethod.trim()}` : '';
+  const notesDetailSection = orderNotesText && orderNotesText.trim() ? `*Nota Adicional:* ${orderNotesText.trim()}` : '';
+
+  const orderMetadataDetails = [
+    customerDetailSection,
+    deliveryDetailSection,
+    paymentDetailSection,
+    notesDetailSection
+  ].filter(Boolean);
 
   const fullOrderMessage = [
     '*PEDIDO QUESERÍA SAN JOAQUÍN*',
     'Mercado & Charcutería',
-    '----------------------------------',
-    customerDetailSection,
-    deliveryDetailSection,
-    paymentDetailSection,
-    notesDetailSection,
+    ...(orderMetadataDetails.length > 0 ? ['----------------------------------', ...orderMetadataDetails] : []),
     '----------------------------------',
     '*PRODUCTOS SOLICITADOS:*',
     orderLinesText,
     '----------------------------------',
     `*TOTAL USD:* $${totalAmountUsd.toFixed(2)}`,
     `*TOTAL BCV:* Bs. ${totalAmountBcv.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} (Tasa: Bs. ${exchangeRateBcv.toFixed(2)})`
-  ].filter(Boolean).join('\n');
+  ].join('\n');
 
   return `https://wa.me/${cleanDestinationNumber}?text=${encodeURIComponent(fullOrderMessage)}`;
 };
