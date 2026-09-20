@@ -68,8 +68,13 @@ export const ProductDetailPage = ({
     setProductQuantity((previousQuantity) => (previousQuantity > 1 ? previousQuantity - 1 : 1));
   };
 
-  const handleAddToCart = () => {
-    addProductToCart(productItem, productQuantity);
+  const handleAddToCart = (clickEvent) => {
+    const buttonBoundingRect = clickEvent?.currentTarget?.getBoundingClientRect();
+    const originCoordinates = buttonBoundingRect ? {
+      coordinateX: buttonBoundingRect.left + buttonBoundingRect.width / 2,
+      coordinateY: buttonBoundingRect.top + buttonBoundingRect.height / 2
+    } : null;
+    addProductToCart(productItem, productQuantity, productQuantity, originCoordinates);
     setAddedFeedbackActive(true);
     setTimeout(() => {
       setAddedFeedbackActive(false);

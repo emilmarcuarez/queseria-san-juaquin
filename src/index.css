@@ -36,3 +36,41 @@
 .animate-slideDownDrawer {
   animation: slideDownDrawer 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
+
+@keyframes flyToCartPath {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  45% {
+    transform: translate(calc(var(--target-horizontal-delta) * 0.4), calc(var(--target-vertical-delta) * 0.3 - 40px)) scale(0.85);
+    opacity: 0.95;
+  }
+  100% {
+    transform: translate(var(--target-horizontal-delta), var(--target-vertical-delta)) scale(0.2);
+    opacity: 0.1;
+  }
+}
+
+.animate-flyToCart {
+  animation: flyToCartPath 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes radarGlowPulse {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.75;
+  }
+  60% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+}
+
+.animate-radarGlow {
+  animation: radarGlowPulse 2.4s cubic-bezier(0.2, 0.8, 0.4, 1) infinite;
+}

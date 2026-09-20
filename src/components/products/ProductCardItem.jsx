@@ -14,7 +14,12 @@ export const ProductCardItem = ({ productItem, onSelectProduct }) => {
 
   const handleAddToCartClick = (clickEvent) => {
     clickEvent.stopPropagation();
-    addProductToCart(productItem, 1);
+    const buttonBoundingRect = clickEvent.currentTarget.getBoundingClientRect();
+    const originCoordinates = {
+      coordinateX: buttonBoundingRect.left + buttonBoundingRect.width / 2,
+      coordinateY: buttonBoundingRect.top + buttonBoundingRect.height / 2
+    };
+    addProductToCart(productItem, 1, 1, originCoordinates);
     setAddedFeedbackActive(true);
     setTimeout(() => {
       setAddedFeedbackActive(false);

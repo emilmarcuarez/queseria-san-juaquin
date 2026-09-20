@@ -15,6 +15,9 @@ export const ShoppingCartProvider = ({ children }) => {
 
   const [isCartDrawerOpen, setIsCartDrawerOpen] = useState(false);
 
+  const [flyingCartAnimationList, setFlyingCartAnimationList] = useState([]);
+  const [isCartBumpingActive, setIsCartBumpingActive] = useState(false);
+
   const [activeToastNotification, setActiveToastNotification] = useState({
     isVisible: false,
     productTitle: '',
@@ -65,7 +68,12 @@ export const ShoppingCartProvider = ({ children }) => {
     }));
   };
 
-  const addProductToCart = (productItem, quantityOrParameter = 1, fallbackQuantity = 1) => {
+  const addProductToCart = (
+    productItem,
+    quantityOrParameter = 1,
+    fallbackQuantity = 1,
+    originCoordinates = null
+  ) => {
     const quantityToAdd = typeof quantityOrParameter === 'number'
       ? quantityOrParameter
       : (typeof fallbackQuantity === 'number' ? fallbackQuantity : 1);
@@ -98,6 +106,35 @@ export const ShoppingCartProvider = ({ children }) => {
 
       return [...previousItemList, newCartEntry];
     });
+
+    if (originCoordinates && typeof originCoordinates.coordinateX === 'number') {
+      const animationUniqueKey = `${Date.now()}_${Math.random()}`;
+      const newFlyingItem = {
+        uniqueKey: animationUniqueKey,
+        productImage: productItem.productImage,
+        startingX: originCoordinates.coordinateX,
+        startingY: originCoordinates.coordinateY
+      };
+      setFlyingCartAnimationList((previousList) => [...previousList, newFlyingItem]);
+
+      setTimeout(() => {
+        setIsCartBumpingActive(true);
+        setTimeout(() => {
+          setIsCartBumpingActive(false);
+        }, 450);
+      }, 550);
+
+      setTimeout(() => {
+        setFlyingCartAnimationList((previousList) => {
+          return previousList.filter((flyingItem) => flyingItem.uniqueKey !== animationUniqueKey);
+        });
+      }, 700);
+    } else {
+      setIsCartBumpingActive(true);
+      setTimeout(() => {
+        setIsCartBumpingActive(false);
+      }, 450);
+    }
 
     setActiveToastNotification({
       isVisible: true,
@@ -166,6 +203,8 @@ export const ShoppingCartProvider = ({ children }) => {
     cartItemList,
     isCartDrawerOpen,
     activeToastNotification,
+    flyingCartAnimationList,
+    isCartBumpingActive,
     openCartDrawer,
     closeCartDrawer,
     hideToastNotification,

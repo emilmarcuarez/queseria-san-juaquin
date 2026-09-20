@@ -7,6 +7,7 @@ import { TopAnnouncementBar } from './components/common/TopAnnouncementBar';
 import { MainHeaderNavigation } from './components/common/MainHeaderNavigation';
 import { MainFooterSection } from './components/common/MainFooterSection';
 import { MobileStickyActionBar } from './components/common/MobileStickyActionBar';
+import { FlyingCartAnimationOverlay } from './components/common/FlyingCartAnimationOverlay';
 import { CartToastNotification } from './components/common/CartToastNotification';
 import { InitialPageLoadingSpinner } from './components/common/InitialPageLoadingSpinner';
 import { HeroCommercialBanner } from './components/home/HeroCommercialBanner';
@@ -175,6 +176,8 @@ const StorefrontContent = () => {
       </main>
 
       <MainFooterSection />
+
+      <FlyingCartAnimationOverlay />
 
       <MobileStickyActionBar />
 
