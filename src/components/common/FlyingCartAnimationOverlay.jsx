@@ -37,7 +37,7 @@ export const FlyingCartAnimationOverlay = () => {
   return (
     <div className="fixed inset-0 pointer-events-none z-[9999] overflow-hidden">
       {flyingCartAnimationList.map((flyingAnimationItem) => {
-        const previewSize = 56;
+        const previewSize = 48;
         const originCenterX = flyingAnimationItem.startingX || (flyingAnimationItem.cardStartX + flyingAnimationItem.cardWidth / 2);
         const originCenterY = flyingAnimationItem.startingY || (flyingAnimationItem.cardStartY + flyingAnimationItem.cardHeight / 2);
 
@@ -58,16 +58,13 @@ export const FlyingCartAnimationOverlay = () => {
               '--target-horizontal-delta': `${deltaHorizontal}px`,
               '--target-vertical-delta': `${deltaVertical}px`
             }}
-            className="absolute bg-white rounded-2xl border border-neutral-200/90 shadow-2xl p-1 overflow-hidden flex items-center justify-center animate-macAppleGlide"
+            className="absolute rounded-full border-2 border-white shadow-xl bg-white overflow-hidden p-0.5 flex items-center justify-center animate-macAppleGlide"
           >
             <img
               src={flyingAnimationItem.productImage}
               alt=""
-              className="w-full h-full object-cover rounded-xl"
+              className="w-full h-full object-cover rounded-full"
             />
-            <div className="absolute top-1 right-1 bg-[#114B2B] text-white text-[8px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow-xs">
-              1
-            </div>
           </div>
         );
       })}

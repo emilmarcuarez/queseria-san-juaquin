@@ -15,15 +15,10 @@ export const ProductCardItem = ({ productItem, onSelectProduct }) => {
 
   const handleAddToCartClick = (clickEvent) => {
     clickEvent.stopPropagation();
-    const productCardElement = clickEvent.currentTarget.closest('[data-product-card]') || clickEvent.currentTarget;
-    const cardBoundingRect = productCardElement.getBoundingClientRect();
+    const buttonBoundingRect = clickEvent.currentTarget.getBoundingClientRect();
     const originCoordinates = {
-      coordinateX: cardBoundingRect.left + cardBoundingRect.width / 2,
-      coordinateY: cardBoundingRect.top + cardBoundingRect.height / 2,
-      cardStartX: cardBoundingRect.left,
-      cardStartY: cardBoundingRect.top,
-      cardWidth: cardBoundingRect.width,
-      cardHeight: cardBoundingRect.height
+      coordinateX: buttonBoundingRect.left + buttonBoundingRect.width / 2,
+      coordinateY: buttonBoundingRect.top + buttonBoundingRect.height / 2
     };
     addProductToCart(productItem, 1, 1, originCoordinates, selectedQuickSuggestion);
     setAddedFeedbackActive(true);

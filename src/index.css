@@ -52,33 +52,34 @@
 
 @keyframes macAppleGlide {
   0% {
-    transform: translate(0, 0) scale(1);
-    opacity: 0.95;
-    filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.15));
+    transform: translate(0, 0) scale(0.3);
+    opacity: 0;
+    filter: drop-shadow(0 4px 8px rgba(16, 185, 129, 0.2));
   }
-  25% {
-    transform: translate(calc(var(--target-horizontal-delta) * 0.22), calc(var(--target-vertical-delta) * 0.12 - 22px)) scale(0.92);
-    opacity: 0.95;
-    filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.12));
+  15% {
+    transform: translate(calc(var(--target-horizontal-delta) * 0.12), calc(var(--target-vertical-delta) * 0.08 - 28px)) scale(1);
+    opacity: 1;
+    filter: drop-shadow(0 12px 24px rgba(16, 185, 129, 0.35));
   }
-  65% {
-    transform: translate(calc(var(--target-horizontal-delta) * 0.72), calc(var(--target-vertical-delta) * 0.65 - 8px)) scale(0.55);
+  50% {
+    transform: translate(calc(var(--target-horizontal-delta) * 0.52), calc(var(--target-vertical-delta) * 0.45 - 20px)) scale(0.88);
+    opacity: 0.95;
+    filter: drop-shadow(0 10px 20px rgba(16, 185, 129, 0.3));
+  }
+  80% {
+    transform: translate(calc(var(--target-horizontal-delta) * 0.86), calc(var(--target-vertical-delta) * 0.82)) scale(0.5);
     opacity: 0.85;
-    filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.08));
-  }
-  90% {
-    transform: translate(calc(var(--target-horizontal-delta) * 0.95), calc(var(--target-vertical-delta) * 0.94)) scale(0.18);
-    opacity: 0.35;
+    filter: drop-shadow(0 4px 10px rgba(16, 185, 129, 0.2));
   }
   100% {
-    transform: translate(var(--target-horizontal-delta), var(--target-vertical-delta)) scale(0.05);
+    transform: translate(var(--target-horizontal-delta), var(--target-vertical-delta)) scale(0.1);
     opacity: 0;
     filter: drop-shadow(0 0 0 rgba(0, 0, 0, 0));
   }
 }
 
 .animate-macAppleGlide {
-  animation: macAppleGlide 0.44s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: macAppleGlide 0.48s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   will-change: transform, opacity, filter;
   transform-origin: center center;
 }
