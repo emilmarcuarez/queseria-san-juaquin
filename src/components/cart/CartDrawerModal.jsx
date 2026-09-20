@@ -201,7 +201,7 @@ export const CartDrawerModal = () => {
                         >
                           {MARACAIBO_DELIVERY_ZONES.map((zone) => (
                             <option key={zone.zoneId} value={zone.zoneId}>
-                              {zone.zoneName} (+$${zone.deliveryCostUsd.toFixed(2)})
+                              {zone.zoneName} (+${zone.deliveryCostUsd.toFixed(2)})
                             </option>
                           ))}
                         </select>
