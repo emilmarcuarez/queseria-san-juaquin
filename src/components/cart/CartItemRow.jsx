@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useShoppingCart } from '../../hooks/useShoppingCart';
+import { getProductTailoredSuggestions } from '../../utils/productSuggestionsService';
 
 export const CartItemRow = ({ cartItemEntry }) => {
   const {
@@ -65,13 +66,7 @@ export const CartItemRow = ({ cartItemEntry }) => {
     });
   };
 
-  const notePresetOptions = [
-    'Rebanado fino',
-    'Rebanado estándar',
-    'En trozo entero',
-    'Empacar por separado',
-    'Bien fresco'
-  ];
+  const notePresetOptions = getProductTailoredSuggestions(cartItemEntry);
 
   return (
     <>

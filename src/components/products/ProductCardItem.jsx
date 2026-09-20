@@ -6,7 +6,6 @@ export const ProductCardItem = ({ productItem, onSelectProduct }) => {
 
   const [addedFeedbackActive, setAddedFeedbackActive] = useState(false);
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
-  const [selectedQuickSuggestion, setSelectedQuickSuggestion] = useState('');
 
   const priceBcvEquivalent = (productItem.productPriceUsd * exchangeRateBcv).toLocaleString('es-VE', {
     minimumFractionDigits: 2,
@@ -20,7 +19,7 @@ export const ProductCardItem = ({ productItem, onSelectProduct }) => {
       coordinateX: buttonBoundingRect.left + buttonBoundingRect.width / 2,
       coordinateY: buttonBoundingRect.top + buttonBoundingRect.height / 2
     };
-    addProductToCart(productItem, 1, 1, originCoordinates, selectedQuickSuggestion);
+    addProductToCart(productItem, 1, 1, originCoordinates);
     setAddedFeedbackActive(true);
     setTimeout(() => {
       setAddedFeedbackActive(false);
@@ -98,37 +97,6 @@ export const ProductCardItem = ({ productItem, onSelectProduct }) => {
             ) : (
               <span>{productItem.productDescription}</span>
             )}
-          </div>
-
-          <div className="mt-1 mb-2">
-            <span className="text-[9px] font-extrabold uppercase tracking-wider text-neutral-400 block mb-1">
-              Sugerencias rápidas:
-            </span>
-            <div className="flex flex-wrap gap-1">
-              {['Rebanado fino', 'En trozo', 'Empacar separado'].map((suggestionItem) => {
-                const isSuggestionSelected = selectedQuickSuggestion === suggestionItem;
-
-                return (
-                  <button
-                    key={suggestionItem}
-                    type="button"
-                    onClick={(clickEvent) => {
-                      clickEvent.stopPropagation();
-                      setSelectedQuickSuggestion((previousValue) =>
-                        previousValue === suggestionItem ? '' : suggestionItem
-                      );
-                    }}
-                    className={`text-[9px] px-2 py-0.5 rounded-md font-semibold border transition-all cursor-pointer whitespace-nowrap ${
-                      isSuggestionSelected
-                        ? 'bg-[#114B2B] text-white border-[#114B2B] shadow-2xs font-bold'
-                        : 'bg-neutral-50 text-neutral-600 border-neutral-200 hover:bg-neutral-100'
-                    }`}
-                  >
-                    + {suggestionItem}
-                  </button>
-                );
-              })}
-            </div>
           </div>
         </div>
       </div>

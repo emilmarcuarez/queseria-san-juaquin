@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useShoppingCart } from '../../hooks/useShoppingCart';
 import productsCatalogData from '../../data/productsCatalogData.json';
+import { getProductTailoredSuggestions } from '../../utils/productSuggestionsService';
 
 export const ProductDetailPage = ({
   productItem,
@@ -338,33 +339,37 @@ export const ProductDetailPage = ({
                   </button>
                 )}
               </div>
+ 
+              {(() => {
+                const tailoredSuggestions = getProductTailoredSuggestions(productItem);
 
-              <div className="flex flex-wrap gap-1.5">
-                {[
-                  'Rebanado fino',
-                  'Rebanado estándar',
-                  'En trozo entero',
-                  'Empacar por separado',
-                  'Bien fresco'
-                ].map((suggestionItem) => {
-                  const isSuggestionActive = productInstructionNote.includes(suggestionItem);
+                if (!tailoredSuggestions || tailoredSuggestions.length === 0) {
+                  return null;
+                }
 
-                  return (
-                    <button
-                      key={suggestionItem}
-                      type="button"
-                      onClick={() => handleToggleSuggestion(suggestionItem)}
-                      className={`text-xs px-3 py-1.5 rounded-xl font-semibold transition-all cursor-pointer border ${
-                        isSuggestionActive
-                          ? 'bg-[#114B2B] text-white border-[#114B2B] shadow-2xs font-bold'
-                          : 'bg-neutral-50 hover:bg-neutral-100 text-neutral-700 border-neutral-200'
-                      }`}
-                    >
-                      + {suggestionItem}
-                    </button>
-                  );
-                })}
-              </div>
+                return (
+                  <div className="flex flex-wrap gap-1.5">
+                    {tailoredSuggestions.map((suggestionItem) => {
+                      const isSuggestionActive = productInstructionNote.includes(suggestionItem);
+
+                      return (
+                        <button
+                          key={suggestionItem}
+                          type="button"
+                          onClick={() => handleToggleSuggestion(suggestionItem)}
+                          className={`text-xs px-3 py-1.5 rounded-xl font-semibold transition-all cursor-pointer border ${
+                            isSuggestionActive
+                              ? 'bg-[#114B2B] text-white border-[#114B2B] shadow-2xs font-bold'
+                              : 'bg-neutral-50 hover:bg-neutral-100 text-neutral-700 border-neutral-200'
+                          }`}
+                        >
+                          + {suggestionItem}
+                        </button>
+                      );
+                    })}
+                  </div>
+                );
+              })()}
 
               <input
                 type="text"
