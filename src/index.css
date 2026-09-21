@@ -300,6 +300,11 @@ html body .driver-popover.sj-tour-popover .driver-popover-description strong {
   pointer-events: auto !important;
 }
 
+main .driver-active-element,
+main .tour-highlight-ring {
+  z-index: 30 !important;
+}
+
 /* ── Confirm button pulse ── */
 @keyframes tourBtnPulse {
   0%, 100% {

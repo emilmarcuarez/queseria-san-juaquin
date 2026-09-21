@@ -170,6 +170,19 @@ export const launchShoppingTour = ({ openCartDrawer }) => {
           description: 'Cada tarjeta muestra el nombre, precio en dólares, equivalente en bolívares a tasa BCV, y el stock disponible.',
           side: isMobile() ? 'bottom' : 'right',
           align: 'start'
+        },
+        onHighlightStarted: () => {
+          if (isMobile()) {
+            const productCardElement = document.querySelector('[data-product-card]');
+            if (productCardElement) {
+              const headerElement = document.querySelector('header');
+              const headerHeight = headerElement ? headerElement.getBoundingClientRect().height : 110;
+              const cardRect = productCardElement.getBoundingClientRect();
+              const targetScrollY = window.scrollY + cardRect.top - headerHeight - 16;
+              window.scrollTo({ top: Math.max(0, targetScrollY), behavior: 'smooth' });
+              setTimeout(() => tourDriver.refresh(), 350);
+            }
+          }
         }
       },
 
@@ -181,6 +194,21 @@ export const launchShoppingTour = ({ openCartDrawer }) => {
           description: 'Este indicador muestra cuánto hay disponible. Verde = hay cantidad. Rojo = queda poco. Agotado = no disponible por ahora.',
           side: 'bottom',
           align: 'start'
+        },
+        onHighlightStarted: () => {
+          if (isMobile()) {
+            const stockBadgeElement = document.querySelector('[data-product-card] .rounded-full');
+            if (stockBadgeElement) {
+              const headerElement = document.querySelector('header');
+              const headerHeight = headerElement ? headerElement.getBoundingClientRect().height : 110;
+              const badgeRect = stockBadgeElement.getBoundingClientRect();
+              if (badgeRect.top < headerHeight + 10) {
+                const targetScrollY = window.scrollY + badgeRect.top - headerHeight - 20;
+                window.scrollTo({ top: Math.max(0, targetScrollY), behavior: 'smooth' });
+                setTimeout(() => tourDriver.refresh(), 300);
+              }
+            }
+          }
         }
       },
 
