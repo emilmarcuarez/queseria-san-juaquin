@@ -82,7 +82,11 @@ export const MainFooterSection = () => {
         </div>
 
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-muted">
-          <p>© 2026 Quesería San Joaquín - Mercado &amp; Charcutería. Maracaibo, Zulia.</p>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 text-center sm:text-left">
+            <p>© 2026 Quesería San Joaquín - Mercado &amp; Charcutería. Maracaibo, Zulia.</p>
+            <span className="hidden sm:inline text-neutral-300">•</span>
+            <p className="font-semibold text-neutral-500">Hecho por <span className="font-bold text-neutral-800">EM Projects</span></p>
+          </div>
           <div className="flex items-center gap-4">
             <a className="hover:text-primary transition-colors" href="#destacados">Precios &amp; BCV</a>
             <a className="hover:text-primary transition-colors" href="#destacados">Envíos y Cobertura</a>
