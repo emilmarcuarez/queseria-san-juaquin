@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 
 const PRESET_WEIGHTS = [
   { key: '250g', label: '250g', sublabel: '¼ Kg', grams: 250, factor: 0.25 },
@@ -25,6 +26,7 @@ export const WeightSelectionModal = ({
       setCustomGramsInput(350);
       setPortionQuantity(1);
       setCustomNote('');
+      window.dispatchEvent(new CustomEvent('sj:weight-modal-opened'));
     }
   }, [isOpen, productItem]);
 
@@ -87,12 +89,13 @@ export const WeightSelectionModal = ({
     onClose();
   };
 
-  return (
+  return createPortal(
     <div
       className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-neutral-950/60 backdrop-blur-sm animate-fadeIn"
       onClick={onClose}
     >
       <div
+        id="tour-weight-modal-container"
         className="w-full sm:max-w-sm bg-white sm:rounded-3xl rounded-t-3xl shadow-2xl overflow-hidden flex flex-col animate-slideDownDrawer"
         onClick={(clickEvent) => clickEvent.stopPropagation()}
       >
@@ -288,6 +291,7 @@ export const WeightSelectionModal = ({
           </button>
           <button
             type="button"
+            id="tour-weight-modal-confirm-btn"
             onClick={handleConfirm}
             className="flex-1 py-3 px-4 rounded-2xl bg-[#114B2B] hover:bg-[#0d3b22] text-white font-extrabold text-sm flex items-center justify-center gap-2 shadow-sm transition-all active:scale-95 cursor-pointer"
           >
@@ -296,6 +300,7 @@ export const WeightSelectionModal = ({
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };

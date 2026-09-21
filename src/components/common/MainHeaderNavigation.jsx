@@ -84,11 +84,12 @@ export const MainHeaderNavigation = ({
         />
       )}
 
-      <div className="w-full bg-white border-b border-neutral-100 relative z-40">
+      <div id="tour-header-wrapper" className="w-full bg-white border-b border-neutral-100 relative z-40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="h-16 sm:h-20 flex items-center justify-between gap-3 sm:gap-6">
           <div className="flex items-center gap-3 shrink-0">
             <button
+              id="tour-mobile-menu-btn"
               type="button"
               onClick={() => (isMobileMenuOpen ? closeMenu() : openMenu())}
               className="lg:hidden inline-flex items-center justify-center w-10 h-10 rounded-xl border border-neutral-200 text-neutral-800 hover:bg-neutral-50 transition-colors cursor-pointer active:scale-95"
@@ -128,7 +129,7 @@ export const MainHeaderNavigation = ({
                   search
                 </span>
                 <input
-                  id="desktop-header-search-input"
+                  id="tour-search-bar"
                   className="w-full bg-neutral-50 border border-neutral-200 rounded-xl pl-11 pr-10 py-2.5 text-sm text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#114B2B] focus:border-transparent transition-all"
                   placeholder="Buscar víveres, quesos llaneros, jamones, café, refrescos..."
                   type="text"
@@ -153,7 +154,7 @@ export const MainHeaderNavigation = ({
 
           <div className="hidden sm:flex items-center gap-2 sm:gap-3 shrink-0">
             <button
-              id="desktop-header-cart-button"
+              id="tour-cart-button"
               onClick={openCartDrawer}
               className="relative inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-[#114B2B] hover:bg-[#0d3b22] text-white text-xs sm:text-sm font-bold transition-all shadow-sm cursor-pointer active:scale-95"
               aria-label="Abrir mi lista de compras"
@@ -207,6 +208,7 @@ export const MainHeaderNavigation = ({
             return (
               <button
                 key={menuItem.pageKey}
+                id={menuItem.pageKey === 'tienda' ? 'tour-nav-store' : undefined}
                 onClick={() => handleNavigationSelect(menuItem.pageKey)}
                 className={`text-xs uppercase tracking-wider transition-colors cursor-pointer py-2 border-b-2 active:scale-95 ${borderActiveClass}`}
               >

@@ -22,6 +22,7 @@ import { AboutUsPage } from './components/pages/AboutUsPage';
 import { ContactUsPage } from './components/pages/ContactUsPage';
 import { ProductDetailPage } from './components/pages/ProductDetailPage';
 import { CartDrawerModal } from './components/cart/CartDrawerModal';
+import { HowToBuyFloatingButton } from './components/common/HowToBuyFloatingButton';
 import productsCatalogData from './data/productsCatalogData.json';
 
 const StorefrontContent = () => {
@@ -184,6 +185,8 @@ const StorefrontContent = () => {
       <CartToastNotification />
 
       <CartDrawerModal />
+
+      <HowToBuyFloatingButton />
     </div>
   );
 };

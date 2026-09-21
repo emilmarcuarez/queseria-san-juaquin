@@ -113,7 +113,7 @@ export const CartDrawerModal = () => {
           </div>
 
           {/* Cuerpo del Carrito */}
-          <div className="flex-1 overflow-y-auto px-5 py-4 scrollbar-none">
+          <div id="tour-cart-scroll-container" className="flex-1 overflow-y-auto px-5 py-4 scrollbar-none">
             {cartItemList.length === 0 ? (
               <div className="text-center py-16">
                 <span className="material-symbols-outlined text-5xl text-neutral-muted mb-2">remove_shopping_cart</span>
@@ -130,9 +130,10 @@ export const CartDrawerModal = () => {
               </div>
             ) : (
               <div>
-                <div className="flex items-center justify-between pb-2 mb-2 border-b border-neutral-border">
+                <div id="tour-items-list-header" className="flex items-center justify-between pb-2 mb-2 border-b border-neutral-border">
                   <span className="text-xs font-bold text-neutral-dark">Productos en lista</span>
                   <button
+                    id="tour-clear-cart-btn"
                     onClick={clearCartItems}
                     className="text-[11px] font-semibold text-red-600 hover:underline cursor-pointer"
                   >
@@ -140,7 +141,7 @@ export const CartDrawerModal = () => {
                   </button>
                 </div>
 
-                <div className="divide-y divide-neutral-border/60">
+                <div id="tour-cart-items-list" className="divide-y divide-neutral-border/60">
                   {cartItemList.map((cartEntryItem) => (
                     <CartItemRow
                       key={cartEntryItem.cartItemKey || cartEntryItem.productIdentifier}
@@ -159,7 +160,7 @@ export const CartDrawerModal = () => {
                   </div>
 
                   {/* Interruptor: Delivery vs Retiro en Tienda */}
-                  <div className="grid grid-cols-2 gap-1.5 p-1 bg-neutral-100 rounded-xl">
+                  <div id="tour-fulfillment-toggle" className="grid grid-cols-2 gap-1.5 p-1 bg-neutral-100 rounded-xl">
                     <button
                       type="button"
                       onClick={() => setFulfillmentType('delivery')}
@@ -254,11 +255,12 @@ export const CartDrawerModal = () => {
                     </div>
                   )}
 
-                  <div>
+                  <div id="tour-customer-name-section">
                     <label className="text-[11px] font-bold text-neutral-dark block mb-1">
                       Tu Nombre y Apellido:
                     </label>
                     <input
+                      id="tour-customer-name-input"
                       type="text"
                       required
                       placeholder="Ej: Carlos Silva"
@@ -367,6 +369,7 @@ export const CartDrawerModal = () => {
               </div>
 
               <button
+                id="tour-whatsapp-btn"
                 onClick={handleSendOrderToWhatsApp}
                 className="w-full py-3.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-extrabold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-md transition-all cursor-pointer active:scale-95"
               >

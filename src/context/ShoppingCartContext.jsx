@@ -219,6 +219,8 @@ export const ShoppingCartProvider = ({ children }) => {
       quantityAdded: quantityToAdd,
       toastTimestampKey: Date.now()
     });
+
+    window.dispatchEvent(new CustomEvent('sj:product-added-to-cart'));
   };
 
   const undoLastCartAddition = () => {

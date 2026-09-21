@@ -117,3 +117,205 @@
 .animate-radarGlow {
   animation: radarGlowPulse 2.4s cubic-bezier(0.2, 0.8, 0.4, 1) infinite;
 }
+
+/* ── Driver.js CSS variable overrides ── */
+:root {
+  --driver-popover-title-color: #111827;
+  --driver-popover-description-color: #374151;
+  --driver-popover-progress-color: #9ca3af;
+  --driver-popover-btn-next-color: #ffffff;
+  --driver-popover-btn-next-background-color: #114B2B;
+  --driver-popover-btn-prev-color: #374151;
+  --driver-popover-btn-prev-background-color: #f3f4f6;
+  --driver-overlay-color: rgba(0,0,0,0.28);
+  --driver-popover-arrow-color: #ffffff;
+}
+
+/* ── Popover base ── */
+.driver-popover.sj-tour-popover {
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 20px 60px -10px rgba(0,0,0,0.20), 0 4px 16px rgba(0,0,0,0.08);
+  padding: 20px 20px 16px;
+  max-width: 300px;
+  width: 300px;
+  font-family: 'Montserrat', 'Inter', sans-serif;
+}
+
+html body .driver-popover.sj-tour-popover,
+html body .driver-popover.sj-tour-popover * {
+  text-decoration: none !important;
+  color: #374151 !important;
+}
+
+html body .driver-popover.sj-tour-popover .driver-popover-title {
+  color: #111827 !important;
+  font-size: 13px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+
+html body .driver-popover.sj-tour-popover .driver-popover-description {
+  color: #374151 !important;
+  font-size: 12px;
+  line-height: 1.65;
+  white-space: pre-line;
+}
+
+html body .driver-popover.sj-tour-popover .driver-popover-description strong {
+  color: #114B2B !important;
+  font-weight: 800;
+}
+
+.driver-popover.sj-tour-popover .driver-popover-footer {
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.driver-popover.sj-tour-popover .driver-popover-progress-text {
+  font-size: 10px;
+  font-weight: 700;
+  color: #9ca3af !important;
+  letter-spacing: 0.05em;
+}
+
+.driver-popover.sj-tour-popover .driver-popover-navigation-btns {
+  display: flex;
+  gap: 8px;
+}
+
+.driver-popover.sj-tour-popover .driver-popover-prev-btn,
+.driver-popover.sj-tour-popover .driver-popover-next-btn,
+.driver-popover.sj-tour-popover .driver-popover-done-btn {
+  font-family: 'Montserrat', 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  border-radius: 10px;
+  padding: 8px 14px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.15s ease;
+  text-shadow: none !important;
+  color: inherit !important;
+}
+
+.driver-popover.sj-tour-popover .driver-popover-prev-btn {
+  background: #f3f4f6;
+  color: #374151 !important;
+}
+
+.driver-popover.sj-tour-popover .driver-popover-next-btn,
+.driver-popover.sj-tour-popover .driver-popover-done-btn {
+  background: #114B2B;
+  color: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(17, 75, 43, 0.30);
+}
+
+.driver-popover.sj-tour-popover .driver-popover-next-btn:hover,
+.driver-popover.sj-tour-popover .driver-popover-done-btn:hover {
+  background: #0d3b22;
+}
+
+.driver-popover.sj-tour-popover .driver-popover-prev-btn:hover {
+  background: #e5e7eb;
+}
+
+.driver-popover.sj-tour-popover .driver-popover-close-btn {
+  color: #9ca3af !important;
+  font-size: 18px;
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.driver-popover.sj-tour-popover .driver-popover-close-btn:hover {
+  color: #374151 !important;
+}
+
+.driver-overlay {
+  background: transparent !important;
+}
+
+.driver-active .driver-active-element {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
+.driver-active .driver-active-element * {
+  pointer-events: auto !important;
+}
+
+/* ── Mobile: popover fixed at bottom, native overlay preserved ── */
+@media (max-width: 1023px) {
+  .driver-popover.sj-tour-popover {
+    position: fixed !important;
+    bottom: 90px !important;
+    top: auto !important;
+    left: 12px !important;
+    right: 12px !important;
+    width: auto !important;
+    max-width: none !important;
+    transform: none !important;
+    border-radius: 18px !important;
+    padding: 16px 16px 14px !important;
+    box-shadow: 0 -4px 24px rgba(0,0,0,0.15), 0 8px 32px rgba(0,0,0,0.12) !important;
+  }
+
+  html body .driver-popover.sj-tour-popover.sj-popover-top {
+    bottom: auto !important;
+    top: calc(env(safe-area-inset-top, 0px) + 38px) !important;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.15), 0 8px 32px rgba(0,0,0,0.12) !important;
+  }
+
+  .driver-popover.sj-tour-popover .driver-popover-arrow {
+    display: none !important;
+  }
+}
+
+/* ── CSS ring highlight for mobile ── */
+@keyframes tourRingPulse {
+  0%, 100% {
+    outline-color: rgba(17, 75, 43, 0.9);
+    box-shadow: 0 0 0 0 rgba(17, 75, 43, 0.35);
+  }
+  50% {
+    outline-color: rgba(17, 75, 43, 0.5);
+    box-shadow: 0 0 0 7px rgba(17, 75, 43, 0);
+  }
+}
+
+.tour-highlight-ring {
+  outline: 2.5px solid #114B2B !important;
+  outline-offset: 4px !important;
+  border-radius: 10px !important;
+  animation: tourRingPulse 1.6s ease-in-out infinite !important;
+  pointer-events: auto !important;
+}
+
+/* ── Confirm button pulse ── */
+@keyframes tourBtnPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(17, 75, 43, 0.7), 0 2px 8px rgba(17, 75, 43, 0.3);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(17, 75, 43, 0), 0 2px 16px rgba(17, 75, 43, 0.5);
+    transform: scale(1.03);
+  }
+}
+
+.tour-btn-pulse {
+  animation: tourBtnPulse 1.2s cubic-bezier(0.4, 0, 0.6, 1) infinite !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+

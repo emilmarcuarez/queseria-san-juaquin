@@ -189,6 +189,7 @@ export const CartItemRow = ({ cartItemEntry }) => {
           ) : (
             <button
               type="button"
+              data-tour="add-note-btn"
               onClick={handleOpenNoteModal}
               className="inline-flex items-center gap-1 text-[11px] font-semibold text-neutral-500 hover:text-[#114B2B] hover:bg-neutral-100/80 px-2 py-1 rounded-md transition-all cursor-pointer"
             >
