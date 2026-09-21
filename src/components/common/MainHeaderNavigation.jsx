@@ -8,10 +8,26 @@ export const MainHeaderNavigation = ({
   onNavigateToPage
 }) => {
   const { totalItemsCount, openCartDrawer } = useShoppingCart();
-  const [isMobileMenuDrawerOpen, setIsMobileMenuDrawerOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMenuClosing, setIsMenuClosing] = useState(false);
+  const menuCloseTimerRef = React.useRef(null);
+
+  const openMenu = () => {
+    clearTimeout(menuCloseTimerRef.current);
+    setIsMenuClosing(false);
+    setIsMobileMenuOpen(true);
+  };
+
+  const closeMenu = () => {
+    setIsMenuClosing(true);
+    menuCloseTimerRef.current = setTimeout(() => {
+      setIsMobileMenuOpen(false);
+      setIsMenuClosing(false);
+    }, 200);
+  };
 
   useEffect(() => {
-    if (isMobileMenuDrawerOpen) {
+    if (isMobileMenuOpen) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
@@ -19,8 +35,9 @@ export const MainHeaderNavigation = ({
 
     return () => {
       document.body.style.overflow = '';
+      clearTimeout(menuCloseTimerRef.current);
     };
-  }, [isMobileMenuDrawerOpen]);
+  }, [isMobileMenuOpen]);
 
   const configuredPhoneNumber = import.meta.env.VITE_WHATSAPP_PHONE_NUMBER || '584146770016';
   const cleanDestinationNumber = configuredPhoneNumber.replace(/[^\d]/g, '');
@@ -46,29 +63,41 @@ export const MainHeaderNavigation = ({
 
   const handleBrandLogoClick = (clickEvent) => {
     clickEvent.preventDefault();
-    setIsMobileMenuDrawerOpen(false);
+    closeMenu();
     onNavigateToPage('inicio');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleNavigationSelect = (targetPageKey) => {
-    setIsMobileMenuDrawerOpen(false);
+    closeMenu();
     onNavigateToPage(targetPageKey);
   };
 
   return (
-    <div className="w-full bg-white border-b border-neutral-100 relative z-40">
+    <>
+      {isMobileMenuOpen && (
+        <div
+          className={`fixed inset-0 z-30 bg-neutral-950/50 backdrop-blur-sm lg:hidden transition-opacity duration-200 ${
+            isMenuClosing ? 'opacity-0' : 'opacity-100'
+          }`}
+          onClick={closeMenu}
+        />
+      )}
+
+      <div className="w-full bg-white border-b border-neutral-100 relative z-40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="h-16 sm:h-20 flex items-center justify-between gap-3 sm:gap-6">
           <div className="flex items-center gap-3 shrink-0">
             <button
               type="button"
-              onClick={() => setIsMobileMenuDrawerOpen(true)}
+              onClick={() => (isMobileMenuOpen ? closeMenu() : openMenu())}
               className="lg:hidden inline-flex items-center justify-center w-10 h-10 rounded-xl border border-neutral-200 text-neutral-800 hover:bg-neutral-50 transition-colors cursor-pointer active:scale-95"
               aria-label="Abrir menú de navegación"
-              aria-expanded={isMobileMenuDrawerOpen}
+              aria-expanded={isMobileMenuOpen}
             >
-              <span className="material-symbols-outlined text-2xl">menu</span>
+              <span className="material-symbols-outlined text-2xl">
+                {isMobileMenuOpen ? 'close' : 'menu'}
+              </span>
             </button>
 
             <button
@@ -188,89 +217,43 @@ export const MainHeaderNavigation = ({
         </div>
       </nav>
 
-      <div
-        onClick={() => setIsMobileMenuDrawerOpen(false)}
-        className={`fixed inset-0 bg-neutral-950/60 backdrop-blur-xs z-50 transition-opacity duration-300 ease-out lg:hidden ${
-          isMobileMenuDrawerOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-        }`}
-      />
-
-      <div
-        className={`fixed inset-y-0 left-0 w-[82%] max-w-xs bg-white text-neutral-900 z-50 shadow-2xl flex flex-col justify-between transform transition-transform duration-300 ease-out lg:hidden ${
-          isMobileMenuDrawerOpen ? 'translate-x-0' : '-translate-x-full'
-        }`}
-      >
-        <div>
-          <div className="px-5 py-4 border-b border-neutral-100 flex items-center justify-between bg-neutral-50/70">
-            <div className="flex items-center gap-2.5">
-              <img
-                src="/images/queseria_san_juaquin_logo.png"
-                alt="Quesería San Joaquín"
-                className="w-9 h-9 object-contain"
-              />
-              <div>
-                <span className="font-extrabold text-sm text-[#114B2B] tracking-tight uppercase block leading-tight">
-                  Quesería San Joaquín
-                </span>
-                <span className="text-[10px] font-semibold text-neutral-500 uppercase tracking-wider block">
-                  Mercado &amp; Charcutería
-                </span>
-              </div>
-            </div>
-
-            <button
-              type="button"
-              onClick={() => setIsMobileMenuDrawerOpen(false)}
-              className="w-8 h-8 rounded-lg border border-neutral-200 flex items-center justify-center text-neutral-600 hover:bg-neutral-100 transition-colors cursor-pointer active:scale-95"
-              aria-label="Cerrar menú"
-            >
-              <span className="material-symbols-outlined text-lg">close</span>
-            </button>
-          </div>
-
-          <div className="px-3 py-4 space-y-1">
+      {isMobileMenuOpen && (
+        <div className={`lg:hidden border-t border-neutral-100 bg-white ${
+          isMenuClosing ? 'animate-slideUpDrawer' : 'animate-slideDownDrawer'
+        }`}>
+          <nav className="max-w-7xl mx-auto px-3 pt-2 pb-1">
             {navigationMenuItems.map((menuItem) => {
               const isItemActive = activePageIdentifier === menuItem.pageKey;
               return (
                 <button
                   key={menuItem.pageKey}
                   onClick={() => handleNavigationSelect(menuItem.pageKey)}
-                  className={`w-full flex items-center justify-between py-2.5 px-3.5 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer ${
+                  className={`w-full text-left py-2.5 px-3 rounded-lg text-sm font-semibold transition-all duration-150 cursor-pointer ${
                     isItemActive
-                      ? 'bg-[#114B2B] text-white shadow-xs'
-                      : 'text-neutral-700 hover:bg-neutral-100 active:bg-neutral-200'
+                      ? 'bg-[#114B2B] text-white'
+                      : 'text-neutral-700 hover:bg-neutral-50 active:bg-neutral-100'
                   }`}
                 >
-                  <div className="flex items-center gap-3">
-                    <span className="material-symbols-outlined text-lg opacity-80">
-                      {menuItem.iconName}
-                    </span>
-                    <span>{menuItem.labelText}</span>
-                  </div>
-                  <span className="material-symbols-outlined text-sm opacity-50">chevron_right</span>
+                  {menuItem.labelText}
                 </button>
               );
             })}
+          </nav>
+
+          <div className="max-w-7xl mx-auto px-3 pt-1 pb-3">
+            <a
+              href={directWhatsAppHelpUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm transition-colors"
+            >
+              <span className="material-symbols-outlined text-[18px]">chat</span>
+              <span>Asistencia por WhatsApp</span>
+            </a>
           </div>
         </div>
-
-        <div className="p-4 border-t border-neutral-100 bg-neutral-50/50 space-y-3">
-          <a
-            href={directWhatsAppHelpUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-xs transition-colors"
-          >
-            <span className="material-symbols-outlined text-base">chat</span>
-            <span>Asistencia WhatsApp</span>
-          </a>
-
-          <div className="text-[10.5px] text-neutral-500 text-center space-y-0.5">
-            <span className="block font-medium">Av. 10 con Calle 66, Maracaibo</span>
-            <span className="block text-[10px] text-neutral-400">Lun-Vie 7am-7pm | Sáb 7am-6pm</span>
-          </div>
-        </div>
-      </div>
+      )}
     </div>
+    </>
   );
 };

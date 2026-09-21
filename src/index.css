@@ -25,7 +25,7 @@
 @keyframes slideDownDrawer {
   from {
     opacity: 0;
-    transform: translateY(-14px);
+    transform: translateY(-8px);
   }
   to {
     opacity: 1;
@@ -34,7 +34,22 @@
 }
 
 .animate-slideDownDrawer {
-  animation: slideDownDrawer 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: slideDownDrawer 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes slideUpDrawer {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+.animate-slideUpDrawer {
+  animation: slideUpDrawer 0.18s cubic-bezier(0.4, 0, 1, 1) both;
 }
 
 @keyframes toastProgressBarCountdown {
