@@ -24,11 +24,15 @@ export const CartItemRow = ({ cartItemEntry }) => {
     maximumFractionDigits: 2
   });
 
+  const itemStockLimit = cartItemEntry.availableStockQuantity ?? Infinity;
+  const isAtStockLimit = itemStockLimit !== Infinity && cartItemEntry.selectedQuantity >= itemStockLimit;
+
   const handleDecreaseQuantity = () => {
     updateItemQuantity(itemKey, cartItemEntry.selectedQuantity - 1);
   };
 
   const handleIncreaseQuantity = () => {
+    if (isAtStockLimit) return;
     updateItemQuantity(itemKey, cartItemEntry.selectedQuantity + 1);
   };
 
@@ -93,7 +97,7 @@ export const CartItemRow = ({ cartItemEntry }) => {
           </div>
 
           <div className="flex items-center gap-1.5 shrink-0">
-            <div className="flex items-center border border-neutral-border rounded-lg bg-surface-alt overflow-hidden">
+            <div className="relative flex items-center border border-neutral-border rounded-lg bg-surface-alt overflow-hidden">
               <button
                 onClick={handleDecreaseQuantity}
                 className="w-7 h-7 flex items-center justify-center text-neutral-dark hover:bg-neutral-border/50 text-sm font-bold cursor-pointer"
@@ -106,12 +110,23 @@ export const CartItemRow = ({ cartItemEntry }) => {
               </span>
               <button
                 onClick={handleIncreaseQuantity}
-                className="w-7 h-7 flex items-center justify-center text-neutral-dark hover:bg-neutral-border/50 text-sm font-bold cursor-pointer"
+                disabled={isAtStockLimit}
+                className={`w-7 h-7 flex items-center justify-center text-sm font-bold transition-colors ${
+                  isAtStockLimit
+                    ? 'text-neutral-300 cursor-not-allowed'
+                    : 'text-neutral-dark hover:bg-neutral-border/50 cursor-pointer'
+                }`}
                 aria-label="Aumentar cantidad"
               >
                 +
               </button>
             </div>
+
+            {isAtStockLimit && (
+              <div className="absolute -bottom-5 left-0 right-0 text-center">
+                <span className="text-[9px] font-bold text-amber-600">Límite de stock</span>
+              </div>
+            )}
 
             <button
               onClick={handleRemoveItem}

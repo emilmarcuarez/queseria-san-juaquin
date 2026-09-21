@@ -11,6 +11,7 @@
     "promotionalBadgeStyle": "bright",
     "productImage": "/images/cheese-category-dairy.jpg",
     "isFeaturedProduct": true,
+    "availableStockQuantity": 12,
     "availableCutOptions": [
       "En Trozo",
       "Rallado Grueso",
@@ -29,6 +30,7 @@
     "promotionalBadgeStyle": "primary",
     "productImage": "/images/queso-paisa-pasteurizado.jpg",
     "isFeaturedProduct": true,
+    "availableStockQuantity": 3,
     "availableCutOptions": [
       "En Barra Entera",
       "Rebanado Fino",
@@ -47,6 +49,7 @@
     "promotionalBadgeStyle": "accent",
     "productImage": "/images/queso-palmizul-zuliano.jpg",
     "isFeaturedProduct": true,
+    "availableStockQuantity": 0,
     "availableCutOptions": [
       "En Trozo con Suero",
       "Rebanado Grueso"
@@ -64,6 +67,7 @@
     "promotionalBadgeStyle": "bright",
     "productImage": "/images/queso-de-mano-fresco.jpg",
     "isFeaturedProduct": true,
+    "availableStockQuantity": 8,
     "availableCutOptions": [
       "En Suero Limpio",
       "Sellado al Vacío"
@@ -81,6 +85,7 @@
     "promotionalBadgeStyle": "primary",
     "productImage": "/images/queso-telita-guayanes.jpg",
     "isFeaturedProduct": false,
+    "availableStockQuantity": 15,
     "availableCutOptions": [
       "En Suero Pasteurizado"
     ]
@@ -97,6 +102,7 @@
     "promotionalBadgeStyle": "accent",
     "productImage": "/images/queso-de-ano-curado.jpg",
     "isFeaturedProduct": false,
+    "availableStockQuantity": 2,
     "availableCutOptions": [
       "En Cuña Entera",
       "Rallado Polvo Fino",
@@ -115,6 +121,7 @@
     "promotionalBadgeStyle": "accent",
     "productImage": "/images/parmesan-cheese-wedge.jpg",
     "isFeaturedProduct": false,
+    "availableStockQuantity": 7,
     "availableCutOptions": [
       "En Cuña / Trozo",
       "Rallado en Virutas",
@@ -133,6 +140,7 @@
     "promotionalBadgeStyle": "primary",
     "productImage": "/images/nata-criolla-venezolana.jpg",
     "isFeaturedProduct": true,
+    "availableStockQuantity": 20,
     "availableCutOptions": [
       "Envase Sellado 350g"
     ]
@@ -149,6 +157,7 @@
     "promotionalBadgeStyle": "bright",
     "productImage": "/images/plumrose-tocineta-ahumada.jpg",
     "isFeaturedProduct": true,
+    "availableStockQuantity": 10,
     "availableCutOptions": [
       "Lonjas Delgadas Crujientes",
       "Lonjas Gruesas Jugosas"
@@ -166,6 +175,7 @@
     "promotionalBadgeStyle": "primary",
     "productImage": "/images/plumrose-jamon-cocido.jpg",
     "isFeaturedProduct": true,
+    "availableStockQuantity": 5,
     "availableCutOptions": [
       "Rebanado Ultrafino",
       "Rebanado Estándar",
@@ -184,6 +194,7 @@
     "promotionalBadgeStyle": "accent",
     "productImage": "/images/salchichas-plumrose-wieners.jpg",
     "isFeaturedProduct": true,
+    "availableStockQuantity": 18,
     "availableCutOptions": [
       "Empaque Sellado al Vacío"
     ]
@@ -200,6 +211,7 @@
     "promotionalBadgeStyle": "accent",
     "productImage": "/images/mortadela-tapara-venezolana.jpg",
     "isFeaturedProduct": true,
+    "availableStockQuantity": 1,
     "availableCutOptions": [
       "Rebanado Fino",
       "Rebanado Grueso",
@@ -218,6 +230,7 @@
     "promotionalBadgeStyle": "bright",
     "productImage": "/images/diablitos-underwood.jpg",
     "isFeaturedProduct": true,
+    "availableStockQuantity": 30,
     "availableCutOptions": [
       "Lata Abre Fácil 115g",
       "Pack x3 Latas"
@@ -235,6 +248,7 @@
     "promotionalBadgeStyle": "primary",
     "productImage": "/images/turkey-breast-slices.jpg",
     "isFeaturedProduct": false,
+    "availableStockQuantity": 4,
     "availableCutOptions": [
       "Rebanado Finísimo",
       "Rebanado Estándar",
@@ -253,6 +267,7 @@
     "promotionalBadgeStyle": "accent",
     "productImage": "/images/charcuterie-ham-bacon.jpg",
     "isFeaturedProduct": false,
+    "availableStockQuantity": 9,
     "availableCutOptions": [
       "Rebanado Estándar",
       "Rebanado Fino"
@@ -270,6 +285,7 @@
     "promotionalBadgeStyle": "bright",
     "productImage": "/images/harina-pan-blanca.jpg",
     "isFeaturedProduct": true,
+    "availableStockQuantity": 50,
     "availableCutOptions": [
       "Paquete Sellado 1 Kg",
       "Fardo de 20 Kg"
@@ -287,6 +303,7 @@
     "promotionalBadgeStyle": "accent",
     "productImage": "/images/harina-pan-amarilla.jpg",
     "isFeaturedProduct": true,
+    "availableStockQuantity": 35,
     "availableCutOptions": [
       "Paquete Sellado 1 Kg"
     ]
@@ -303,6 +320,7 @@
     "promotionalBadgeStyle": "accent",
     "productImage": "/images/harina-juana-blanca.jpg",
     "isFeaturedProduct": true,
+    "availableStockQuantity": 0,
     "availableCutOptions": [
       "Paquete Sellado 1 Kg"
     ]
@@ -319,6 +337,7 @@
     "promotionalBadgeStyle": "primary",
     "productImage": "/images/arroz-primor-blanco.jpg",
     "isFeaturedProduct": true,
+    "availableStockQuantity": 25,
     "availableCutOptions": [
       "Paquete Sellado 1 Kg"
     ]
@@ -335,6 +354,7 @@
     "promotionalBadgeStyle": "primary",
     "productImage": "/images/pasta-primor-spaghetti.jpg",
     "isFeaturedProduct": true,
+    "availableStockQuantity": 22,
     "availableCutOptions": [
       "Paquete Sellado 1 Kg"
     ]
@@ -351,6 +371,7 @@
     "promotionalBadgeStyle": "accent",
     "productImage": "/images/mayonesa-mavesa.jpg",
     "isFeaturedProduct": true,
+    "availableStockQuantity": 14,
     "availableCutOptions": [
       "Frasco Sellado 470g"
     ]
@@ -367,6 +388,7 @@
     "promotionalBadgeStyle": "accent",
     "productImage": "/images/salsa-tomate-pampero.jpg",
     "isFeaturedProduct": false,
+    "availableStockQuantity": 11,
     "availableCutOptions": [
       "Botella Sellada 397g"
     ]
@@ -383,6 +405,7 @@
     "promotionalBadgeStyle": "bright",
     "productImage": "/images/cafe-fama-de-america.jpg",
     "isFeaturedProduct": true,
+    "availableStockQuantity": 6,
     "availableCutOptions": [
       "Molido Medio para Greca",
       "Molido Fino para Cafetera"
@@ -400,6 +423,7 @@
     "promotionalBadgeStyle": "primary",
     "productImage": "/images/cooking-oil-bottle.jpg",
     "isFeaturedProduct": false,
+    "availableStockQuantity": 16,
     "availableCutOptions": [
       "Botella Sellada 1 Litro"
     ]
@@ -416,6 +440,7 @@
     "promotionalBadgeStyle": "bright",
     "productImage": "/images/margarina-mavesa.jpg",
     "isFeaturedProduct": true,
+    "availableStockQuantity": 19,
     "availableCutOptions": [
       "Pote Familiar 1 Kg",
       "Pote 500g"
@@ -433,6 +458,7 @@
     "promotionalBadgeStyle": "accent",
     "productImage": "/images/pan-de-jamon-artesanal.jpg",
     "isFeaturedProduct": true,
+    "availableStockQuantity": 2,
     "availableCutOptions": [
       "Pieza Entera Horneada",
       "Rebanado en Bandeja"
@@ -450,6 +476,7 @@
     "promotionalBadgeStyle": "bright",
     "productImage": "/images/pirulin-lata-chocolate.jpg",
     "isFeaturedProduct": true,
+    "availableStockQuantity": 13,
     "availableCutOptions": [
       "Lata Metálica 300g"
     ]
@@ -466,6 +493,7 @@
     "promotionalBadgeStyle": "accent",
     "productImage": "/images/maltin-polar-botella.jpg",
     "isFeaturedProduct": true,
+    "availableStockQuantity": 40,
     "availableCutOptions": [
       "Botella Individual Fría",
       "Six Pack Empacado"
@@ -483,6 +511,7 @@
     "promotionalBadgeStyle": "primary",
     "productImage": "/images/galletas-susy-maria.jpg",
     "isFeaturedProduct": true,
+    "availableStockQuantity": 17,
     "availableCutOptions": [
       "Pack Combo Familiar"
     ]
@@ -499,6 +528,7 @@
     "promotionalBadgeStyle": "accent",
     "productImage": "/images/artisan-sandwich-bread.jpg",
     "isFeaturedProduct": false,
+    "availableStockQuantity": 5,
     "availableCutOptions": [
       "Rebanado Estándar",
       "Rebanado Grueso",
@@ -517,6 +547,7 @@
     "promotionalBadgeStyle": "primary",
     "productImage": "/images/breakfast-butter-cream.jpg",
     "isFeaturedProduct": false,
+    "availableStockQuantity": 8,
     "availableCutOptions": [
       "Envase Sellado 450g"
     ]

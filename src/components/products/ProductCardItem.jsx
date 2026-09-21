@@ -3,7 +3,7 @@ import { useShoppingCart } from '../../hooks/useShoppingCart';
 import { WeightSelectionModal } from './WeightSelectionModal';
 
 export const ProductCardItem = ({ productItem, onSelectProduct }) => {
-  const { addProductToCart, exchangeRateBcv } = useShoppingCart();
+  const { addProductToCart, exchangeRateBcv, cartItemList } = useShoppingCart();
 
   const [addedFeedbackActive, setAddedFeedbackActive] = useState(false);
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
@@ -17,8 +17,23 @@ export const ProductCardItem = ({ productItem, onSelectProduct }) => {
 
   const isWeightBased = productItem.productPriceUnit === 'kg';
 
+  const totalStock = productItem.availableStockQuantity ?? Infinity;
+  const isOutOfStock = totalStock === 0;
+
+  const quantityCurrentlyInCart = cartItemList
+    .filter((cartEntry) => cartEntry.productIdentifier === productItem.productIdentifier)
+    .reduce((totalQty, cartEntry) => totalQty + cartEntry.selectedQuantity, 0);
+
+  const remainingStockAfterCart = totalStock === Infinity ? Infinity : totalStock - quantityCurrentlyInCart;
+  const isStockExhaustedInCart = remainingStockAfterCart <= 0 && totalStock !== Infinity;
+
+  const stockIsLow = totalStock !== Infinity && totalStock > 0 && totalStock <= 5;
+
   const handleAddToCartClick = (clickEvent) => {
     clickEvent.stopPropagation();
+
+    if (isOutOfStock || isStockExhaustedInCart) return;
+
     const productCardElement = clickEvent.currentTarget.closest('[data-product-card]') || clickEvent.currentTarget;
     const cardBoundingRect = productCardElement.getBoundingClientRect();
     const originCoordinates = {
@@ -34,7 +49,8 @@ export const ProductCardItem = ({ productItem, onSelectProduct }) => {
     if (isWeightBased) {
       setIsWeightModalOpen(true);
     } else {
-      addProductToCart(productItem, 1, 1, originCoordinates);
+      const addResult = addProductToCart(productItem, 1, 1, originCoordinates);
+      if (addResult?.stockLimitReached) return;
       setAddedFeedbackActive(true);
       setTimeout(() => {
         setAddedFeedbackActive(false);
@@ -76,13 +92,30 @@ export const ProductCardItem = ({ productItem, onSelectProduct }) => {
 
   const isDescriptionLong = productItem.productDescription && productItem.productDescription.length > 50;
 
+  const isAddButtonDisabled = isOutOfStock || isStockExhaustedInCart;
+
+  const stockBadgeContent = () => {
+    if (isOutOfStock) {
+      return { text: 'Agotado', className: 'bg-neutral-100 text-neutral-500 border border-neutral-200' };
+    }
+    if (isStockExhaustedInCart) {
+      return { text: 'Límite alcanzado', className: 'bg-amber-50 text-amber-700 border border-amber-200' };
+    }
+    if (stockIsLow) {
+      return { text: `Solo ${totalStock} disponibles`, className: 'bg-red-50 text-red-600 border border-red-200' };
+    }
+    return { text: `${totalStock} en stock`, className: 'bg-emerald-50 text-emerald-700 border border-emerald-200' };
+  };
+
+  const stockBadge = totalStock !== Infinity ? stockBadgeContent() : null;
+
   return (
     <>
       <div
         data-product-card="true"
         data-aos="fade-up"
         onClick={handleCardClick}
-        className="h-full bg-white rounded-2xl border border-neutral-200/90 p-3 sm:p-4 flex flex-col justify-between shadow-2xs hover:shadow-md transition-all relative group cursor-pointer"
+        className={`h-full bg-white rounded-2xl border border-neutral-200/90 p-3 sm:p-4 flex flex-col justify-between shadow-2xs hover:shadow-md transition-all relative group cursor-pointer ${isOutOfStock ? 'opacity-60' : ''}`}
       >
         <div>
           {productItem.promotionalBadgeText && (
@@ -98,6 +131,13 @@ export const ProductCardItem = ({ productItem, onSelectProduct }) => {
               src={productItem.productImage}
               loading="lazy"
             />
+            {isOutOfStock && (
+              <div className="absolute inset-0 bg-white/60 flex items-center justify-center">
+                <span className="text-[11px] font-extrabold text-neutral-500 uppercase tracking-wider bg-white px-3 py-1 rounded-full border border-neutral-200">
+                  Agotado
+                </span>
+              </div>
+            )}
           </div>
 
           <div>
@@ -150,27 +190,48 @@ export const ProductCardItem = ({ productItem, onSelectProduct }) => {
             <div className="text-[11px] sm:text-xs font-bold text-emerald-800 mt-0.5">
               Ref. BCV: Bs. {priceBcvEquivalent}
             </div>
+
+            {stockBadge && (
+              <div className={`inline-flex items-center gap-1 mt-1.5 text-[10px] font-bold px-2 py-0.5 rounded-full ${stockBadge.className}`}>
+                <span className="material-symbols-outlined text-[11px]">
+                  {isOutOfStock ? 'remove_shopping_cart' : isStockExhaustedInCart ? 'block' : 'inventory_2'}
+                </span>
+                {stockBadge.text}
+              </div>
+            )}
           </div>
 
           <button
             type="button"
             onClick={handleAddToCartClick}
-            className={`w-full py-2.5 px-3 text-xs font-bold rounded-xl flex items-center justify-center gap-1.5 transition-all shadow-xs cursor-pointer active:scale-98 ${
-              addedFeedbackActive
-                ? 'bg-emerald-600 text-white shadow-emerald-200'
-                : 'bg-primary hover:bg-primary-dark text-white'
+            disabled={isAddButtonDisabled}
+            className={`w-full py-2.5 px-3 text-xs font-bold rounded-xl flex items-center justify-center gap-1.5 transition-all shadow-xs ${
+              isAddButtonDisabled
+                ? 'bg-neutral-100 text-neutral-400 cursor-not-allowed shadow-none'
+                : addedFeedbackActive
+                  ? 'bg-emerald-600 text-white shadow-emerald-200 cursor-pointer active:scale-98'
+                  : 'bg-primary hover:bg-primary-dark text-white cursor-pointer active:scale-98'
             }`}
             aria-label={`Agregar ${productItem.productTitle} al carrito`}
           >
             <span className="material-symbols-outlined text-base">
-              {addedFeedbackActive ? 'check_circle' : (isWeightBased ? 'scale' : 'add_shopping_cart')}
+              {isAddButtonDisabled
+                ? (isOutOfStock ? 'remove_shopping_cart' : 'block')
+                : addedFeedbackActive ? 'check_circle' : (isWeightBased ? 'scale' : 'add_shopping_cart')}
             </span>
-            <span>{addedFeedbackActive ? '¡Agregado!' : (isWeightBased ? 'Elegir Peso y Agregar' : 'Agregar')}</span>
+            <span>
+              {isOutOfStock
+                ? 'Sin stock'
+                : isStockExhaustedInCart
+                  ? 'Límite en carrito'
+                  : addedFeedbackActive
+                    ? '¡Agregado!'
+                    : isWeightBased ? 'Elegir Peso y Agregar' : 'Agregar'}
+            </span>
           </button>
         </div>
       </div>
 
-      {/* Modal de selección de peso al presionar agregar en productos por kilo */}
       {isWeightBased && (
         <WeightSelectionModal
           isOpen={isWeightModalOpen}

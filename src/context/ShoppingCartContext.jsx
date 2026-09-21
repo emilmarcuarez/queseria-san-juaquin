@@ -93,6 +93,11 @@ export const ShoppingCartProvider = ({ children }) => {
     const effectivePriceUsd = productItem.productPriceUsd * effectiveFactor;
     const portionLabel = weightFraction ? weightFraction.label : (productItem.productPriceUnit === 'kg' ? '1 Kg' : '');
 
+    const productStockLimit = productItem.availableStockQuantity ?? Infinity;
+
+    let actualQuantityAdded = quantityToAdd;
+    let stockLimitReached = false;
+
     setCartItemList((previousItemList) => {
       const existingItemIndex = previousItemList.findIndex((elementItem) => {
         const currentKey = elementItem.cartItemKey || elementItem.productIdentifier;
@@ -102,12 +107,37 @@ export const ShoppingCartProvider = ({ children }) => {
       if (existingItemIndex > -1) {
         const updatedList = [...previousItemList];
         const currentTargetItem = updatedList[existingItemIndex];
+        const currentQuantityInCart = currentTargetItem.selectedQuantity;
+        const remainingStock = productStockLimit - currentQuantityInCart;
+
+        if (remainingStock <= 0) {
+          stockLimitReached = true;
+          actualQuantityAdded = 0;
+          return previousItemList;
+        }
+
+        actualQuantityAdded = Math.min(quantityToAdd, remainingStock);
+        if (actualQuantityAdded < quantityToAdd) {
+          stockLimitReached = true;
+        }
+
         updatedList[existingItemIndex] = {
           ...currentTargetItem,
-          selectedQuantity: currentTargetItem.selectedQuantity + quantityToAdd,
+          selectedQuantity: currentQuantityInCart + actualQuantityAdded,
+          availableStockQuantity: productStockLimit,
           customItemNote: sanitizedNote || currentTargetItem.customItemNote
         };
         return updatedList;
+      }
+
+      actualQuantityAdded = Math.min(quantityToAdd, productStockLimit);
+      if (actualQuantityAdded < quantityToAdd) {
+        stockLimitReached = true;
+      }
+
+      if (actualQuantityAdded <= 0) {
+        stockLimitReached = true;
+        return previousItemList;
       }
 
       const newCartEntry = {
@@ -120,12 +150,17 @@ export const ShoppingCartProvider = ({ children }) => {
         portionLabel: portionLabel,
         productPriceUnit: productItem.productPriceUnit,
         productImage: productItem.productImage,
-        selectedQuantity: quantityToAdd,
+        selectedQuantity: actualQuantityAdded,
+        availableStockQuantity: productStockLimit,
         customItemNote: sanitizedNote
       };
 
       return [...previousItemList, newCartEntry];
     });
+
+    if (stockLimitReached && actualQuantityAdded === 0) {
+      return { success: false, stockLimitReached: true };
+    }
 
     if (originCoordinates && typeof originCoordinates.coordinateX === 'number') {
       const animationUniqueKey = `${Date.now()}_${Math.random()}`;
@@ -233,9 +268,11 @@ export const ShoppingCartProvider = ({ children }) => {
       return previousItemList.map((elementItem) => {
         const currentKey = elementItem.cartItemKey || elementItem.productIdentifier;
         if (currentKey === itemIdentifierOrKey) {
+          const stockLimit = elementItem.availableStockQuantity ?? Infinity;
+          const clampedQuantity = Math.min(newQuantity, stockLimit);
           return {
             ...elementItem,
-            selectedQuantity: newQuantity
+            selectedQuantity: clampedQuantity
           };
         }
         return elementItem;
