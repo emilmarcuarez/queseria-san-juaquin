@@ -25,7 +25,23 @@ export const CartItemRow = ({ cartItemEntry }) => {
   });
 
   const itemStockLimit = cartItemEntry.availableStockQuantity ?? Infinity;
-  const isAtStockLimit = itemStockLimit !== Infinity && cartItemEntry.selectedQuantity >= itemStockLimit;
+
+  const portionFactor = (cartItemEntry.basePriceUsd && cartItemEntry.basePriceUsd > 0)
+    ? cartItemEntry.productPriceUsd / cartItemEntry.basePriceUsd
+    : 1;
+  const isWeightBasedItem = cartItemEntry.productPriceUnit === 'kg';
+  const kgConsumedByThisEntry = isWeightBasedItem
+    ? cartItemEntry.selectedQuantity * portionFactor
+    : cartItemEntry.selectedQuantity;
+
+  const remainingStock = itemStockLimit === Infinity ? Infinity : Math.max(0, itemStockLimit - kgConsumedByThisEntry);
+  const isAtStockLimit = itemStockLimit !== Infinity && remainingStock <= 0;
+
+  const formatRemainingStock = (amount) => {
+    if (!isWeightBasedItem) return `${Math.round(amount)}`;
+    if (amount === Math.floor(amount)) return `${amount} kg`;
+    return `${amount.toFixed(2).replace(/\.?0+$/, '')} kg`;
+  };
 
   const handleDecreaseQuantity = () => {
     updateItemQuantity(itemKey, cartItemEntry.selectedQuantity - 1);
@@ -94,10 +110,18 @@ export const CartItemRow = ({ cartItemEntry }) => {
                 Bs. {itemSubtotalBcv}
               </span>
             </div>
+            {isAtStockLimit && (
+              <span className="text-[9px] font-bold text-amber-600 mt-0.5 block">Stock agotado</span>
+            )}
+            {!isAtStockLimit && itemStockLimit !== Infinity && (
+              <span className="text-[9px] font-medium text-neutral-400 mt-0.5 block">
+                Stock: {formatRemainingStock(remainingStock)}
+              </span>
+            )}
           </div>
 
           <div className="flex items-center gap-1.5 shrink-0">
-            <div className="relative flex items-center border border-neutral-border rounded-lg bg-surface-alt overflow-hidden">
+            <div className="flex items-center border border-neutral-border rounded-lg bg-surface-alt overflow-hidden">
               <button
                 onClick={handleDecreaseQuantity}
                 className="w-7 h-7 flex items-center justify-center text-neutral-dark hover:bg-neutral-border/50 text-sm font-bold cursor-pointer"
@@ -121,12 +145,6 @@ export const CartItemRow = ({ cartItemEntry }) => {
                 +
               </button>
             </div>
-
-            {isAtStockLimit && (
-              <div className="absolute -bottom-5 left-0 right-0 text-center">
-                <span className="text-[9px] font-bold text-amber-600">Límite de stock</span>
-              </div>
-            )}
 
             <button
               onClick={handleRemoveItem}

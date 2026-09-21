@@ -20,14 +20,26 @@ export const ProductCardItem = ({ productItem, onSelectProduct }) => {
   const totalStock = productItem.availableStockQuantity ?? Infinity;
   const isOutOfStock = totalStock === 0;
 
-  const quantityCurrentlyInCart = cartItemList
+  const kgConsumedByCart = cartItemList
     .filter((cartEntry) => cartEntry.productIdentifier === productItem.productIdentifier)
-    .reduce((totalQty, cartEntry) => totalQty + cartEntry.selectedQuantity, 0);
+    .reduce((totalConsumed, cartEntry) => {
+      if (isWeightBased && cartEntry.basePriceUsd) {
+        const portionFactor = cartEntry.productPriceUsd / cartEntry.basePriceUsd;
+        return totalConsumed + cartEntry.selectedQuantity * portionFactor;
+      }
+      return totalConsumed + cartEntry.selectedQuantity;
+    }, 0);
 
-  const remainingStockAfterCart = totalStock === Infinity ? Infinity : totalStock - quantityCurrentlyInCart;
+  const remainingStockAfterCart = totalStock === Infinity ? Infinity : Math.max(0, totalStock - kgConsumedByCart);
   const isStockExhaustedInCart = remainingStockAfterCart <= 0 && totalStock !== Infinity;
 
-  const stockIsLow = totalStock !== Infinity && totalStock > 0 && totalStock <= 5;
+  const stockIsLow = totalStock !== Infinity && remainingStockAfterCart > 0 && remainingStockAfterCart <= (isWeightBased ? 2 : 5);
+
+  const formatStockAmount = (amount) => {
+    if (!isWeightBased) return `${Math.round(amount)}`;
+    if (amount === Math.floor(amount)) return `${amount} kg`;
+    return `${amount.toFixed(2).replace(/\.?0+$/, '')} kg`;
+  };
 
   const handleAddToCartClick = (clickEvent) => {
     clickEvent.stopPropagation();
@@ -96,15 +108,15 @@ export const ProductCardItem = ({ productItem, onSelectProduct }) => {
 
   const stockBadgeContent = () => {
     if (isOutOfStock) {
-      return { text: 'Agotado', className: 'bg-neutral-100 text-neutral-500 border border-neutral-200' };
+      return { text: 'Agotado', className: 'bg-neutral-100 text-neutral-500 border border-neutral-200', icon: 'remove_shopping_cart' };
     }
     if (isStockExhaustedInCart) {
-      return { text: 'Límite alcanzado', className: 'bg-amber-50 text-amber-700 border border-amber-200' };
+      return { text: 'Límite alcanzado', className: 'bg-amber-50 text-amber-700 border border-amber-200', icon: 'block' };
     }
     if (stockIsLow) {
-      return { text: `Solo ${totalStock} disponibles`, className: 'bg-red-50 text-red-600 border border-red-200' };
+      return { text: `Solo ${formatStockAmount(remainingStockAfterCart)} disponible${!isWeightBased && remainingStockAfterCart === 1 ? '' : 's'}`, className: 'bg-red-50 text-red-600 border border-red-200', icon: 'inventory_2' };
     }
-    return { text: `${totalStock} en stock`, className: 'bg-emerald-50 text-emerald-700 border border-emerald-200' };
+    return { text: `${formatStockAmount(remainingStockAfterCart)} disponibles`, className: 'bg-emerald-50 text-emerald-700 border border-emerald-200', icon: 'inventory_2' };
   };
 
   const stockBadge = totalStock !== Infinity ? stockBadgeContent() : null;
@@ -194,7 +206,7 @@ export const ProductCardItem = ({ productItem, onSelectProduct }) => {
             {stockBadge && (
               <div className={`inline-flex items-center gap-1 mt-1.5 text-[10px] font-bold px-2 py-0.5 rounded-full ${stockBadge.className}`}>
                 <span className="material-symbols-outlined text-[11px]">
-                  {isOutOfStock ? 'remove_shopping_cart' : isStockExhaustedInCart ? 'block' : 'inventory_2'}
+                  {stockBadge.icon}
                 </span>
                 {stockBadge.text}
               </div>
