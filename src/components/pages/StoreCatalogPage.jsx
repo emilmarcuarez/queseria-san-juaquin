@@ -106,7 +106,7 @@ export const StoreCatalogPage = ({
   return (
     <div className="w-full bg-[#fafafa] min-h-screen">
       <div className="w-full bg-white border-b border-neutral-200 shadow-2xs">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-10 lg:pt-12 pb-6 sm:pb-8 space-y-5">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 sm:gap-6 pb-5 border-b border-neutral-100">
             <div>
               <h1 className="text-3xl sm:text-4xl font-black text-neutral-900 tracking-tight">
