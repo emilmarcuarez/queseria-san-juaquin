@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { useShoppingCart } from '../../hooks/useShoppingCart';
 import { WeightSelectionModal } from './WeightSelectionModal';
 
@@ -7,7 +8,8 @@ export const ProductCardItem = ({ productItem, onSelectProduct }) => {
 
   const [addedFeedbackActive, setAddedFeedbackActive] = useState(false);
   const [isDetailsExpanded, setIsDetailsExpanded] = useState(false);
-  const [isMobileDetailsModalOpen, setIsMobileDetailsModalOpen] = useState(false);
+  const [isMobileDetailsModalMounted, setIsMobileDetailsModalMounted] = useState(false);
+  const [isMobileDetailsModalActive, setIsMobileDetailsModalActive] = useState(false);
   const [isMobileDevice, setIsMobileDevice] = useState(false);
   const [isWeightModalOpen, setIsWeightModalOpen] = useState(false);
   const [cardOriginCoordinates, setCardOriginCoordinates] = useState(null);
@@ -20,6 +22,40 @@ export const ProductCardItem = ({ productItem, onSelectProduct }) => {
     window.addEventListener('resize', handleResizeScreen);
     return () => window.removeEventListener('resize', handleResizeScreen);
   }, []);
+
+  const handleOpenMobileDetails = () => {
+    setIsMobileDetailsModalMounted(true);
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setIsMobileDetailsModalActive(true);
+      });
+    });
+  };
+
+  const handleCloseMobileDetails = () => {
+    if (!isMobileDetailsModalActive) return;
+    setIsMobileDetailsModalActive(false);
+    setTimeout(() => {
+      setIsMobileDetailsModalMounted(false);
+    }, 300);
+  };
+
+  useEffect(() => {
+    if (!isMobileDetailsModalMounted) return;
+    const previousOverflowValue = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    const handleEscapeKeyDown = (keyboardEvent) => {
+      if (keyboardEvent.key === 'Escape') {
+        handleCloseMobileDetails();
+      }
+    };
+    window.addEventListener('keydown', handleEscapeKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflowValue;
+      window.removeEventListener('keydown', handleEscapeKeyDown);
+    };
+  }, [isMobileDetailsModalMounted, isMobileDetailsModalActive]);
 
   const priceBcvEquivalent = (productItem.productPriceUsd * exchangeRateBcv).toLocaleString('es-VE', {
     minimumFractionDigits: 2,
@@ -106,7 +142,7 @@ export const ProductCardItem = ({ productItem, onSelectProduct }) => {
   const handleToggleDetailsExpand = (clickEvent) => {
     clickEvent.stopPropagation();
     if (isMobileDevice) {
-      setIsMobileDetailsModalOpen(true);
+      handleOpenMobileDetails();
     } else {
       setIsDetailsExpanded((previousState) => !previousState);
     }
@@ -199,7 +235,7 @@ export const ProductCardItem = ({ productItem, onSelectProduct }) => {
             type="button"
             onClick={handleToggleDetailsExpand}
             className="group/details self-center mx-auto text-[11px] font-medium text-neutral-400 hover:text-[#114B2B] inline-flex items-center gap-1 transition-colors cursor-pointer py-0.5"
-            aria-expanded={isDetailsExpanded || isMobileDetailsModalOpen}
+            aria-expanded={isDetailsExpanded || isMobileDetailsModalMounted}
           >
             <span className="group-hover/details:underline underline-offset-2">
               {isDetailsExpanded ? 'Ocultar detalles' : 'Ver detalles'}
@@ -281,20 +317,26 @@ export const ProductCardItem = ({ productItem, onSelectProduct }) => {
         </div>
       </div>
 
-      {isMobileDetailsModalOpen && (
+      {isMobileDetailsModalMounted && createPortal(
         <div
-          onClick={() => setIsMobileDetailsModalOpen(false)}
-          className="fixed inset-0 bg-black/60 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 backdrop-blur-xs animate-fadeIn"
+          onClick={handleCloseMobileDetails}
+          className={`fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 backdrop-blur-xs transition-opacity duration-300 ease-out ${
+            isMobileDetailsModalActive ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          }`}
         >
           <div
             onClick={(clickEvent) => clickEvent.stopPropagation()}
-            className="bg-white w-full max-w-lg rounded-t-3xl sm:rounded-2xl shadow-2xl p-5 max-h-[88vh] overflow-y-auto flex flex-col gap-3 relative"
+            className={`bg-white w-full max-w-lg rounded-t-3xl sm:rounded-2xl shadow-2xl p-5 max-h-[88vh] overflow-y-auto flex flex-col gap-3 relative transition-all duration-300 ease-out transform ${
+              isMobileDetailsModalActive
+                ? 'translate-y-0 opacity-100 sm:scale-100'
+                : 'translate-y-full sm:translate-y-4 opacity-0 sm:scale-95'
+            }`}
           >
             <div className="w-12 h-1.5 bg-neutral-300 rounded-full mx-auto mb-1 sm:hidden" />
 
             <button
               type="button"
-              onClick={() => setIsMobileDetailsModalOpen(false)}
+              onClick={handleCloseMobileDetails}
               className="absolute top-4 right-4 w-8 h-8 rounded-full bg-neutral-100 hover:bg-neutral-200 text-neutral-500 flex items-center justify-center cursor-pointer transition-colors"
               aria-label="Cerrar detalles"
             >
@@ -372,7 +414,7 @@ export const ProductCardItem = ({ productItem, onSelectProduct }) => {
                 onClick={(clickEvent) => {
                   handleAddToCartClick(clickEvent);
                   if (!isWeightBased) {
-                    setIsMobileDetailsModalOpen(false);
+                    handleCloseMobileDetails();
                   }
                 }}
                 disabled={isAddButtonDisabled}
@@ -404,7 +446,7 @@ export const ProductCardItem = ({ productItem, onSelectProduct }) => {
                 <button
                   type="button"
                   onClick={(clickEvent) => {
-                    setIsMobileDetailsModalOpen(false);
+                    handleCloseMobileDetails();
                     handleProductNavigation(clickEvent);
                   }}
                   className="w-full py-2 text-xs font-bold text-primary hover:underline flex items-center justify-center gap-1 cursor-pointer"
@@ -415,7 +457,8 @@ export const ProductCardItem = ({ productItem, onSelectProduct }) => {
               )}
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       {isWeightBased && (
