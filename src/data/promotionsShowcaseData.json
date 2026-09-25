@@ -4,6 +4,7 @@
     "promoTitle": "Combos San Joaquín: Arepero Criollo",
     "promoSubtitle": "Lleva 1 Harina P.A.N. 1kg + 1 Queso Blanco Llanero + 1 Mavesa",
     "promoBadge": "Ref. $6,99",
+    "comboPriceUsd": 6.99,
     "promoBannerImage": "/promotions/promo_combo_arepero.jpg",
     "matchingProductIds": [
       "harina-pan-blanca-1kg",
@@ -17,6 +18,7 @@
     "promoTitle": "Especial Charcutería",
     "promoSubtitle": "Hasta 20% dcto en Jamón Plumrose + Tocineta Ahumada + Queso Paisa",
     "promoBadge": "Ref. $8,49",
+    "comboPriceUsd": 8.49,
     "promoBannerImage": "/promotions/promo_charcuteria_combo.jpg",
     "matchingProductIds": [
       "plumrose-jamon-cocido-deli",
@@ -30,6 +32,7 @@
     "promoTitle": "Combo Merienda Dulzura",
     "promoSubtitle": "Lleva 1 Lata Pirulin 300g + 2 Maltín Polar Botella",
     "promoBadge": "Ref. $4,99",
+    "comboPriceUsd": 4.99,
     "promoBannerImage": "/promotions/promo_combo_merienda.jpg",
     "matchingProductIds": [
       "pirulin-lata-avellana-300g",
@@ -42,6 +45,7 @@
     "promoTitle": "Combo Picadera San Joaquín",
     "promoSubtitle": "Salchichas Wieners Plumrose + Queso de Mano + Salsa Pampero",
     "promoBadge": "Ref. $7,49",
+    "comboPriceUsd": 7.49,
     "promoBannerImage": "/promotions/promo_combo_parrillero.jpg",
     "matchingProductIds": [
       "plumrose-salchichas-wieners",

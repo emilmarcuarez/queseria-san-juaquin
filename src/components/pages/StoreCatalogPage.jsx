@@ -5,12 +5,14 @@ import categoriesShowcaseData from '../../data/categoriesShowcaseData.json';
 import { ProductCardItem } from '../products/ProductCardItem';
 import { CategoryCircleSlider } from '../products/CategoryCircleSlider';
 import { PromotionalBannersCarousel } from '../common/PromotionalBannersCarousel';
+import { useShoppingCart } from '../../hooks/useShoppingCart';
 
 export const StoreCatalogPage = ({
   initialDepartmentKey = 'todos',
   onSelectProduct,
   initialPromotionFilter = null
 }) => {
+  const { addProductToCart } = useShoppingCart();
   const [inPageSearchQuery, setInPageSearchQuery] = useState('');
   const [selectedDepartmentFilter, setSelectedDepartmentFilter] = useState(initialDepartmentKey);
   const [selectedPromotionFilter, setSelectedPromotionFilter] = useState(initialPromotionFilter);
@@ -19,6 +21,16 @@ export const StoreCatalogPage = ({
   const [currentPageIndex, setCurrentPageIndex] = useState(1);
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const productsRenderLimitPerPage = 12;
+
+  const handleQuickAddFullComboToCart = () => {
+    if (!selectedPromotionFilter) return;
+    const productsInCombo = productsCatalogData.filter((productItem) =>
+      selectedPromotionFilter.matchingProductIds.includes(productItem.productIdentifier)
+    );
+    productsInCombo.forEach((productItem) => {
+      addProductToCart(productItem, 1, 1);
+    });
+  };
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -276,6 +288,45 @@ export const StoreCatalogPage = ({
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+        {selectedPromotionFilter && (
+          <div className="mb-8 p-4 sm:p-6 bg-gradient-to-r from-amber-50 via-yellow-50 to-emerald-50 border-2 border-yellow-300 rounded-3xl shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-yellow-400 text-neutral-900 flex items-center justify-center shrink-0 shadow-md">
+                <span className="material-symbols-outlined text-3xl">celebration</span>
+              </div>
+              <div>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="text-xs font-black uppercase tracking-wider text-emerald-900 bg-emerald-100 px-2.5 py-0.5 rounded-full">
+                    Oferta Especial de Combo
+                  </span>
+                  <span className="text-xs font-extrabold text-neutral-900 bg-yellow-400 px-2.5 py-0.5 rounded-full shadow-2xs">
+                    {selectedPromotionFilter.promoBadge}
+                  </span>
+                </div>
+                <h2 className="text-base sm:text-xl font-black text-neutral-900 mt-1">
+                  {selectedPromotionFilter.promoTitle}
+                </h2>
+                <p className="text-xs text-neutral-600 mt-0.5">
+                  {selectedPromotionFilter.promoSubtitle}
+                </p>
+                <div className="text-[11px] text-emerald-800 font-semibold mt-1 flex items-center gap-1">
+                  <span className="material-symbols-outlined text-sm text-emerald-700">info</span>
+                  <span>Agrega todos los productos del combo y el carrito te descontará la diferencia automáticamente al precio especial.</span>
+                </div>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={handleQuickAddFullComboToCart}
+              className="w-full md:w-auto px-5 py-3 bg-[#114B2B] hover:bg-[#0d3b22] text-white text-xs sm:text-sm font-black rounded-xl flex items-center justify-center gap-2 shadow-md transition-all active:scale-95 cursor-pointer whitespace-nowrap shrink-0"
+            >
+              <span className="material-symbols-outlined text-base sm:text-lg">add_shopping_cart</span>
+              <span>Agregar Combo Completo</span>
+            </button>
+          </div>
+        )}
+
         {filteredAndSortedProducts.length === 0 ? (
           <div className="bg-white rounded-3xl border border-neutral-200 p-12 text-center max-w-md mx-auto my-8">
             <span className="material-symbols-outlined text-5xl text-neutral-300 mb-3 block">

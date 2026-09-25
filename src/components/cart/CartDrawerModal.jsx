@@ -15,6 +15,9 @@ export const CartDrawerModal = () => {
     closeCartDrawer,
     clearCartItems,
     totalItemsCount,
+    rawSubtotalUsd,
+    appliedCombosList,
+    totalComboDiscountUsd,
     totalCartAmountUsd,
     exchangeRateBcv
   } = useShoppingCart();
@@ -50,7 +53,9 @@ export const CartDrawerModal = () => {
       fulfillmentType,
       selectedZone: fulfillmentType === 'delivery' ? selectedZone : null,
       pickupEstimatedTime,
-      deliveryCostUsd
+      deliveryCostUsd,
+      appliedCombosList,
+      totalComboDiscountUsd
     });
 
     window.open(targetWhatsAppUrl, '_blank', 'noopener,noreferrer');
@@ -130,6 +135,51 @@ export const CartDrawerModal = () => {
               </div>
             ) : (
               <div>
+                {appliedCombosList.length > 0 && (
+                  <div className="mb-4 space-y-2">
+                    {appliedCombosList.map((appliedComboItem) => (
+                      <div
+                        key={appliedComboItem.promoIdentifier}
+                        className="p-3 bg-gradient-to-r from-emerald-50 via-teal-50 to-amber-50 border border-emerald-300 rounded-2xl flex items-center justify-between gap-3 shadow-2xs"
+                      >
+                        <div className="flex items-center gap-2.5">
+                          <div className="w-8 h-8 rounded-xl bg-[#114B2B] text-white flex items-center justify-center shrink-0">
+                            <span className="material-symbols-outlined text-lg">celebration</span>
+                          </div>
+                          <div>
+                            <div className="flex items-center gap-1.5 flex-wrap">
+                              <span className="text-xs font-black text-neutral-900 leading-tight">
+                                ¡{appliedComboItem.promoTitle} detectado!
+                              </span>
+                              {appliedComboItem.completedCombos > 1 && (
+                                <span className="text-[10px] bg-[#114B2B] text-white font-extrabold px-1.5 py-0.5 rounded-full">
+                                  x{appliedComboItem.completedCombos}
+                                </span>
+                              )}
+                            </div>
+                            <div className="text-[10px] text-neutral-600 mt-0.5 flex items-center gap-1.5 flex-wrap">
+                              <span>Suma regular: <span className="line-through font-semibold text-neutral-500">${appliedComboItem.regularBundlePrice.toFixed(2)}</span></span>
+                              <span>•</span>
+                              <span className="text-emerald-800 font-extrabold bg-emerald-100/80 px-1.5 py-0.5 rounded">
+                                Ahorras -${appliedComboItem.discountAmount.toFixed(2)}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="text-right shrink-0">
+                          <span className="text-xs font-black text-[#114B2B] block">
+                            ${appliedComboItem.finalComboPrice.toFixed(2)}
+                          </span>
+                          <span className="text-[10px] font-bold text-neutral-400 block">
+                            Bs. {(appliedComboItem.finalComboPrice * exchangeRateBcv).toFixed(2)}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
                 <div id="tour-items-list-header" className="flex items-center justify-between pb-2 mb-2 border-b border-neutral-border">
                   <span className="text-xs font-bold text-neutral-dark">Productos en lista</span>
                   <button
@@ -330,9 +380,28 @@ export const CartDrawerModal = () => {
             <div className="p-5 border-t border-neutral-border bg-surface-alt space-y-3">
               <div className="space-y-1">
                 <div className="flex items-center justify-between text-xs font-semibold text-neutral-muted">
-                  <span>Subtotal Productos:</span>
-                  <span className="font-bold text-neutral-dark">${totalCartAmountUsd.toFixed(2)}</span>
+                  <span>Suma regular de productos:</span>
+                  <span className={`font-bold ${totalComboDiscountUsd > 0 ? 'line-through text-neutral-400' : 'text-neutral-dark'}`}>
+                    ${rawSubtotalUsd.toFixed(2)}
+                  </span>
                 </div>
+
+                {totalComboDiscountUsd > 0 && (
+                  <div className="flex items-center justify-between text-xs font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2.5 py-1.5 rounded-xl">
+                    <span className="flex items-center gap-1.5">
+                      <span className="material-symbols-outlined text-sm text-emerald-700">savings</span>
+                      <span>Descuento por Combos:</span>
+                    </span>
+                    <span className="font-black text-emerald-800">-${totalComboDiscountUsd.toFixed(2)}</span>
+                  </div>
+                )}
+
+                {totalComboDiscountUsd > 0 && (
+                  <div className="flex items-center justify-between text-xs font-semibold text-neutral-muted">
+                    <span>Subtotal con descuento:</span>
+                    <span className="font-extrabold text-neutral-dark">${totalCartAmountUsd.toFixed(2)}</span>
+                  </div>
+                )}
 
                 {fulfillmentType === 'delivery' ? (
                   <div className="flex items-center justify-between text-xs font-semibold text-neutral-muted">

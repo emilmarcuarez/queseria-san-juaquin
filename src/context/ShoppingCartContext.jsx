@@ -1,5 +1,6 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useMemo } from 'react';
 import { fetchLiveBcvExchangeRate } from '../services/bcvExchangeRateService';
+import promotionsShowcaseData from '../data/promotionsShowcaseData.json';
 
 export const ShoppingCartContext = createContext(null);
 
@@ -314,11 +315,67 @@ export const ShoppingCartProvider = ({ children }) => {
     return accumulatorCount + currentEntry.selectedQuantity;
   }, 0);
 
-  const totalCartAmountUsd = cartItemList.reduce((accumulatorAmount, currentEntry) => {
+  const rawSubtotalUsd = cartItemList.reduce((accumulatorAmount, currentEntry) => {
     return accumulatorAmount + (currentEntry.productPriceUsd * currentEntry.selectedQuantity);
   }, 0);
 
+  const appliedCombosList = useMemo(() => {
+    const activeCombos = [];
+
+    promotionsShowcaseData.forEach((promoDefinition) => {
+      const requiredProductIds = promoDefinition.matchingProductIds;
+      if (!requiredProductIds || requiredProductIds.length === 0 || !promoDefinition.comboPriceUsd) return;
+
+      const productQuantitiesInCart = requiredProductIds.map((requiredId) => {
+        const matchingCartItems = cartItemList.filter(
+          (cartEntry) => cartEntry.productIdentifier === requiredId
+        );
+        return matchingCartItems.reduce((totalQuantity, cartEntry) => totalQuantity + cartEntry.selectedQuantity, 0);
+      });
+
+      const completedCombosCount = Math.min(...productQuantitiesInCart);
+
+      if (completedCombosCount > 0) {
+        let singleBundleRegularSum = 0;
+        requiredProductIds.forEach((requiredId) => {
+          const matchingCartItem = cartItemList.find(
+            (cartEntry) => cartEntry.productIdentifier === requiredId
+          );
+          if (matchingCartItem) {
+            singleBundleRegularSum += matchingCartItem.productPriceUsd;
+          }
+        });
+
+        const comboSpecialPrice = promoDefinition.comboPriceUsd;
+        const singleComboSavings = Math.max(0, singleBundleRegularSum - comboSpecialPrice);
+        const totalComboSavings = singleComboSavings * completedCombosCount;
+
+        if (totalComboSavings > 0) {
+          activeCombos.push({
+            promoIdentifier: promoDefinition.promoIdentifier,
+            promoTitle: promoDefinition.promoTitle,
+            completedCombos: completedCombosCount,
+            regularBundlePrice: singleBundleRegularSum * completedCombosCount,
+            singleBundlePrice: singleBundleRegularSum,
+            discountAmount: totalComboSavings,
+            finalComboPrice: comboSpecialPrice * completedCombosCount,
+            singleComboPrice: comboSpecialPrice
+          });
+        }
+      }
+    });
+
+    return activeCombos;
+  }, [cartItemList]);
+
+  const totalComboDiscountUsd = appliedCombosList.reduce((accumulatorSavings, comboEntry) => {
+    return accumulatorSavings + comboEntry.discountAmount;
+  }, 0);
+
+  const totalCartAmountUsd = Math.max(0, rawSubtotalUsd - totalComboDiscountUsd);
   const totalCartAmountBcv = totalCartAmountUsd * exchangeRateBcv;
+  const rawSubtotalBcv = rawSubtotalUsd * exchangeRateBcv;
+  const totalComboDiscountBcv = totalComboDiscountUsd * exchangeRateBcv;
 
   const contextValue = {
     cartItemList,
@@ -336,6 +393,11 @@ export const ShoppingCartProvider = ({ children }) => {
     updateCartItemNote,
     clearCartItems,
     totalItemsCount,
+    rawSubtotalUsd,
+    rawSubtotalBcv,
+    appliedCombosList,
+    totalComboDiscountUsd,
+    totalComboDiscountBcv,
     totalCartAmountUsd,
     totalCartAmountBcv,
     exchangeRateBcv,

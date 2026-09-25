@@ -27,17 +27,20 @@ export const buildWhatsAppOrderUrl = ({
   fulfillmentType = 'delivery',
   selectedZone = null,
   pickupEstimatedTime = 'En 30 - 45 minutos',
-  deliveryCostUsd = 0
+  deliveryCostUsd = 0,
+  appliedCombosList = [],
+  totalComboDiscountUsd = 0
 }) => {
   const configuredPhoneNumber = import.meta.env.VITE_WHATSAPP_PHONE_NUMBER || '584146770016';
   const cleanDestinationNumber = configuredPhoneNumber.replace(/[^\d]/g, '');
 
-  const totalProductsUsd = cartItemList.reduce((accumulatorAmount, currentItem) => {
+  const rawProductsUsd = cartItemList.reduce((accumulatorAmount, currentItem) => {
     return accumulatorAmount + (currentItem.productPriceUsd * currentItem.selectedQuantity);
   }, 0);
 
+  const discountedProductsUsd = Math.max(0, rawProductsUsd - totalComboDiscountUsd);
   const appliedDeliveryCost = fulfillmentType === 'delivery' ? (selectedZone?.deliveryCostUsd || deliveryCostUsd || 0) : 0;
-  const finalTotalUsd = totalProductsUsd + appliedDeliveryCost;
+  const finalTotalUsd = discountedProductsUsd + appliedDeliveryCost;
   const finalTotalBcv = finalTotalUsd * exchangeRateBcv;
 
   const orderLinesText = cartItemList.map((cartEntryItem) => {
@@ -82,12 +85,22 @@ export const buildWhatsAppOrderUrl = ({
     notesDetailSection
   ].filter(Boolean);
 
-  const breakdownSection = fulfillmentType === 'delivery' && appliedDeliveryCost > 0
+  const combosAppliedLines = appliedCombosList.length > 0
     ? [
-      `*Subtotal:* $${totalProductsUsd.toFixed(2)}`,
-      `*Delivery:* $${appliedDeliveryCost.toFixed(2)}`
+      '*Combos y Promociones Aplicadas:*',
+      ...appliedCombosList.map((comboEntry) => {
+        return `• ${comboEntry.promoTitle} (x${comboEntry.completedCombos}): Precio Combo $${comboEntry.finalComboPrice.toFixed(2)} (Ahorro -$${comboEntry.discountAmount.toFixed(2)})`;
+      }),
+      ''
     ]
     : [];
+
+  const breakdownSection = [
+    `*Suma Regular Productos:* $${rawProductsUsd.toFixed(2)}`,
+    totalComboDiscountUsd > 0 ? `*Ahorro por Combos:* -$${totalComboDiscountUsd.toFixed(2)}` : null,
+    totalComboDiscountUsd > 0 ? `*Subtotal Productos:* $${discountedProductsUsd.toFixed(2)}` : null,
+    fulfillmentType === 'delivery' && appliedDeliveryCost > 0 ? `*Delivery:* $${appliedDeliveryCost.toFixed(2)}` : null
+  ].filter(Boolean);
 
   const fullOrderMessage = [
     '*QUESERÍA SAN JOAQUÍN*',
@@ -95,6 +108,7 @@ export const buildWhatsAppOrderUrl = ({
     '',
     ...orderMetadataDetails,
     '',
+    ...combosAppliedLines,
     '*Detalle de Productos:*',
     orderLinesText,
     '',
