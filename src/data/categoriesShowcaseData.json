@@ -1,0 +1,86 @@
+[
+  {
+    "categoryIdentifier": "todos",
+    "categoryTitle": "Todos los Productos",
+    "matchingProductIds": []
+  },
+  {
+    "categoryIdentifier": "quesos-frescos",
+    "categoryTitle": "Quesos Frescos",
+    "matchingProductIds": [
+      "queso-blanco-llanero-1kg",
+      "queso-paisa-pasteurizado-1kg",
+      "queso-palmizul-zuliano-1kg",
+      "queso-de-mano-fresco-pack",
+      "queso-telita-guayanes-fresco",
+      "nata-criolla-venezolana-pote",
+      "nata-criolla-pasteurizada-450g"
+    ]
+  },
+  {
+    "categoryIdentifier": "quesos-madurados",
+    "categoryTitle": "Quesos Madurados",
+    "matchingProductIds": [
+      "queso-de-ano-curado-wedge",
+      "queso-parmesano-curado-250g"
+    ]
+  },
+  {
+    "categoryIdentifier": "jamones-cortes",
+    "categoryTitle": "Jamones & Cortes",
+    "matchingProductIds": [
+      "plumrose-jamon-cocido-deli",
+      "jamon-espalda-ahumada-500g",
+      "pechuga-pavo-ahumada-hermo"
+    ]
+  },
+  {
+    "categoryIdentifier": "embutidos-tocineta",
+    "categoryTitle": "Embutidos & Tocineta",
+    "matchingProductIds": [
+      "plumrose-tocineta-ahumada-lonjas",
+      "plumrose-salchichas-wieners",
+      "mortadela-tapara-venezolana",
+      "diablitos-underwood-lata"
+    ]
+  },
+  {
+    "categoryIdentifier": "harinas-granos",
+    "categoryTitle": "Harinas & Granos",
+    "matchingProductIds": [
+      "harina-pan-blanca-1kg",
+      "harina-pan-amarilla-1kg",
+      "harina-juana-blanca-1kg",
+      "arroz-primor-blanco-1kg",
+      "pasta-primor-spaghetti-1kg"
+    ]
+  },
+  {
+    "categoryIdentifier": "viveres-salsas",
+    "categoryTitle": "Víveres & Salsas",
+    "matchingProductIds": [
+      "mayonesa-mavesa-frasco-470g",
+      "salsa-tomate-pampero-397g",
+      "cafe-fama-de-america-500g",
+      "aceite-maiz-dorado-1l"
+    ]
+  },
+  {
+    "categoryIdentifier": "panaderia-desayuno",
+    "categoryTitle": "Panadería & Desayuno",
+    "matchingProductIds": [
+      "margarina-mavesa-pote-1kg",
+      "pan-de-jamon-artesanal-tradicional",
+      "pan-sandwich-artesanal-rebanado"
+    ]
+  },
+  {
+    "categoryIdentifier": "dulces-bebidas",
+    "categoryTitle": "Dulces & Bebidas",
+    "matchingProductIds": [
+      "pirulin-lata-avellana-300g",
+      "maltin-polar-botella-pack",
+      "galletas-susy-maria-pack"
+    ]
+  }
+]

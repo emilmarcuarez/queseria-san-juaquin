@@ -1,7 +1,9 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import productsCatalogData from '../../data/productsCatalogData.json';
 import departmentsCatalogData from '../../data/departmentsCatalogData.json';
+import categoriesShowcaseData from '../../data/categoriesShowcaseData.json';
 import { ProductCardItem } from '../products/ProductCardItem';
+import { CategoryCircleSlider } from '../products/CategoryCircleSlider';
 
 export const StoreCatalogPage = ({
   initialDepartmentKey = 'todos',
@@ -26,10 +28,15 @@ export const StoreCatalogPage = ({
   const filteredAndSortedProducts = useMemo(() => {
     const normalizedSearchTerm = inPageSearchQuery.trim().toLowerCase();
 
+    const matchingCategoryConfig = categoriesShowcaseData.find(
+      (categoryEntry) => categoryEntry.categoryIdentifier === selectedDepartmentFilter
+    );
+
     const filteredResultList = productsCatalogData.filter((productItem) => {
-      const matchesDepartment =
+      const matchesDepartmentOrCategory =
         selectedDepartmentFilter === 'todos' ||
-        productItem.departmentIdentifier === selectedDepartmentFilter;
+        productItem.departmentIdentifier === selectedDepartmentFilter ||
+        (matchingCategoryConfig && matchingCategoryConfig.matchingProductIds.includes(productItem.productIdentifier));
 
       const matchesSearchTerm =
         !normalizedSearchTerm ||
@@ -37,7 +44,7 @@ export const StoreCatalogPage = ({
         productItem.productDescription.toLowerCase().includes(normalizedSearchTerm) ||
         productItem.productCategoryName.toLowerCase().includes(normalizedSearchTerm);
 
-      return matchesDepartment && matchesSearchTerm;
+      return matchesDepartmentOrCategory && matchesSearchTerm;
     });
 
     return filteredResultList.sort((firstProductItem, secondProductItem) => {
@@ -84,6 +91,12 @@ export const StoreCatalogPage = ({
   const activeDepartmentTitle = useMemo(() => {
     if (selectedDepartmentFilter === 'todos') {
       return 'Todas las Categorías';
+    }
+    const matchingShowcaseCategory = categoriesShowcaseData.find(
+      (categoryItem) => categoryItem.categoryIdentifier === selectedDepartmentFilter
+    );
+    if (matchingShowcaseCategory) {
+      return matchingShowcaseCategory.categoryTitle;
     }
     const matchingDepartment = departmentsCatalogData.find(
       (departmentItem) => departmentItem.departmentIdentifier === selectedDepartmentFilter
@@ -143,12 +156,19 @@ export const StoreCatalogPage = ({
             </div>
           </div>
 
+          <CategoryCircleSlider
+            departmentsCatalogList={departmentsCatalogData}
+            selectedDepartmentIdentifier={selectedDepartmentFilter}
+            onSelectDepartmentFilter={(selectedIdentifier) => setSelectedDepartmentFilter(selectedIdentifier)}
+            productsCatalogList={productsCatalogData}
+          />
+
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="flex flex-wrap items-center gap-2.5">
               <button
                 type="button"
                 onClick={() => setIsFilterModalOpen(true)}
-                className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-2 border shadow-2xs active:scale-95 ${
+                className={`h-9 px-3.5 rounded-xl text-xs font-bold transition-all cursor-pointer inline-flex items-center gap-2 border shadow-2xs active:scale-95 ${
                   selectedDepartmentFilter !== 'todos'
                     ? 'bg-emerald-50 text-[#114B2B] border-emerald-300 shadow-xs'
                     : 'bg-white text-neutral-800 border-neutral-200 hover:bg-neutral-50 hover:border-neutral-300'
@@ -164,12 +184,12 @@ export const StoreCatalogPage = ({
               </button>
 
               {selectedDepartmentFilter !== 'todos' && (
-                <div className="inline-flex items-center gap-1.5 bg-neutral-100 text-neutral-800 text-xs px-3 py-1.5 rounded-xl font-semibold border border-neutral-200">
+                <div className="h-9 inline-flex items-center gap-2 bg-neutral-100 text-neutral-800 text-xs px-3 rounded-xl font-semibold border border-neutral-200">
                   <span>{activeDepartmentTitle}</span>
                   <button
                     type="button"
                     onClick={() => setSelectedDepartmentFilter('todos')}
-                    className="text-neutral-400 hover:text-red-600 cursor-pointer ml-1 text-xs"
+                    className="w-4 h-4 rounded-full bg-neutral-200 hover:bg-neutral-300 text-neutral-600 hover:text-neutral-900 inline-flex items-center justify-center text-[10px] transition-colors cursor-pointer"
                     aria-label="Quitar filtro de categoría"
                   >
                     ✕
@@ -177,7 +197,7 @@ export const StoreCatalogPage = ({
                 </div>
               )}
 
-              <span className="text-xs font-semibold text-neutral-500 hidden sm:inline-block">
+              <span className="text-xs font-semibold text-neutral-500 hidden sm:inline-flex items-center h-9">
                 Mostrando {filteredAndSortedProducts.length} producto{filteredAndSortedProducts.length === 1 ? '' : 's'}
                 {inPageSearchQuery && ` para "${inPageSearchQuery}"`}
               </span>
@@ -186,7 +206,7 @@ export const StoreCatalogPage = ({
                 <button
                   type="button"
                   onClick={handleResetAllStoreFilters}
-                  className="text-xs font-bold text-red-600 hover:underline cursor-pointer flex items-center gap-1 ml-1"
+                  className="h-9 px-2.5 rounded-xl text-xs font-bold text-red-600 hover:text-red-700 hover:bg-red-50/60 cursor-pointer inline-flex items-center gap-1 transition-colors"
                 >
                   <span className="material-symbols-outlined text-sm">restart_alt</span>
                   <span>Restablecer</span>
@@ -198,7 +218,7 @@ export const StoreCatalogPage = ({
               <button
                 type="button"
                 onClick={() => setIsGroupedByCategoryActive(!isGroupedByCategoryActive)}
-                className={`px-3.5 py-2 rounded-xl text-xs font-bold border transition-all cursor-pointer flex items-center gap-2 whitespace-nowrap ${
+                className={`h-9 px-3.5 rounded-xl text-xs font-bold border transition-all cursor-pointer inline-flex items-center gap-2 whitespace-nowrap ${
                   isGroupedByCategoryActive
                     ? 'bg-emerald-50 text-[#114B2B] border-emerald-400 font-extrabold shadow-xs'
                     : 'bg-white text-neutral-700 border-neutral-200 hover:bg-neutral-50 shadow-2xs'

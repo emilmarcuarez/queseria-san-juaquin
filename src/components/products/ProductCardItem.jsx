@@ -6,7 +6,7 @@ export const ProductCardItem = ({ productItem, onSelectProduct }) => {
   const { addProductToCart, exchangeRateBcv, cartItemList } = useShoppingCart();
 
   const [addedFeedbackActive, setAddedFeedbackActive] = useState(false);
-  const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
+  const [isDetailsExpanded, setIsDetailsExpanded] = useState(false);
   const [isWeightModalOpen, setIsWeightModalOpen] = useState(false);
   const [cardOriginCoordinates, setCardOriginCoordinates] = useState(null);
 
@@ -85,15 +85,16 @@ export const ProductCardItem = ({ productItem, onSelectProduct }) => {
     }, 1200);
   };
 
-  const handleCardClick = () => {
+  const handleProductNavigation = (clickEvent) => {
+    clickEvent.stopPropagation();
     if (onSelectProduct) {
       onSelectProduct(productItem);
     }
   };
 
-  const handleToggleDescriptionExpand = (clickEvent) => {
+  const handleToggleDetailsExpand = (clickEvent) => {
     clickEvent.stopPropagation();
-    setIsDescriptionExpanded((previousState) => !previousState);
+    setIsDetailsExpanded((previousState) => !previousState);
   };
 
   const badgeBackgroundClass = productItem.promotionalBadgeStyle === 'bright'
@@ -101,8 +102,6 @@ export const ProductCardItem = ({ productItem, onSelectProduct }) => {
     : productItem.promotionalBadgeStyle === 'accent'
       ? 'bg-accent text-neutral-dark'
       : 'bg-primary text-white';
-
-  const isDescriptionLong = productItem.productDescription && productItem.productDescription.length > 50;
 
   const isAddButtonDisabled = isOutOfStock || isStockExhaustedInCart;
 
@@ -126,17 +125,13 @@ export const ProductCardItem = ({ productItem, onSelectProduct }) => {
       <div
         data-product-card="true"
         data-aos="fade-up"
-        onClick={handleCardClick}
-        className={`h-full bg-white rounded-2xl border border-neutral-200/90 p-3 sm:p-4 flex flex-col justify-between shadow-2xs hover:shadow-md transition-all relative group cursor-pointer ${isOutOfStock ? 'opacity-60' : ''}`}
+        className={`h-full bg-white rounded-2xl border border-neutral-200/90 p-3 sm:p-4 flex flex-col justify-between shadow-2xs hover:shadow-md transition-all relative group ${isOutOfStock ? 'opacity-60' : ''}`}
       >
         <div>
-          {productItem.promotionalBadgeText && (
-            <div className={`absolute top-2.5 left-2.5 z-10 text-[9px] sm:text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-md shadow-xs ${badgeBackgroundClass}`}>
-              {productItem.promotionalBadgeText}
-            </div>
-          )}
-
-          <div className="w-full aspect-square rounded-xl bg-surface-alt overflow-hidden mb-2.5 relative">
+          <div
+            onClick={handleProductNavigation}
+            className="w-full aspect-square rounded-xl bg-surface-alt overflow-hidden mb-2.5 relative cursor-pointer"
+          >
             <img
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
               alt={productItem.productTitle}
@@ -153,54 +148,23 @@ export const ProductCardItem = ({ productItem, onSelectProduct }) => {
           </div>
 
           <div>
-            <span className="text-[10px] sm:text-[11px] font-bold text-primary uppercase tracking-wider block mb-0.5 truncate">
-              {productItem.productCategoryName}
-            </span>
-
             <h3
+              onClick={handleProductNavigation}
               title={productItem.productTitle}
-              className="text-xs sm:text-sm font-bold text-neutral-900 group-hover:text-primary transition-colors leading-snug line-clamp-2 min-h-[2.2rem] sm:min-h-[2.5rem]"
+              className="text-xs sm:text-sm font-bold text-neutral-900 group-hover:text-primary transition-colors leading-snug line-clamp-2 min-h-[2.2rem] sm:min-h-[2.5rem] cursor-pointer"
             >
               {productItem.productTitle}
             </h3>
-
-            <div className="text-[10px] sm:text-[11px] text-neutral-500 leading-relaxed mt-1 mb-2">
-              {isDescriptionLong ? (
-                <span>
-                  {isDescriptionExpanded
-                    ? productItem.productDescription
-                    : `${productItem.productDescription.slice(0, 48)}...`}
-                  <button
-                    type="button"
-                    onClick={handleToggleDescriptionExpand}
-                    className="text-[10px] font-bold text-[#114B2B] hover:underline ml-1 cursor-pointer inline-block"
-                  >
-                    {isDescriptionExpanded ? 'ver menos' : 'ver más'}
-                  </button>
-                </span>
-              ) : (
-                <span>{productItem.productDescription}</span>
-              )}
-            </div>
           </div>
         </div>
 
         <div className="mt-auto pt-2.5 border-t border-neutral-100 flex flex-col gap-2">
           <div>
-            {isWeightBased && (
-              <div className="mb-1 flex items-center gap-1 text-[10px] font-extrabold text-emerald-800">
-                <span className="material-symbols-outlined text-[12px]">scale</span>
-                <span>Porciones: 250g • 500g • 1 Kg • Personalizado</span>
-              </div>
-            )}
             <div className="text-base sm:text-lg font-black text-neutral-900 leading-tight">
               ${productItem.productPriceUsd.toFixed(2)}{' '}
               <span className="text-[10px] sm:text-xs font-normal text-neutral-400">
                 / {productItem.productPriceUnit}
               </span>
-            </div>
-            <div className="text-[11px] sm:text-xs font-bold text-emerald-800 mt-0.5">
-              Ref. BCV: Bs. {priceBcvEquivalent}
             </div>
 
             {stockBadge && (
@@ -212,6 +176,62 @@ export const ProductCardItem = ({ productItem, onSelectProduct }) => {
               </div>
             )}
           </div>
+
+          <button
+            type="button"
+            onClick={handleToggleDetailsExpand}
+            className="w-full py-1.5 px-2 text-[11px] font-semibold text-neutral-600 hover:text-primary hover:bg-neutral-50 rounded-lg flex items-center justify-center gap-1 transition-colors border border-dashed border-neutral-200 cursor-pointer"
+          >
+            <span>{isDetailsExpanded ? 'Ocultar detalles' : 'Ver detalles'}</span>
+            <span className={`material-symbols-outlined text-[15px] transition-transform duration-200 ${isDetailsExpanded ? 'rotate-180' : ''}`}>
+              expand_more
+            </span>
+          </button>
+
+          {isDetailsExpanded && (
+            <div className="pt-2 pb-1 border-t border-neutral-100 flex flex-col gap-2 text-left">
+              <div className="flex flex-wrap items-center gap-1.5">
+                {productItem.promotionalBadgeText && (
+                  <span className={`text-[9px] font-extrabold uppercase px-2 py-0.5 rounded-md ${badgeBackgroundClass}`}>
+                    {productItem.promotionalBadgeText}
+                  </span>
+                )}
+                {productItem.productCategoryName && (
+                  <span className="text-[10px] font-bold text-primary uppercase tracking-wider">
+                    {productItem.productCategoryName}
+                  </span>
+                )}
+              </div>
+
+              {productItem.productDescription && (
+                <p className="text-[11px] text-neutral-600 leading-relaxed">
+                  {productItem.productDescription}
+                </p>
+              )}
+
+              {isWeightBased && (
+                <div className="flex items-center gap-1 text-[10px] font-bold text-emerald-800 bg-emerald-50/70 p-1.5 rounded-md border border-emerald-100">
+                  <span className="material-symbols-outlined text-[13px]">scale</span>
+                  <span>Porciones: 250g • 500g • 1 Kg • Personalizado</span>
+                </div>
+              )}
+
+              <div className="text-[11px] font-bold text-emerald-800">
+                Ref. BCV: Bs. {priceBcvEquivalent}
+              </div>
+
+              {onSelectProduct && (
+                <button
+                  type="button"
+                  onClick={handleProductNavigation}
+                  className="text-[11px] font-bold text-primary hover:underline flex items-center gap-0.5 cursor-pointer pt-0.5"
+                >
+                  <span>Ver ficha completa</span>
+                  <span className="material-symbols-outlined text-[13px]">arrow_forward</span>
+                </button>
+              )}
+            </div>
+          )}
 
           <button
             type="button"
