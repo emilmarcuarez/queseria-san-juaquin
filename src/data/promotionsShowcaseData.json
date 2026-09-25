@@ -1,0 +1,53 @@
+[
+  {
+    "promoIdentifier": "combo-arepero",
+    "promoTitle": "Combos San Joaquín: Arepero Criollo",
+    "promoSubtitle": "Lleva 1 Harina P.A.N. 1kg + 1 Queso Blanco Llanero + 1 Mavesa",
+    "promoBadge": "Ref. $6,99",
+    "promoBannerImage": "/promotions/promo_combo_arepero.jpg",
+    "matchingProductIds": [
+      "harina-pan-blanca-1kg",
+      "queso-blanco-llanero-1kg",
+      "margarina-mavesa-pote-1kg"
+    ],
+    "targetSearchFilter": "arepa"
+  },
+  {
+    "promoIdentifier": "especial-charcuteria",
+    "promoTitle": "Especial Charcutería",
+    "promoSubtitle": "Hasta 20% dcto en Jamón Plumrose + Tocineta Ahumada + Queso Paisa",
+    "promoBadge": "Ref. $8,49",
+    "promoBannerImage": "/promotions/promo_charcuteria_combo.jpg",
+    "matchingProductIds": [
+      "plumrose-jamon-cocido-deli",
+      "plumrose-tocineta-ahumada-lonjas",
+      "queso-paisa-pasteurizado-1kg"
+    ],
+    "targetSearchFilter": "plumrose"
+  },
+  {
+    "promoIdentifier": "combo-merienda",
+    "promoTitle": "Combo Merienda Dulzura",
+    "promoSubtitle": "Lleva 1 Lata Pirulin 300g + 2 Maltín Polar Botella",
+    "promoBadge": "Ref. $4,99",
+    "promoBannerImage": "/promotions/promo_combo_merienda.jpg",
+    "matchingProductIds": [
+      "pirulin-lata-avellana-300g",
+      "maltin-polar-botella-pack"
+    ],
+    "targetSearchFilter": "merienda"
+  },
+  {
+    "promoIdentifier": "combo-picadera",
+    "promoTitle": "Combo Picadera San Joaquín",
+    "promoSubtitle": "Salchichas Wieners Plumrose + Queso de Mano + Salsa Pampero",
+    "promoBadge": "Ref. $7,49",
+    "promoBannerImage": "/promotions/promo_combo_parrillero.jpg",
+    "matchingProductIds": [
+      "plumrose-salchichas-wieners",
+      "queso-de-mano-fresco-pack",
+      "salsa-tomate-pampero-397g"
+    ],
+    "targetSearchFilter": "picadera"
+  }
+]

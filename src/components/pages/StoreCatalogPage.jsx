@@ -4,13 +4,16 @@ import departmentsCatalogData from '../../data/departmentsCatalogData.json';
 import categoriesShowcaseData from '../../data/categoriesShowcaseData.json';
 import { ProductCardItem } from '../products/ProductCardItem';
 import { CategoryCircleSlider } from '../products/CategoryCircleSlider';
+import { PromotionalBannersCarousel } from '../common/PromotionalBannersCarousel';
 
 export const StoreCatalogPage = ({
   initialDepartmentKey = 'todos',
-  onSelectProduct
+  onSelectProduct,
+  initialPromotionFilter = null
 }) => {
   const [inPageSearchQuery, setInPageSearchQuery] = useState('');
   const [selectedDepartmentFilter, setSelectedDepartmentFilter] = useState(initialDepartmentKey);
+  const [selectedPromotionFilter, setSelectedPromotionFilter] = useState(initialPromotionFilter);
   const [selectedSortingOption, setSelectedSortingOption] = useState('destacados');
   const [isGroupedByCategoryActive, setIsGroupedByCategoryActive] = useState(false);
   const [currentPageIndex, setCurrentPageIndex] = useState(1);
@@ -22,8 +25,15 @@ export const StoreCatalogPage = ({
   }, []);
 
   useEffect(() => {
+    if (initialPromotionFilter) {
+      setSelectedPromotionFilter(initialPromotionFilter);
+      setSelectedDepartmentFilter('todos');
+    }
+  }, [initialPromotionFilter]);
+
+  useEffect(() => {
     setCurrentPageIndex(1);
-  }, [inPageSearchQuery, selectedDepartmentFilter, selectedSortingOption, isGroupedByCategoryActive]);
+  }, [inPageSearchQuery, selectedDepartmentFilter, selectedPromotionFilter, selectedSortingOption, isGroupedByCategoryActive]);
 
   const filteredAndSortedProducts = useMemo(() => {
     const normalizedSearchTerm = inPageSearchQuery.trim().toLowerCase();
@@ -38,13 +48,17 @@ export const StoreCatalogPage = ({
         productItem.departmentIdentifier === selectedDepartmentFilter ||
         (matchingCategoryConfig && matchingCategoryConfig.matchingProductIds.includes(productItem.productIdentifier));
 
+      const matchesPromotion =
+        !selectedPromotionFilter ||
+        selectedPromotionFilter.matchingProductIds.includes(productItem.productIdentifier);
+
       const matchesSearchTerm =
         !normalizedSearchTerm ||
         productItem.productTitle.toLowerCase().includes(normalizedSearchTerm) ||
         productItem.productDescription.toLowerCase().includes(normalizedSearchTerm) ||
         productItem.productCategoryName.toLowerCase().includes(normalizedSearchTerm);
 
-      return matchesDepartmentOrCategory && matchesSearchTerm;
+      return matchesDepartmentOrCategory && matchesSearchTerm && matchesPromotion;
     });
 
     return filteredResultList.sort((firstProductItem, secondProductItem) => {
@@ -59,7 +73,7 @@ export const StoreCatalogPage = ({
       }
       return (secondProductItem.isFeaturedProduct ? 1 : 0) - (firstProductItem.isFeaturedProduct ? 1 : 0);
     });
-  }, [inPageSearchQuery, selectedDepartmentFilter, selectedSortingOption]);
+  }, [inPageSearchQuery, selectedDepartmentFilter, selectedPromotionFilter, selectedSortingOption]);
 
   const totalCalculatedPages = Math.ceil(filteredAndSortedProducts.length / productsRenderLimitPerPage) || 1;
 
@@ -111,6 +125,7 @@ export const StoreCatalogPage = ({
   const handleResetAllStoreFilters = () => {
     setInPageSearchQuery('');
     setSelectedDepartmentFilter('todos');
+    setSelectedPromotionFilter(null);
     setSelectedSortingOption('destacados');
     setIsGroupedByCategoryActive(false);
     setCurrentPageIndex(1);
@@ -159,8 +174,18 @@ export const StoreCatalogPage = ({
           <CategoryCircleSlider
             departmentsCatalogList={departmentsCatalogData}
             selectedDepartmentIdentifier={selectedDepartmentFilter}
-            onSelectDepartmentFilter={(selectedIdentifier) => setSelectedDepartmentFilter(selectedIdentifier)}
+            onSelectDepartmentFilter={(selectedIdentifier) => {
+              setSelectedDepartmentFilter(selectedIdentifier);
+              setSelectedPromotionFilter(null);
+            }}
             productsCatalogList={productsCatalogData}
+          />
+
+          <PromotionalBannersCarousel
+            onSelectPromotion={(chosenPromotion) => {
+              setSelectedPromotionFilter(chosenPromotion);
+              setSelectedDepartmentFilter('todos');
+            }}
           />
 
           <div className="flex flex-wrap items-center justify-between gap-3">
@@ -169,7 +194,7 @@ export const StoreCatalogPage = ({
                 type="button"
                 onClick={() => setIsFilterModalOpen(true)}
                 className={`h-9 px-3.5 rounded-xl text-xs font-bold transition-all cursor-pointer inline-flex items-center gap-2 border shadow-2xs active:scale-95 ${
-                  selectedDepartmentFilter !== 'todos'
+                  selectedDepartmentFilter !== 'todos' || selectedPromotionFilter
                     ? 'bg-emerald-50 text-[#114B2B] border-emerald-300 shadow-xs'
                     : 'bg-white text-neutral-800 border-neutral-200 hover:bg-neutral-50 hover:border-neutral-300'
                 }`}
@@ -177,13 +202,28 @@ export const StoreCatalogPage = ({
               >
                 <span className="material-symbols-outlined text-base text-[#114B2B]">tune</span>
                 <span>Filtros</span>
-                {selectedDepartmentFilter !== 'todos' && (
+                {(selectedDepartmentFilter !== 'todos' || selectedPromotionFilter) && (
                   <span className="w-2 h-2 rounded-full bg-[#114B2B]"></span>
                 )}
                 <span className="material-symbols-outlined text-xs text-neutral-400">expand_more</span>
               </button>
 
-              {selectedDepartmentFilter !== 'todos' && (
+              {selectedPromotionFilter && (
+                <div className="h-9 inline-flex items-center gap-2 bg-yellow-50 text-yellow-950 text-xs px-3 rounded-xl font-bold border border-yellow-300 shadow-2xs">
+                  <span className="material-symbols-outlined text-sm text-yellow-700">local_offer</span>
+                  <span>{selectedPromotionFilter.promoTitle}</span>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedPromotionFilter(null)}
+                    className="w-4 h-4 rounded-full bg-yellow-200 hover:bg-yellow-300 text-yellow-800 inline-flex items-center justify-center text-[10px] transition-colors cursor-pointer"
+                    aria-label="Quitar filtro de promoción"
+                  >
+                    ✕
+                  </button>
+                </div>
+              )}
+
+              {selectedDepartmentFilter !== 'todos' && !selectedPromotionFilter && (
                 <div className="h-9 inline-flex items-center gap-2 bg-neutral-100 text-neutral-800 text-xs px-3 rounded-xl font-semibold border border-neutral-200">
                   <span>{activeDepartmentTitle}</span>
                   <button
@@ -202,7 +242,7 @@ export const StoreCatalogPage = ({
                 {inPageSearchQuery && ` para "${inPageSearchQuery}"`}
               </span>
 
-              {(inPageSearchQuery || selectedDepartmentFilter !== 'todos') && (
+              {(inPageSearchQuery || selectedDepartmentFilter !== 'todos' || selectedPromotionFilter) && (
                 <button
                   type="button"
                   onClick={handleResetAllStoreFilters}

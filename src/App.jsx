@@ -17,6 +17,7 @@ import { HomeFeaturedProductsPreview } from './components/home/HomeFeaturedProdu
 import { PromotionalAisleBanner } from './components/home/PromotionalAisleBanner';
 import { HowToBuyInstructionSteps } from './components/home/HowToBuyInstructionSteps';
 import { CustomerTestimonialsCarousel } from './components/home/CustomerTestimonialsCarousel';
+import { PromotionalBannersCarousel } from './components/common/PromotionalBannersCarousel';
 import { StoreCatalogPage } from './components/pages/StoreCatalogPage';
 import { AboutUsPage } from './components/pages/AboutUsPage';
 import { ContactUsPage } from './components/pages/ContactUsPage';
@@ -29,6 +30,7 @@ const StorefrontContent = () => {
   const [activePageIdentifier, setActivePageIdentifier] = useState('inicio');
   const [selectedProductDetail, setSelectedProductDetail] = useState(null);
   const [storeInitialDepartmentKey, setStoreInitialDepartmentKey] = useState('todos');
+  const [storeInitialPromotionFilter, setStoreInitialPromotionFilter] = useState(null);
 
   const {
     searchQueryString,
@@ -92,6 +94,13 @@ const StorefrontContent = () => {
 
   const handleDepartmentSelectFromHome = (chosenDepartmentIdentifier) => {
     setStoreInitialDepartmentKey(chosenDepartmentIdentifier);
+    setStoreInitialPromotionFilter(null);
+    handleNavigateToPage('tienda');
+  };
+
+  const handlePromotionSelectFromHome = (chosenPromoEntry) => {
+    setStoreInitialPromotionFilter(chosenPromoEntry);
+    setStoreInitialDepartmentKey('todos');
     handleNavigateToPage('tienda');
   };
 
@@ -137,6 +146,10 @@ const StorefrontContent = () => {
               />
             </div>
 
+            <PromotionalBannersCarousel
+              onSelectPromotion={handlePromotionSelectFromHome}
+            />
+
             <HomeFeaturedProductsPreview
               onNavigateToStore={handleNavigateToPage}
               onSelectProduct={handleSelectProduct}
@@ -155,6 +168,7 @@ const StorefrontContent = () => {
         {activePageIdentifier === 'tienda' && (
           <StoreCatalogPage
             initialDepartmentKey={storeInitialDepartmentKey}
+            initialPromotionFilter={storeInitialPromotionFilter}
             onSelectProduct={handleSelectProduct}
           />
         )}
