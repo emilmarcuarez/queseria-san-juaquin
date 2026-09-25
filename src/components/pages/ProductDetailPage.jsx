@@ -16,7 +16,7 @@ export const ProductDetailPage = ({
 }) => {
   const { addProductToCart, exchangeRateBcv } = useShoppingCart();
 
-  const isWeightBasedProduct = productItem?.productPriceUnit?.toLowerCase() === 'kg';
+  const isWeightBasedProduct = productItem?.departmentIdentifier === 'quesos-lacteos' && productItem?.productPriceUnit?.toLowerCase() === 'kg';
 
   const [selectedPresetKey, setSelectedPresetKey] = useState('500g');
   const [customGramsInput, setCustomGramsInput] = useState(350);

@@ -29,7 +29,7 @@ export const CartItemRow = ({ cartItemEntry }) => {
   const portionFactor = (cartItemEntry.basePriceUsd && cartItemEntry.basePriceUsd > 0)
     ? cartItemEntry.productPriceUsd / cartItemEntry.basePriceUsd
     : 1;
-  const isWeightBasedItem = cartItemEntry.productPriceUnit === 'kg';
+  const isWeightBasedItem = cartItemEntry.departmentIdentifier === 'quesos-lacteos' && cartItemEntry.productPriceUnit === 'kg';
   const kgConsumedByThisEntry = isWeightBasedItem
     ? cartItemEntry.selectedQuantity * portionFactor
     : cartItemEntry.selectedQuantity;

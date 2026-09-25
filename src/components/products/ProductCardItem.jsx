@@ -62,7 +62,7 @@ export const ProductCardItem = ({ productItem, onSelectProduct }) => {
     maximumFractionDigits: 2
   });
 
-  const isWeightBased = productItem.productPriceUnit === 'kg';
+  const isWeightBased = productItem.departmentIdentifier === 'quesos-lacteos' && productItem.productPriceUnit === 'kg';
 
   const totalStock = productItem.availableStockQuantity ?? Infinity;
   const isOutOfStock = totalStock === 0;
