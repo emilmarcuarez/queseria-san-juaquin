@@ -14,14 +14,14 @@ export const HowToBuyFloatingButton = () => {
       type="button"
       id="tour-help-button"
       onClick={handleLaunchTour}
-      aria-label="¿Cómo comprar? — Iniciar tutorial"
-      className="fixed right-0 top-1/2 -translate-y-1/2 z-40 bg-[#114B2B] hover:bg-[#0d3b22] text-white rounded-l-xl shadow-lg cursor-pointer transition-colors duration-200 flex items-center justify-center px-2.5 py-4"
-      style={{ writingMode: 'vertical-rl' }}
+      aria-label="¿Cómo comprar? — Iniciar tutorial interactivo"
+      className="fixed bottom-5 left-4 z-30 bg-white/95 hover:bg-emerald-50 text-[#114B2B] border border-neutral-200/90 shadow-md hover:shadow-lg rounded-full px-3.5 py-2 flex items-center gap-1.5 text-xs font-bold backdrop-blur-sm transition-all hover:scale-105 active:scale-95 cursor-pointer"
     >
-      <span className="flex items-center gap-1.5" style={{ transform: 'rotate(180deg)' }}>
-        <span className="material-symbols-outlined" style={{ fontSize: '13px' }}>help</span>
-        <span className="text-[10px] font-black uppercase tracking-[0.18em] whitespace-nowrap">Cómo comprar</span>
+      <span className="material-symbols-outlined text-base text-[#114B2B]">
+        help
       </span>
+      <span className="tracking-tight">¿Cómo comprar?</span>
     </button>
   );
 };
+

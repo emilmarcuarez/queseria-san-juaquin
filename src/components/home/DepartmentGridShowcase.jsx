@@ -25,7 +25,7 @@ const CategoryHomeCircleItem = ({
     <button
       type="button"
       onClick={() => onSelectCategory(categoryIdentifier)}
-      className="flex flex-col items-center flex-shrink-0 group cursor-pointer focus:outline-none transition-transform active:scale-95 px-2 sm:px-3"
+      className="flex flex-col items-center flex-shrink-0 group cursor-pointer focus:outline-none transition-transform active:scale-95 w-[104px] sm:w-[124px] md:w-[136px]"
       aria-label={`Explorar categoría ${categoryTitle}`}
     >
       <div className="relative p-1.5 rounded-full transition-all duration-300 ring-2 ring-neutral-200 group-hover:ring-[#114B2B] group-hover:scale-105 shadow-sm group-hover:shadow-md bg-white">
@@ -231,7 +231,7 @@ export const DepartmentGridShowcase = ({ onSelectDepartment }) => {
           <div
             ref={sliderContainerReference}
             onScroll={handleSliderScroll}
-            className="flex items-start justify-start gap-4 sm:gap-6 overflow-x-auto scroll-smooth py-3 px-3 sm:px-6"
+            className="flex items-start justify-start gap-3 sm:gap-6 overflow-x-auto scroll-smooth py-3 pl-3 sm:pl-6 pr-14 sm:pr-20"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
             {categoryShowcaseEntries.map((categoryItem) => (
@@ -247,7 +247,7 @@ export const DepartmentGridShowcase = ({ onSelectDepartment }) => {
           </div>
 
           <div
-            className={`pointer-events-none absolute right-0 top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-l from-white via-white/80 to-transparent z-10 transition-opacity duration-300 ${
+            className={`pointer-events-none absolute right-0 top-0 bottom-0 w-14 sm:w-24 bg-gradient-to-l from-white via-white/50 to-transparent z-10 transition-opacity duration-300 ${
               canScrollRight ? 'opacity-100' : 'opacity-0'
             }`}
           />

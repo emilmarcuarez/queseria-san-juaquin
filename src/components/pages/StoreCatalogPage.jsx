@@ -146,14 +146,19 @@ export const StoreCatalogPage = ({
   return (
     <div className="w-full bg-[#fafafa] min-h-screen">
       <div className="w-full bg-white border-b border-neutral-200 shadow-2xs">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-10 lg:pt-12 pb-6 sm:pb-8 space-y-5">
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 sm:gap-6 pb-5 border-b border-neutral-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-3 sm:pt-5 lg:pt-6 pb-4 sm:pb-5 space-y-3 sm:space-y-4">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 sm:gap-5 pb-3 sm:pb-4 border-b border-neutral-100">
             <div>
-              <h1 className="text-3xl sm:text-4xl font-black text-neutral-900 tracking-tight">
-                Quesería San Joaquín
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-neutral-900 tracking-tight">
+                Charcutería fresca a tu mesa
               </h1>
-              <p className="text-xs sm:text-sm text-neutral-500 mt-1 font-medium">
-                Charcutería al corte, quesería fresca y despensa completa con tasa oficial BCV.
+              <p className="text-xs sm:text-sm text-neutral-500 mt-1 font-medium flex items-center flex-wrap gap-1.5">
+                <span>Charcutería al corte y despensa completa</span>
+                <span className="text-neutral-300 hidden sm:inline">•</span>
+                <span className="inline-flex items-center gap-1 text-emerald-700 font-semibold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/60 text-[11px] sm:text-xs">
+                  <span className="material-symbols-outlined text-xs">verified</span>
+                  Tasa oficial BCV garantizada
+                </span>
               </p>
             </div>
 
@@ -167,7 +172,7 @@ export const StoreCatalogPage = ({
                   value={inPageSearchQuery}
                   onChange={(inputEvent) => setInPageSearchQuery(inputEvent.target.value)}
                   placeholder="Buscar en la tienda: Harina PAN, queso, tocineta..."
-                  className="w-full bg-neutral-50 border border-neutral-200 rounded-xl pl-11 pr-10 py-3 text-sm text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#114B2B] focus:border-transparent transition-all shadow-xs"
+                  className="w-full bg-neutral-50 border border-neutral-200 rounded-xl pl-11 pr-10 py-2.5 sm:py-3 text-sm text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#114B2B] focus:border-transparent transition-all shadow-xs"
                 />
                 {inPageSearchQuery && (
                   <button

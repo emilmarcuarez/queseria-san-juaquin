@@ -117,8 +117,8 @@ const StorefrontContent = () => {
   };
 
   const mainTopPaddingClass = (activePageIdentifier === 'tienda' || activePageIdentifier === 'producto')
-    ? 'pt-[124px] sm:pt-[140px] lg:pt-[168px]'
-    : 'pt-[162px] sm:pt-[150px] lg:pt-[168px]';
+    ? 'pt-[88px] sm:pt-[108px] lg:pt-[116px]'
+    : 'pt-[138px] sm:pt-[120px] lg:pt-[116px]';
 
   return (
     <div className="min-h-screen flex flex-col bg-[#fafafa]">

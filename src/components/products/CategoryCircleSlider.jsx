@@ -25,7 +25,7 @@ const CategoryCircleItem = ({
     <button
       type="button"
       onClick={() => onSelectCategory(categoryIdentifier)}
-      className="flex flex-col items-center flex-shrink-0 group cursor-pointer focus:outline-none transition-transform active:scale-95"
+      className="flex flex-col items-center flex-shrink-0 group cursor-pointer focus:outline-none transition-transform active:scale-95 w-[76px] sm:w-[92px]"
       aria-label={`Filtrar por ${categoryTitle}`}
     >
       <div
@@ -62,7 +62,7 @@ const CategoryCircleItem = ({
       </div>
 
       <span
-        className={`text-[11px] sm:text-xs font-bold text-center leading-tight mt-2 max-w-[80px] sm:max-w-[96px] line-clamp-2 transition-colors ${
+        className={`text-[11px] sm:text-xs font-bold text-center leading-tight mt-2 max-w-[76px] sm:max-w-[92px] line-clamp-2 transition-colors ${
           isSelectedCategory
             ? 'text-[#114B2B] font-extrabold'
             : 'text-neutral-700 group-hover:text-[#114B2B]'
@@ -217,7 +217,7 @@ export const CategoryCircleSlider = ({
       <div
         ref={sliderContainerReference}
         onScroll={handleSliderScroll}
-        className="flex items-start gap-4 sm:gap-6 overflow-x-auto scroll-smooth py-2 px-6 sm:px-10"
+        className="flex items-start gap-3 sm:gap-5 overflow-x-auto scroll-smooth py-2 pl-3 sm:pl-6 pr-12 sm:pr-16"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
         {categoriesSliderEntries.map((categoryEntry) => (
@@ -234,7 +234,7 @@ export const CategoryCircleSlider = ({
       </div>
 
       <div
-        className={`pointer-events-none absolute right-0 top-0 bottom-0 w-10 sm:w-16 bg-gradient-to-l from-white via-white/80 to-transparent z-10 transition-opacity duration-300 ${
+        className={`pointer-events-none absolute right-0 top-0 bottom-0 w-14 sm:w-20 bg-gradient-to-l from-white via-white/50 to-transparent z-10 transition-opacity duration-300 ${
           canScrollRight ? 'opacity-100' : 'opacity-0'
         }`}
       />

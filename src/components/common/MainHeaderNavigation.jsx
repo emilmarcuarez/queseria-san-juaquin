@@ -86,13 +86,13 @@ export const MainHeaderNavigation = ({
 
       <div id="tour-header-wrapper" className="w-full bg-white border-b border-neutral-100 relative z-40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="h-16 sm:h-20 flex items-center justify-between gap-3 sm:gap-6">
-          <div className="flex items-center gap-3 shrink-0">
+        <div className="h-14 sm:h-18 flex items-center justify-between gap-2.5 sm:gap-6">
+          <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
             <button
               id="tour-mobile-menu-btn"
               type="button"
               onClick={() => (isMobileMenuOpen ? closeMenu() : openMenu())}
-              className="lg:hidden inline-flex items-center justify-center w-10 h-10 rounded-xl border border-neutral-200 text-neutral-800 hover:bg-neutral-50 transition-colors cursor-pointer active:scale-95"
+              className="lg:hidden inline-flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-xl border border-neutral-200 text-neutral-800 hover:bg-neutral-50 transition-colors cursor-pointer active:scale-95"
               aria-label="Abrir menú de navegación"
               aria-expanded={isMobileMenuOpen}
             >
@@ -104,18 +104,18 @@ export const MainHeaderNavigation = ({
             <button
               type="button"
               onClick={handleBrandLogoClick}
-              className="flex items-center gap-2.5 sm:gap-3 text-left cursor-pointer"
+              className="flex items-center gap-2 sm:gap-3 text-left cursor-pointer"
             >
               <img
                 src="/images/queseria_san_juaquin_logo.png"
                 alt="Quesería San Joaquín Logo"
-                className="w-10 h-10 sm:w-12 sm:h-12 object-contain transition-transform hover:scale-105"
+                className="w-9 h-9 sm:w-11 sm:h-11 object-contain transition-transform hover:scale-105"
               />
               <div className="flex flex-col">
-                <span className="font-extrabold text-sm sm:text-lg lg:text-xl text-[#114B2B] tracking-tight uppercase leading-tight">
+                <span className="font-extrabold text-sm sm:text-base lg:text-lg text-[#114B2B] tracking-tight uppercase leading-tight">
                   Quesería San Joaquín
                 </span>
-                <span className="text-[10px] sm:text-xs font-semibold text-neutral-500 tracking-wider uppercase">
+                <span className="text-[9.5px] sm:text-[11px] font-semibold text-neutral-500 tracking-wider uppercase">
                   Mercado &amp; Charcutería
                 </span>
               </div>
@@ -151,6 +151,18 @@ export const MainHeaderNavigation = ({
           ) : (
             <div className="hidden lg:flex flex-1" />
           )}
+
+          <div className="flex sm:hidden items-center gap-2 shrink-0">
+            <a
+              href={directWhatsAppHelpUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200/70 transition-colors shadow-2xs active:scale-95"
+              aria-label="Atención directa por WhatsApp"
+            >
+              <span className="material-symbols-outlined text-[20px]">chat</span>
+            </a>
+          </div>
 
           <div className="hidden sm:flex items-center gap-2 sm:gap-3 shrink-0">
             <button
