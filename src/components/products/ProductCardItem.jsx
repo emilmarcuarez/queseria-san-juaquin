@@ -180,10 +180,13 @@ export const ProductCardItem = ({ productItem, onSelectProduct }) => {
           <button
             type="button"
             onClick={handleToggleDetailsExpand}
-            className="w-full py-1.5 px-2 text-[11px] font-semibold text-neutral-600 hover:text-primary hover:bg-neutral-50 rounded-lg flex items-center justify-center gap-1 transition-colors border border-dashed border-neutral-200 cursor-pointer"
+            className="group/details self-center mx-auto text-[11px] font-medium text-neutral-400 hover:text-[#114B2B] inline-flex items-center gap-1 transition-colors cursor-pointer py-0.5"
+            aria-expanded={isDetailsExpanded}
           >
-            <span>{isDetailsExpanded ? 'Ocultar detalles' : 'Ver detalles'}</span>
-            <span className={`material-symbols-outlined text-[15px] transition-transform duration-200 ${isDetailsExpanded ? 'rotate-180' : ''}`}>
+            <span className="group-hover/details:underline underline-offset-2">
+              {isDetailsExpanded ? 'Ocultar detalles' : 'Ver detalles'}
+            </span>
+            <span className={`material-symbols-outlined text-[14px] text-neutral-400 group-hover/details:text-[#114B2B] transition-transform duration-300 ${isDetailsExpanded ? 'rotate-180' : ''}`}>
               expand_more
             </span>
           </button>
