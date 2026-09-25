@@ -2,11 +2,13 @@
   {
     "categoryIdentifier": "todos",
     "categoryTitle": "Todos los Productos",
+    "categoryAssignedImage": null,
     "matchingProductIds": []
   },
   {
     "categoryIdentifier": "quesos-frescos",
     "categoryTitle": "Quesos Frescos",
+    "categoryAssignedImage": null,
     "matchingProductIds": [
       "queso-blanco-llanero-1kg",
       "queso-paisa-pasteurizado-1kg",
@@ -20,6 +22,7 @@
   {
     "categoryIdentifier": "quesos-madurados",
     "categoryTitle": "Quesos Madurados",
+    "categoryAssignedImage": null,
     "matchingProductIds": [
       "queso-de-ano-curado-wedge",
       "queso-parmesano-curado-250g"
@@ -28,6 +31,7 @@
   {
     "categoryIdentifier": "jamones-cortes",
     "categoryTitle": "Jamones & Cortes",
+    "categoryAssignedImage": null,
     "matchingProductIds": [
       "plumrose-jamon-cocido-deli",
       "jamon-espalda-ahumada-500g",
@@ -37,6 +41,7 @@
   {
     "categoryIdentifier": "embutidos-tocineta",
     "categoryTitle": "Embutidos & Tocineta",
+    "categoryAssignedImage": null,
     "matchingProductIds": [
       "plumrose-tocineta-ahumada-lonjas",
       "plumrose-salchichas-wieners",
@@ -47,6 +52,7 @@
   {
     "categoryIdentifier": "harinas-granos",
     "categoryTitle": "Harinas & Granos",
+    "categoryAssignedImage": null,
     "matchingProductIds": [
       "harina-pan-blanca-1kg",
       "harina-pan-amarilla-1kg",
@@ -58,6 +64,7 @@
   {
     "categoryIdentifier": "viveres-salsas",
     "categoryTitle": "Víveres & Salsas",
+    "categoryAssignedImage": null,
     "matchingProductIds": [
       "mayonesa-mavesa-frasco-470g",
       "salsa-tomate-pampero-397g",
@@ -68,6 +75,7 @@
   {
     "categoryIdentifier": "panaderia-desayuno",
     "categoryTitle": "Panadería & Desayuno",
+    "categoryAssignedImage": null,
     "matchingProductIds": [
       "margarina-mavesa-pote-1kg",
       "pan-de-jamon-artesanal-tradicional",
@@ -77,6 +85,7 @@
   {
     "categoryIdentifier": "dulces-bebidas",
     "categoryTitle": "Dulces & Bebidas",
+    "categoryAssignedImage": null,
     "matchingProductIds": [
       "pirulin-lata-avellana-300g",
       "maltin-polar-botella-pack",

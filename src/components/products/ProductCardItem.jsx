@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useShoppingCart } from '../../hooks/useShoppingCart';
 import { WeightSelectionModal } from './WeightSelectionModal';
 
@@ -7,8 +7,19 @@ export const ProductCardItem = ({ productItem, onSelectProduct }) => {
 
   const [addedFeedbackActive, setAddedFeedbackActive] = useState(false);
   const [isDetailsExpanded, setIsDetailsExpanded] = useState(false);
+  const [isMobileDetailsModalOpen, setIsMobileDetailsModalOpen] = useState(false);
+  const [isMobileDevice, setIsMobileDevice] = useState(false);
   const [isWeightModalOpen, setIsWeightModalOpen] = useState(false);
   const [cardOriginCoordinates, setCardOriginCoordinates] = useState(null);
+
+  useEffect(() => {
+    const handleResizeScreen = () => {
+      setIsMobileDevice(window.innerWidth < 768);
+    };
+    handleResizeScreen();
+    window.addEventListener('resize', handleResizeScreen);
+    return () => window.removeEventListener('resize', handleResizeScreen);
+  }, []);
 
   const priceBcvEquivalent = (productItem.productPriceUsd * exchangeRateBcv).toLocaleString('es-VE', {
     minimumFractionDigits: 2,
@@ -94,7 +105,11 @@ export const ProductCardItem = ({ productItem, onSelectProduct }) => {
 
   const handleToggleDetailsExpand = (clickEvent) => {
     clickEvent.stopPropagation();
-    setIsDetailsExpanded((previousState) => !previousState);
+    if (isMobileDevice) {
+      setIsMobileDetailsModalOpen(true);
+    } else {
+      setIsDetailsExpanded((previousState) => !previousState);
+    }
   };
 
   const badgeBackgroundClass = productItem.promotionalBadgeStyle === 'bright'
@@ -166,6 +181,9 @@ export const ProductCardItem = ({ productItem, onSelectProduct }) => {
                 / {productItem.productPriceUnit}
               </span>
             </div>
+            <div className="text-[11px] font-semibold text-neutral-500 mt-0.5">
+              Bs. {priceBcvEquivalent}
+            </div>
 
             {stockBadge && (
               <div className={`inline-flex items-center gap-1 mt-1.5 text-[10px] font-bold px-2 py-0.5 rounded-full ${stockBadge.className}`}>
@@ -181,7 +199,7 @@ export const ProductCardItem = ({ productItem, onSelectProduct }) => {
             type="button"
             onClick={handleToggleDetailsExpand}
             className="group/details self-center mx-auto text-[11px] font-medium text-neutral-400 hover:text-[#114B2B] inline-flex items-center gap-1 transition-colors cursor-pointer py-0.5"
-            aria-expanded={isDetailsExpanded}
+            aria-expanded={isDetailsExpanded || isMobileDetailsModalOpen}
           >
             <span className="group-hover/details:underline underline-offset-2">
               {isDetailsExpanded ? 'Ocultar detalles' : 'Ver detalles'}
@@ -191,7 +209,7 @@ export const ProductCardItem = ({ productItem, onSelectProduct }) => {
             </span>
           </button>
 
-          {isDetailsExpanded && (
+          {!isMobileDevice && isDetailsExpanded && (
             <div className="pt-2 pb-1 border-t border-neutral-100 flex flex-col gap-2 text-left">
               <div className="flex flex-wrap items-center gap-1.5">
                 {productItem.promotionalBadgeText && (
@@ -218,10 +236,6 @@ export const ProductCardItem = ({ productItem, onSelectProduct }) => {
                   <span>Porciones: 250g • 500g • 1 Kg • Personalizado</span>
                 </div>
               )}
-
-              <div className="text-[11px] font-bold text-emerald-800">
-                Ref. BCV: Bs. {priceBcvEquivalent}
-              </div>
 
               {onSelectProduct && (
                 <button
@@ -266,6 +280,143 @@ export const ProductCardItem = ({ productItem, onSelectProduct }) => {
           </button>
         </div>
       </div>
+
+      {isMobileDetailsModalOpen && (
+        <div
+          onClick={() => setIsMobileDetailsModalOpen(false)}
+          className="fixed inset-0 bg-black/60 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 backdrop-blur-xs animate-fadeIn"
+        >
+          <div
+            onClick={(clickEvent) => clickEvent.stopPropagation()}
+            className="bg-white w-full max-w-lg rounded-t-3xl sm:rounded-2xl shadow-2xl p-5 max-h-[88vh] overflow-y-auto flex flex-col gap-3 relative"
+          >
+            <div className="w-12 h-1.5 bg-neutral-300 rounded-full mx-auto mb-1 sm:hidden" />
+
+            <button
+              type="button"
+              onClick={() => setIsMobileDetailsModalOpen(false)}
+              className="absolute top-4 right-4 w-8 h-8 rounded-full bg-neutral-100 hover:bg-neutral-200 text-neutral-500 flex items-center justify-center cursor-pointer transition-colors"
+              aria-label="Cerrar detalles"
+            >
+              <span className="material-symbols-outlined text-base">close</span>
+            </button>
+
+            <div className="w-full aspect-[4/3] rounded-2xl bg-surface-alt overflow-hidden relative">
+              <img
+                src={productItem.productImage}
+                alt={productItem.productTitle}
+                className="w-full h-full object-cover"
+              />
+              {productItem.promotionalBadgeText && (
+                <div className={`absolute top-3 left-3 text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-md shadow-xs ${badgeBackgroundClass}`}>
+                  {productItem.promotionalBadgeText}
+                </div>
+              )}
+            </div>
+
+            <div>
+              {productItem.productCategoryName && (
+                <span className="text-xs font-bold text-primary uppercase tracking-wider block mb-1">
+                  {productItem.productCategoryName}
+                </span>
+              )}
+              <h2 className="text-lg font-black text-neutral-900 leading-snug">
+                {productItem.productTitle}
+              </h2>
+            </div>
+
+            <div className="flex items-baseline justify-between gap-2 py-2 border-y border-neutral-100">
+              <div>
+                <div className="text-xl font-black text-neutral-900">
+                  ${productItem.productPriceUsd.toFixed(2)}{' '}
+                  <span className="text-xs font-normal text-neutral-400">
+                    / {productItem.productPriceUnit}
+                  </span>
+                </div>
+                <div className="text-xs font-bold text-emerald-800 mt-0.5">
+                  Ref. BCV: Bs. {priceBcvEquivalent}
+                </div>
+              </div>
+
+              {stockBadge && (
+                <div className={`inline-flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-full ${stockBadge.className}`}>
+                  <span className="material-symbols-outlined text-xs">
+                    {stockBadge.icon}
+                  </span>
+                  {stockBadge.text}
+                </div>
+              )}
+            </div>
+
+            {productItem.productDescription && (
+              <div>
+                <h4 className="text-xs font-bold text-neutral-700 uppercase tracking-wider mb-1">
+                  Descripción
+                </h4>
+                <p className="text-xs text-neutral-600 leading-relaxed">
+                  {productItem.productDescription}
+                </p>
+              </div>
+            )}
+
+            {isWeightBased && (
+              <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-800 bg-emerald-50 p-2.5 rounded-xl border border-emerald-100">
+                <span className="material-symbols-outlined text-sm">scale</span>
+                <span>Porciones disponibles: 250g • 500g • 1 Kg • Personalizado</span>
+              </div>
+            )}
+
+            <div className="pt-2 flex flex-col gap-2">
+              <button
+                type="button"
+                onClick={(clickEvent) => {
+                  handleAddToCartClick(clickEvent);
+                  if (!isWeightBased) {
+                    setIsMobileDetailsModalOpen(false);
+                  }
+                }}
+                disabled={isAddButtonDisabled}
+                className={`w-full py-3 px-4 text-xs sm:text-sm font-bold rounded-xl flex items-center justify-center gap-2 transition-all shadow-xs ${
+                  isAddButtonDisabled
+                    ? 'bg-neutral-100 text-neutral-400 cursor-not-allowed shadow-none'
+                    : addedFeedbackActive
+                      ? 'bg-emerald-600 text-white shadow-emerald-200 cursor-pointer active:scale-98'
+                      : 'bg-primary hover:bg-primary-dark text-white cursor-pointer active:scale-98'
+                }`}
+              >
+                <span className="material-symbols-outlined text-base">
+                  {isAddButtonDisabled
+                    ? (isOutOfStock ? 'remove_shopping_cart' : 'block')
+                    : addedFeedbackActive ? 'check_circle' : (isWeightBased ? 'scale' : 'add_shopping_cart')}
+                </span>
+                <span>
+                  {isOutOfStock
+                    ? 'Sin stock'
+                    : isStockExhaustedInCart
+                      ? 'Límite en carrito'
+                      : addedFeedbackActive
+                        ? '¡Agregado!'
+                        : isWeightBased ? 'Elegir Peso y Agregar' : 'Agregar al Carrito'}
+                </span>
+              </button>
+
+              {onSelectProduct && (
+                <button
+                  type="button"
+                  onClick={(clickEvent) => {
+                    setIsMobileDetailsModalOpen(false);
+                    handleProductNavigation(clickEvent);
+                  }}
+                  className="w-full py-2 text-xs font-bold text-primary hover:underline flex items-center justify-center gap-1 cursor-pointer"
+                >
+                  <span>Ver ficha técnica completa</span>
+                  <span className="material-symbols-outlined text-xs">arrow_forward</span>
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
       {isWeightBased && (
         <WeightSelectionModal

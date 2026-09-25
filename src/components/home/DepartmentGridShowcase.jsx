@@ -150,32 +150,35 @@ export const DepartmentGridShowcase = ({ onSelectDepartment }) => {
     return productsCatalogData
       .filter((productEntry) => Boolean(productEntry.productImage))
       .map((productEntry) => productEntry.productImage)
-      .slice(0, 10);
+      .slice(0, 5);
   }, []);
 
   const categoryShowcaseEntries = useMemo(() => {
     return categoriesShowcaseData.map((categoryShowcaseItem, categoryIndex) => {
-      if (categoryShowcaseItem.categoryIdentifier === 'todos') {
-        return {
-          categoryIdentifier: 'todos',
-          categoryTitle: categoryShowcaseItem.categoryTitle,
-          categoryProductImages: allProductsImages,
-          staggerOffsetMilliseconds: 0
-        };
+      const hasAssignedCategoryImage = Boolean(categoryShowcaseItem.categoryAssignedImage);
+
+      let resolvedCategoryImages = [];
+      if (hasAssignedCategoryImage) {
+        resolvedCategoryImages = [categoryShowcaseItem.categoryAssignedImage];
+      } else if (categoryShowcaseItem.categoryIdentifier === 'todos') {
+        resolvedCategoryImages = allProductsImages;
+      } else {
+        const matchingProducts = productsCatalogData.filter((productEntry) =>
+          categoryShowcaseItem.matchingProductIds.includes(productEntry.productIdentifier)
+        );
+
+        const matchingImages = matchingProducts
+          .filter((productEntry) => Boolean(productEntry.productImage))
+          .map((productEntry) => productEntry.productImage)
+          .slice(0, 5);
+
+        resolvedCategoryImages = matchingImages.length > 0 ? matchingImages : allProductsImages.slice(0, 3);
       }
-
-      const matchingProducts = productsCatalogData.filter((productEntry) =>
-        categoryShowcaseItem.matchingProductIds.includes(productEntry.productIdentifier)
-      );
-
-      const matchingImages = matchingProducts
-        .filter((productEntry) => Boolean(productEntry.productImage))
-        .map((productEntry) => productEntry.productImage);
 
       return {
         categoryIdentifier: categoryShowcaseItem.categoryIdentifier,
         categoryTitle: categoryShowcaseItem.categoryTitle,
-        categoryProductImages: matchingImages.length > 0 ? matchingImages : allProductsImages.slice(0, 3),
+        categoryProductImages: resolvedCategoryImages,
         staggerOffsetMilliseconds: (categoryIndex + 1) * 350
       };
     });

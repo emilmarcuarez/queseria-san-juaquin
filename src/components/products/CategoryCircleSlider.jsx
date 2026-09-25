@@ -160,32 +160,35 @@ export const CategoryCircleSlider = ({
     return productsCatalogList
       .filter((productEntry) => Boolean(productEntry.productImage))
       .map((productEntry) => productEntry.productImage)
-      .slice(0, 8);
+      .slice(0, 5);
   }, [productsCatalogList]);
 
   const categoriesSliderEntries = useMemo(() => {
     return categoriesShowcaseData.map((categoryShowcaseItem, categoryIndex) => {
-      if (categoryShowcaseItem.categoryIdentifier === 'todos') {
-        return {
-          categoryIdentifier: 'todos',
-          categoryTitle: categoryShowcaseItem.categoryTitle,
-          categoryProductImages: allProductsImages,
-          staggerOffsetMilliseconds: 0
-        };
+      const hasAssignedCategoryImage = Boolean(categoryShowcaseItem.categoryAssignedImage);
+
+      let resolvedCategoryImages = [];
+      if (hasAssignedCategoryImage) {
+        resolvedCategoryImages = [categoryShowcaseItem.categoryAssignedImage];
+      } else if (categoryShowcaseItem.categoryIdentifier === 'todos') {
+        resolvedCategoryImages = allProductsImages;
+      } else {
+        const matchingProducts = productsCatalogList.filter((productEntry) =>
+          categoryShowcaseItem.matchingProductIds.includes(productEntry.productIdentifier)
+        );
+
+        const matchingImages = matchingProducts
+          .filter((productEntry) => Boolean(productEntry.productImage))
+          .map((productEntry) => productEntry.productImage)
+          .slice(0, 5);
+
+        resolvedCategoryImages = matchingImages.length > 0 ? matchingImages : allProductsImages.slice(0, 3);
       }
-
-      const matchingProducts = productsCatalogList.filter((productEntry) =>
-        categoryShowcaseItem.matchingProductIds.includes(productEntry.productIdentifier)
-      );
-
-      const matchingImages = matchingProducts
-        .filter((productEntry) => Boolean(productEntry.productImage))
-        .map((productEntry) => productEntry.productImage);
 
       return {
         categoryIdentifier: categoryShowcaseItem.categoryIdentifier,
         categoryTitle: categoryShowcaseItem.categoryTitle,
-        categoryProductImages: matchingImages,
+        categoryProductImages: resolvedCategoryImages,
         staggerOffsetMilliseconds: (categoryIndex + 1) * 350
       };
     });
