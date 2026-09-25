@@ -75,7 +75,6 @@ export const ContactUsPage = () => {
                   </div>
                 </div>
 
-                {/* Horario */}
                 <div className="flex items-start gap-3.5">
                   <div className="w-10 h-10 rounded-xl bg-surface-alt border border-neutral-border flex items-center justify-center text-primary shrink-0">
                     <span className="material-symbols-outlined text-xl">schedule</span>
@@ -84,11 +83,10 @@ export const ContactUsPage = () => {
                     <span className="font-extrabold block text-neutral-dark">Horario de Atención</span>
                     <span className="text-neutral-600 block">Lunes a Viernes: 7:00 AM - 7:00 PM</span>
                     <span className="text-neutral-600 block">Sábados: 7:00 AM - 6:00 PM</span>
-                    <span className="text-neutral-400 text-[11px] block">Domingos: Cerrado (Pedidos programados)</span>
+                    <span className="text-neutral-400 text-[11px] block">Domingos: Cerrado</span>
                   </div>
                 </div>
 
-                {/* WhatsApp */}
                 <div className="flex items-start gap-3.5">
                   <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-700 shrink-0">
                     <span className="material-symbols-outlined text-xl">call</span>

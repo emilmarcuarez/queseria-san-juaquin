@@ -57,13 +57,13 @@ export const getStoreCurrentScheduleStatus = () => {
       };
     }
 
-    let nextOpeningMessage = 'Abre mañana a las 7:00 AM — ¡Deja tu pedido programado!';
+    let nextOpeningMessage = 'Abre mañana a las 7:00 AM';
     if (dayOfWeek === 0) {
-      nextOpeningMessage = 'Abrimos el lunes a las 7:00 AM — ¡Deja tu pedido programado!';
+      nextOpeningMessage = 'Abrimos el lunes a las 7:00 AM';
     } else if (currentTotalMinutes < weekdayOpenMinutes) {
-      nextOpeningMessage = 'Abrimos hoy a las 7:00 AM — ¡Puedes armar tu pedido!';
+      nextOpeningMessage = 'Abrimos hoy a las 7:00 AM';
     } else if (dayOfWeek === 6 && currentTotalMinutes >= saturdayCloseMinutes) {
-      nextOpeningMessage = 'Abrimos el lunes a las 7:00 AM — ¡Deja tu pedido programado!';
+      nextOpeningMessage = 'Abrimos el lunes a las 7:00 AM';
     }
 
     return {
