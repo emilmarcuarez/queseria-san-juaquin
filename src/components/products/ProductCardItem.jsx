@@ -217,38 +217,45 @@ export const ProductCardItem = ({ productItem, onSelectProduct, cardVariant = 'd
           </div>
         </div>
 
-        <div className="mt-3 pt-2.5 border-t border-neutral-100 flex items-end justify-between gap-2">
-          <div>
+        <div className="mt-3 pt-2.5 border-t border-neutral-100 flex items-end justify-between gap-1.5 sm:gap-2">
+          <div className="flex-1 min-w-0 pr-0.5">
             {preferredCurrency === 'BS' ? (
               <>
-                <div className="text-base sm:text-lg font-black text-neutral-900 leading-none">
-                  Bs. {priceBcvEquivalent}{' '}
-                  <span className="text-[10px] sm:text-xs font-semibold text-neutral-400">
-                    / {productItem.productPriceUnit}
+                <div className="flex items-baseline gap-0.5 sm:gap-1 flex-wrap">
+                  <span className="text-[10px] sm:text-xs font-black text-neutral-500 uppercase leading-none">
+                    Bs.
+                  </span>
+                  <span className="text-[13px] sm:text-base lg:text-lg font-black text-neutral-900 tracking-tight leading-none whitespace-nowrap">
+                    {priceBcvEquivalent}
+                  </span>
+                  <span className="text-[9px] sm:text-xs font-semibold text-neutral-400 leading-none whitespace-nowrap">
+                    /{productItem.productPriceUnit}
                   </span>
                 </div>
 
-                <div className="text-[11px] font-bold text-neutral-500 mt-1 leading-none">
+                <div className="text-[10px] sm:text-[11px] font-bold text-neutral-500 mt-1 leading-none truncate">
                   Ref. ${productItem.productPriceUsd.toFixed(2)} USD
                 </div>
               </>
             ) : (
               <>
-                <div className="text-base sm:text-lg font-black text-neutral-900 leading-none">
-                  ${productItem.productPriceUsd.toFixed(2)}{' '}
-                  <span className="text-[10px] sm:text-xs font-semibold text-neutral-400">
-                    / {productItem.productPriceUnit}
+                <div className="flex items-baseline gap-0.5 flex-wrap">
+                  <span className="text-sm sm:text-base lg:text-lg font-black text-neutral-900 tracking-tight leading-none">
+                    ${productItem.productPriceUsd.toFixed(2)}
+                  </span>
+                  <span className="text-[9.5px] sm:text-xs font-semibold text-neutral-400 leading-none">
+                    /{productItem.productPriceUnit}
                   </span>
                 </div>
 
-                <div className="text-[11px] font-bold text-emerald-800 mt-1 leading-none">
+                <div className="text-[10px] sm:text-[11px] font-bold text-emerald-800 mt-1 leading-none truncate">
                   Bs. {priceBcvEquivalent}
                 </div>
               </>
             )}
 
             {stockIsLow && (
-              <div className="text-[10px] font-bold text-amber-700 mt-1">
+              <div className="text-[10px] font-bold text-amber-700 mt-1 truncate">
                 Solo {formatStockAmount(remainingStockAfterCart)} disp.
               </div>
             )}
@@ -258,7 +265,7 @@ export const ProductCardItem = ({ productItem, onSelectProduct, cardVariant = 'd
             type="button"
             onClick={handleAddToCartClick}
             disabled={isAddButtonDisabled}
-            className={`w-10 h-10 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center transition-all duration-200 cursor-pointer shadow-xs active:scale-90 shrink-0 ${
+            className={`w-9 h-9 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center transition-all duration-200 cursor-pointer shadow-xs active:scale-90 shrink-0 ${
               isAddButtonDisabled
                 ? 'bg-neutral-100 text-neutral-400 cursor-not-allowed shadow-none'
                 : addedFeedbackActive
