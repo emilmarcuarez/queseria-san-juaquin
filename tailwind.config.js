@@ -30,7 +30,9 @@ export default {
         }
       },
       fontFamily: {
-        sans: ['Montserrat', 'Inter', 'sans-serif']
+        sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+        display: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+        serif: ['"Playfair Display"', 'Georgia', 'serif']
       }
     }
   },

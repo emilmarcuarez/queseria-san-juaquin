@@ -6,7 +6,7 @@ import { useProductCatalogFilter } from './hooks/useProductCatalogFilter';
 import { TopAnnouncementBar } from './components/common/TopAnnouncementBar';
 import { MainHeaderNavigation } from './components/common/MainHeaderNavigation';
 import { MainFooterSection } from './components/common/MainFooterSection';
-import { MobileStickyActionBar } from './components/common/MobileStickyActionBar';
+import { MobileBottomNavigationBar } from './components/common/MobileBottomNavigationBar';
 import { FlyingCartAnimationOverlay } from './components/common/FlyingCartAnimationOverlay';
 import { CartToastNotification } from './components/common/CartToastNotification';
 import { InitialPageLoadingSpinner } from './components/common/InitialPageLoadingSpinner';
@@ -14,23 +14,19 @@ import { HeroCommercialBanner } from './components/home/HeroCommercialBanner';
 import { SupermarketQuickPerks } from './components/home/SupermarketQuickPerks';
 import { DepartmentGridShowcase } from './components/home/DepartmentGridShowcase';
 import { HomeFeaturedProductsPreview } from './components/home/HomeFeaturedProductsPreview';
-import { PromotionalAisleBanner } from './components/home/PromotionalAisleBanner';
-import { HowToBuyInstructionSteps } from './components/home/HowToBuyInstructionSteps';
-import { CustomerTestimonialsCarousel } from './components/home/CustomerTestimonialsCarousel';
-import { PromotionalBannersCarousel } from './components/common/PromotionalBannersCarousel';
 import { StoreCatalogPage } from './components/pages/StoreCatalogPage';
 import { AboutUsPage } from './components/pages/AboutUsPage';
 import { ContactUsPage } from './components/pages/ContactUsPage';
 import { ProductDetailPage } from './components/pages/ProductDetailPage';
 import { CartDrawerModal } from './components/cart/CartDrawerModal';
 import { HowToBuyFloatingButton } from './components/common/HowToBuyFloatingButton';
+import { FloatingCartQuickButton } from './components/common/FloatingCartQuickButton';
 import productsCatalogData from './data/productsCatalogData.json';
 
 const StorefrontContent = () => {
   const [activePageIdentifier, setActivePageIdentifier] = useState('inicio');
   const [selectedProductDetail, setSelectedProductDetail] = useState(null);
   const [storeInitialDepartmentKey, setStoreInitialDepartmentKey] = useState('todos');
-  const [storeInitialPromotionFilter, setStoreInitialPromotionFilter] = useState(null);
 
   const {
     searchQueryString,
@@ -94,13 +90,6 @@ const StorefrontContent = () => {
 
   const handleDepartmentSelectFromHome = (chosenDepartmentIdentifier) => {
     setStoreInitialDepartmentKey(chosenDepartmentIdentifier);
-    setStoreInitialPromotionFilter(null);
-    handleNavigateToPage('tienda');
-  };
-
-  const handlePromotionSelectFromHome = (chosenPromoEntry) => {
-    setStoreInitialPromotionFilter(chosenPromoEntry);
-    setStoreInitialDepartmentKey('todos');
     handleNavigateToPage('tienda');
   };
 
@@ -117,11 +106,11 @@ const StorefrontContent = () => {
   };
 
   const mainTopPaddingClass = (activePageIdentifier === 'tienda' || activePageIdentifier === 'producto')
-    ? 'pt-[88px] sm:pt-[108px] lg:pt-[116px]'
-    : 'pt-[138px] sm:pt-[120px] lg:pt-[116px]';
+    ? 'pt-[164px] sm:pt-[150px] lg:pt-[116px]'
+    : 'pt-[164px] sm:pt-[150px] lg:pt-[116px]';
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#fafafa]">
+    <div className="min-h-screen flex flex-col bg-white">
       <InitialPageLoadingSpinner />
 
       <header className="fixed top-0 left-0 w-full z-40 bg-white lg:shadow-none shadow-xs">
@@ -131,44 +120,34 @@ const StorefrontContent = () => {
           onSearchChange={updateSearchQuery}
           activePageIdentifier={activePageIdentifier === 'producto' ? 'tienda' : activePageIdentifier}
           onNavigateToPage={handleNavigateToPage}
+          onSelectDepartment={handleDepartmentSelectFromHome}
+          storeInitialDepartmentKey={storeInitialDepartmentKey}
         />
       </header>
 
-      <main className={`w-full ${mainTopPaddingClass} flex-1`}>
+      <main className={`w-full ${mainTopPaddingClass} pb-20 lg:pb-0 flex-1`}>
         {activePageIdentifier === 'inicio' && (
           <>
             <HeroCommercialBanner onExploreCatalog={() => handleNavigateToPage('tienda')} />
+
             <SupermarketQuickPerks />
 
-            <div id="departamentos">
+            <div id="departamentos" className="hidden md:block">
               <DepartmentGridShowcase
                 onSelectDepartment={handleDepartmentSelectFromHome}
               />
             </div>
 
-            <PromotionalBannersCarousel
-              onSelectPromotion={handlePromotionSelectFromHome}
-            />
-
             <HomeFeaturedProductsPreview
               onNavigateToStore={handleNavigateToPage}
               onSelectProduct={handleSelectProduct}
             />
-
-            <PromotionalAisleBanner
-              onShowAllProducts={() => handleNavigateToPage('tienda')}
-            />
-
-            <HowToBuyInstructionSteps />
-
-            <CustomerTestimonialsCarousel />
           </>
         )}
 
         {activePageIdentifier === 'tienda' && (
           <StoreCatalogPage
             initialDepartmentKey={storeInitialDepartmentKey}
-            initialPromotionFilter={storeInitialPromotionFilter}
             onSelectProduct={handleSelectProduct}
           />
         )}
@@ -194,13 +173,21 @@ const StorefrontContent = () => {
 
       <FlyingCartAnimationOverlay />
 
-      <MobileStickyActionBar />
+      <MobileBottomNavigationBar
+        activePageIdentifier={activePageIdentifier}
+        onNavigateToPage={handleNavigateToPage}
+        onSelectProduct={handleSelectProduct}
+      />
 
       <CartToastNotification />
 
       <CartDrawerModal />
 
-      <HowToBuyFloatingButton />
+      <FloatingCartQuickButton />
+
+      <div className="hidden lg:block">
+        <HowToBuyFloatingButton />
+      </div>
     </div>
   );
 };

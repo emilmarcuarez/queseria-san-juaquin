@@ -7,7 +7,7 @@ export const MainFooterSection = () => {
 
   return (
     <footer className="w-full bg-white border-t border-neutral-border pt-12 pb-16 lg:pb-8 text-neutral-dark">
-      <div className="max-w-7xl mx-auto px-4 lg:px-8">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14 2xl:px-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-10 border-b border-neutral-border">
           <div className="space-y-3">
             <div className="flex items-center gap-2">

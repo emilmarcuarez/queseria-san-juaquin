@@ -14,7 +14,7 @@ export const ProductDetailPage = ({
   onBackToStore,
   onSelectProduct
 }) => {
-  const { addProductToCart, exchangeRateBcv } = useShoppingCart();
+  const { addProductToCart, exchangeRateBcv, preferredCurrency } = useShoppingCart();
 
   const isWeightBasedProduct = productItem?.departmentIdentifier === 'quesos-lacteos' && productItem?.productPriceUnit?.toLowerCase() === 'kg';
 
@@ -318,15 +318,26 @@ export const ProductDetailPage = ({
                   {isWeightBasedProduct ? `Precio por ${portionLabel}` : `Precio por ${productItem.productPriceUnit}`}
                 </span>
                 <div className="text-2xl sm:text-3xl font-black text-neutral-dark leading-tight">
-                  ${effectiveUnitPriceUsd.toFixed(2)}{' '}
-                  <span className="text-xs font-normal text-neutral-muted">USD</span>
+                  {preferredCurrency === 'BS' ? (
+                    <>
+                      Bs. {priceBcvEquivalent}{' '}
+                      <span className="text-xs font-normal text-neutral-muted">BCV</span>
+                    </>
+                  ) : (
+                    <>
+                      ${effectiveUnitPriceUsd.toFixed(2)}{' '}
+                      <span className="text-xs font-normal text-neutral-muted">USD</span>
+                    </>
+                  )}
                 </div>
               </div>
 
               <div className="text-right">
-                <span className="text-[10px] font-bold text-neutral-muted uppercase block">Tasa Oficial BCV</span>
+                <span className="text-[10px] font-bold text-neutral-muted uppercase block">
+                  {preferredCurrency === 'BS' ? 'Referencia USD' : 'Tasa Oficial BCV'}
+                </span>
                 <div className="text-sm sm:text-base font-extrabold text-emerald-800">
-                  Bs. {priceBcvEquivalent}
+                  {preferredCurrency === 'BS' ? `$ ${effectiveUnitPriceUsd.toFixed(2)} USD` : `Bs. ${priceBcvEquivalent}`}
                 </div>
               </div>
             </div>
@@ -470,7 +481,17 @@ export const ProductDetailPage = ({
 
                 <div className="text-xs text-neutral-muted">
                   Total estimado:{' '}
-                  <strong className="text-neutral-dark">${totalCalculatedUsd}</strong> (Bs. {totalCalculatedBcv})
+                  {preferredCurrency === 'BS' ? (
+                    <>
+                      <strong className="text-neutral-dark font-black">Bs. {totalCalculatedBcv}</strong>{' '}
+                      <span>(Ref. ${totalCalculatedUsd} USD)</span>
+                    </>
+                  ) : (
+                    <>
+                      <strong className="text-neutral-dark font-black">${totalCalculatedUsd}</strong>{' '}
+                      <span>(Bs. {totalCalculatedBcv})</span>
+                    </>
+                  )}
                 </div>
               </div>
             </div>

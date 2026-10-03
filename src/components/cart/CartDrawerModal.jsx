@@ -19,10 +19,11 @@ export const CartDrawerModal = () => {
     appliedCombosList,
     totalComboDiscountUsd,
     totalCartAmountUsd,
-    exchangeRateBcv
+    exchangeRateBcv,
+    preferredCurrency
   } = useShoppingCart();
 
-  const [fulfillmentType, setFulfillmentType] = useState('delivery'); // 'delivery' | 'pickup'
+  const [fulfillmentType, setFulfillmentType] = useState('delivery');
   const [selectedZoneId, setSelectedZoneId] = useState(MARACAIBO_DELIVERY_ZONES[0].zoneId);
   const [pickupEstimatedTime, setPickupEstimatedTime] = useState(PICKUP_TIME_SLOTS[0]);
   const [customerFullName, setCustomerFullName] = useState('');
@@ -429,10 +430,14 @@ export const CartDrawerModal = () => {
                 <div className="flex items-center justify-between pt-2 border-t border-neutral-border/80">
                   <div>
                     <span className="text-sm font-extrabold text-neutral-dark block leading-none">Total General</span>
-                    <span className="text-[11px] text-emerald-800 font-bold">Bs. {formattedTotalBcv}</span>
+                    {preferredCurrency === 'BS' ? (
+                      <span className="text-[11px] text-neutral-500 font-bold">Ref. ${finalTotalUsd.toFixed(2)} USD</span>
+                    ) : (
+                      <span className="text-[11px] text-emerald-800 font-bold">Bs. {formattedTotalBcv}</span>
+                    )}
                   </div>
                   <span className="text-xl font-black text-primary leading-none">
-                    ${finalTotalUsd.toFixed(2)}
+                    {preferredCurrency === 'BS' ? `Bs. ${formattedTotalBcv}` : `$${finalTotalUsd.toFixed(2)}`}
                   </span>
                 </div>
               </div>

@@ -6,7 +6,8 @@ export const CartItemRow = ({ cartItemEntry }) => {
     updateItemQuantity,
     removeProductFromCart,
     updateCartItemNote,
-    exchangeRateBcv
+    exchangeRateBcv,
+    preferredCurrency
   } = useShoppingCart();
 
   const [isNoteModalOpen, setIsNoteModalOpen] = useState(false);
@@ -103,12 +104,25 @@ export const CartItemRow = ({ cartItemEntry }) => {
             )}
 
             <div className="flex items-center gap-2 mt-1">
-              <span className="text-xs font-black text-neutral-dark">
-                ${itemSubtotalUsd}
-              </span>
-              <span className="text-[10px] font-semibold text-neutral-muted">
-                Bs. {itemSubtotalBcv}
-              </span>
+              {preferredCurrency === 'BS' ? (
+                <>
+                  <span className="text-xs font-black text-neutral-dark">
+                    Bs. {itemSubtotalBcv}
+                  </span>
+                  <span className="text-[10px] font-semibold text-neutral-muted">
+                    ${itemSubtotalUsd}
+                  </span>
+                </>
+              ) : (
+                <>
+                  <span className="text-xs font-black text-neutral-dark">
+                    ${itemSubtotalUsd}
+                  </span>
+                  <span className="text-[10px] font-semibold text-neutral-muted">
+                    Bs. {itemSubtotalBcv}
+                  </span>
+                </>
+              )}
             </div>
             {isAtStockLimit && (
               <span className="text-[9px] font-bold text-amber-600 mt-0.5 block">Stock agotado</span>

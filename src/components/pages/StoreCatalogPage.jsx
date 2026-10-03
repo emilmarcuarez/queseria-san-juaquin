@@ -4,48 +4,28 @@ import departmentsCatalogData from '../../data/departmentsCatalogData.json';
 import categoriesShowcaseData from '../../data/categoriesShowcaseData.json';
 import { ProductCardItem } from '../products/ProductCardItem';
 import { CategoryCircleSlider } from '../products/CategoryCircleSlider';
-import { PromotionalBannersCarousel } from '../common/PromotionalBannersCarousel';
 import { useShoppingCart } from '../../hooks/useShoppingCart';
 
 export const StoreCatalogPage = ({
   initialDepartmentKey = 'todos',
-  onSelectProduct,
-  initialPromotionFilter = null
+  onSelectProduct
 }) => {
   const { addProductToCart } = useShoppingCart();
   const [inPageSearchQuery, setInPageSearchQuery] = useState('');
   const [selectedDepartmentFilter, setSelectedDepartmentFilter] = useState(initialDepartmentKey);
-  const [selectedPromotionFilter, setSelectedPromotionFilter] = useState(initialPromotionFilter);
   const [selectedSortingOption, setSelectedSortingOption] = useState('destacados');
   const [isGroupedByCategoryActive, setIsGroupedByCategoryActive] = useState(false);
   const [currentPageIndex, setCurrentPageIndex] = useState(1);
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const productsRenderLimitPerPage = 12;
 
-  const handleQuickAddFullComboToCart = () => {
-    if (!selectedPromotionFilter) return;
-    const productsInCombo = productsCatalogData.filter((productItem) =>
-      selectedPromotionFilter.matchingProductIds.includes(productItem.productIdentifier)
-    );
-    productsInCombo.forEach((productItem) => {
-      addProductToCart(productItem, 1, 1);
-    });
-  };
-
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
   useEffect(() => {
-    if (initialPromotionFilter) {
-      setSelectedPromotionFilter(initialPromotionFilter);
-      setSelectedDepartmentFilter('todos');
-    }
-  }, [initialPromotionFilter]);
-
-  useEffect(() => {
     setCurrentPageIndex(1);
-  }, [inPageSearchQuery, selectedDepartmentFilter, selectedPromotionFilter, selectedSortingOption, isGroupedByCategoryActive]);
+  }, [inPageSearchQuery, selectedDepartmentFilter, selectedSortingOption, isGroupedByCategoryActive]);
 
   const filteredAndSortedProducts = useMemo(() => {
     const normalizedSearchTerm = inPageSearchQuery.trim().toLowerCase();
@@ -60,17 +40,13 @@ export const StoreCatalogPage = ({
         productItem.departmentIdentifier === selectedDepartmentFilter ||
         (matchingCategoryConfig && matchingCategoryConfig.matchingProductIds.includes(productItem.productIdentifier));
 
-      const matchesPromotion =
-        !selectedPromotionFilter ||
-        selectedPromotionFilter.matchingProductIds.includes(productItem.productIdentifier);
-
       const matchesSearchTerm =
         !normalizedSearchTerm ||
         productItem.productTitle.toLowerCase().includes(normalizedSearchTerm) ||
         productItem.productDescription.toLowerCase().includes(normalizedSearchTerm) ||
         productItem.productCategoryName.toLowerCase().includes(normalizedSearchTerm);
 
-      return matchesDepartmentOrCategory && matchesSearchTerm && matchesPromotion;
+      return matchesDepartmentOrCategory && matchesSearchTerm;
     });
 
     return filteredResultList.sort((firstProductItem, secondProductItem) => {
@@ -85,7 +61,7 @@ export const StoreCatalogPage = ({
       }
       return (secondProductItem.isFeaturedProduct ? 1 : 0) - (firstProductItem.isFeaturedProduct ? 1 : 0);
     });
-  }, [inPageSearchQuery, selectedDepartmentFilter, selectedPromotionFilter, selectedSortingOption]);
+  }, [inPageSearchQuery, selectedDepartmentFilter, selectedSortingOption]);
 
   const totalCalculatedPages = Math.ceil(filteredAndSortedProducts.length / productsRenderLimitPerPage) || 1;
 
@@ -137,16 +113,15 @@ export const StoreCatalogPage = ({
   const handleResetAllStoreFilters = () => {
     setInPageSearchQuery('');
     setSelectedDepartmentFilter('todos');
-    setSelectedPromotionFilter(null);
     setSelectedSortingOption('destacados');
     setIsGroupedByCategoryActive(false);
     setCurrentPageIndex(1);
   };
 
   return (
-    <div className="w-full bg-[#fafafa] min-h-screen">
+    <div className="w-full bg-white min-h-screen">
       <div className="w-full bg-white border-b border-neutral-200 shadow-2xs">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-3 sm:pt-5 lg:pt-6 pb-4 sm:pb-5 space-y-3 sm:space-y-4">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14 2xl:px-16 pt-3 sm:pt-5 lg:pt-6 pb-4 sm:pb-5 space-y-3 sm:space-y-4">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 sm:gap-5 pb-3 sm:pb-4 border-b border-neutral-100">
             <div>
               <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-neutral-900 tracking-tight">
@@ -193,16 +168,8 @@ export const StoreCatalogPage = ({
             selectedDepartmentIdentifier={selectedDepartmentFilter}
             onSelectDepartmentFilter={(selectedIdentifier) => {
               setSelectedDepartmentFilter(selectedIdentifier);
-              setSelectedPromotionFilter(null);
             }}
             productsCatalogList={productsCatalogData}
-          />
-
-          <PromotionalBannersCarousel
-            onSelectPromotion={(chosenPromotion) => {
-              setSelectedPromotionFilter(chosenPromotion);
-              setSelectedDepartmentFilter('todos');
-            }}
           />
 
           <div className="flex flex-wrap items-center justify-between gap-3">
@@ -211,7 +178,7 @@ export const StoreCatalogPage = ({
                 type="button"
                 onClick={() => setIsFilterModalOpen(true)}
                 className={`h-9 px-3.5 rounded-xl text-xs font-bold transition-all cursor-pointer inline-flex items-center gap-2 border shadow-2xs active:scale-95 ${
-                  selectedDepartmentFilter !== 'todos' || selectedPromotionFilter
+                  selectedDepartmentFilter !== 'todos'
                     ? 'bg-emerald-50 text-[#114B2B] border-emerald-300 shadow-xs'
                     : 'bg-white text-neutral-800 border-neutral-200 hover:bg-neutral-50 hover:border-neutral-300'
                 }`}
@@ -219,28 +186,13 @@ export const StoreCatalogPage = ({
               >
                 <span className="material-symbols-outlined text-base text-[#114B2B]">tune</span>
                 <span>Filtros</span>
-                {(selectedDepartmentFilter !== 'todos' || selectedPromotionFilter) && (
+                {selectedDepartmentFilter !== 'todos' && (
                   <span className="w-2 h-2 rounded-full bg-[#114B2B]"></span>
                 )}
                 <span className="material-symbols-outlined text-xs text-neutral-400">expand_more</span>
               </button>
 
-              {selectedPromotionFilter && (
-                <div className="h-9 inline-flex items-center gap-2 bg-yellow-50 text-yellow-950 text-xs px-3 rounded-xl font-bold border border-yellow-300 shadow-2xs">
-                  <span className="material-symbols-outlined text-sm text-yellow-700">local_offer</span>
-                  <span>{selectedPromotionFilter.promoTitle}</span>
-                  <button
-                    type="button"
-                    onClick={() => setSelectedPromotionFilter(null)}
-                    className="w-4 h-4 rounded-full bg-yellow-200 hover:bg-yellow-300 text-yellow-800 inline-flex items-center justify-center text-[10px] transition-colors cursor-pointer"
-                    aria-label="Quitar filtro de promoción"
-                  >
-                    ✕
-                  </button>
-                </div>
-              )}
-
-              {selectedDepartmentFilter !== 'todos' && !selectedPromotionFilter && (
+              {selectedDepartmentFilter !== 'todos' && (
                 <div className="h-9 inline-flex items-center gap-2 bg-neutral-100 text-neutral-800 text-xs px-3 rounded-xl font-semibold border border-neutral-200">
                   <span>{activeDepartmentTitle}</span>
                   <button
@@ -259,7 +211,7 @@ export const StoreCatalogPage = ({
                 {inPageSearchQuery && ` para "${inPageSearchQuery}"`}
               </span>
 
-              {(inPageSearchQuery || selectedDepartmentFilter !== 'todos' || selectedPromotionFilter) && (
+              {(inPageSearchQuery || selectedDepartmentFilter !== 'todos') && (
                 <button
                   type="button"
                   onClick={handleResetAllStoreFilters}
@@ -292,45 +244,7 @@ export const StoreCatalogPage = ({
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
-        {selectedPromotionFilter && (
-          <div className="mb-8 p-4 sm:p-6 bg-gradient-to-r from-amber-50 via-yellow-50 to-emerald-50 border-2 border-yellow-300 rounded-3xl shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-4">
-              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-yellow-400 text-neutral-900 flex items-center justify-center shrink-0 shadow-md">
-                <span className="material-symbols-outlined text-3xl">celebration</span>
-              </div>
-              <div>
-                <div className="flex items-center gap-2 flex-wrap">
-                  <span className="text-xs font-black uppercase tracking-wider text-emerald-900 bg-emerald-100 px-2.5 py-0.5 rounded-full">
-                    Oferta Especial de Combo
-                  </span>
-                  <span className="text-xs font-extrabold text-neutral-900 bg-yellow-400 px-2.5 py-0.5 rounded-full shadow-2xs">
-                    {selectedPromotionFilter.promoBadge}
-                  </span>
-                </div>
-                <h2 className="text-base sm:text-xl font-black text-neutral-900 mt-1">
-                  {selectedPromotionFilter.promoTitle}
-                </h2>
-                <p className="text-xs text-neutral-600 mt-0.5">
-                  {selectedPromotionFilter.promoSubtitle}
-                </p>
-                <div className="text-[11px] text-emerald-800 font-semibold mt-1 flex items-center gap-1">
-                  <span className="material-symbols-outlined text-sm text-emerald-700">info</span>
-                  <span>Agrega todos los productos del combo y el carrito te descontará la diferencia automáticamente al precio especial.</span>
-                </div>
-              </div>
-            </div>
-
-            <button
-              type="button"
-              onClick={handleQuickAddFullComboToCart}
-              className="w-full md:w-auto px-5 py-3 bg-[#114B2B] hover:bg-[#0d3b22] text-white text-xs sm:text-sm font-black rounded-xl flex items-center justify-center gap-2 shadow-md transition-all active:scale-95 cursor-pointer whitespace-nowrap shrink-0"
-            >
-              <span className="material-symbols-outlined text-base sm:text-lg">add_shopping_cart</span>
-              <span>Agregar Combo Completo</span>
-            </button>
-          </div>
-        )}
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14 2xl:px-16 py-8 sm:py-10">
 
         {filteredAndSortedProducts.length === 0 ? (
           <div className="bg-white rounded-3xl border border-neutral-200 p-12 text-center max-w-md mx-auto my-8">

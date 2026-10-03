@@ -35,6 +35,25 @@ export const ShoppingCartProvider = ({ children }) => {
 
   const [exchangeRateDateString, setExchangeRateDateString] = useState('');
   const [isLiveRateActive, setIsLiveRateActive] = useState(false);
+  const [preferredCurrency, setPreferredCurrency] = useState(() => {
+    try {
+      const storedPreference = localStorage.getItem('san_joaquin_preferred_currency');
+      return storedPreference === 'BS' ? 'BS' : 'USD';
+    } catch (storageError) {
+      return 'USD';
+    }
+  });
+
+  const togglePreferredCurrency = (targetCurrency) => {
+    const resolvedTargetCurrency = targetCurrency || (preferredCurrency === 'USD' ? 'BS' : 'USD');
+    setPreferredCurrency(resolvedTargetCurrency);
+    try {
+      localStorage.setItem('san_joaquin_preferred_currency', resolvedTargetCurrency);
+    } catch (storageError) {
+      return;
+    }
+  };
+
 
   useEffect(() => {
     const synchronizeLiveExchangeRate = async () => {
@@ -402,7 +421,10 @@ export const ShoppingCartProvider = ({ children }) => {
     totalCartAmountBcv,
     exchangeRateBcv,
     exchangeRateDateString,
-    isLiveRateActive
+    isLiveRateActive,
+    preferredCurrency,
+    setPreferredCurrency,
+    togglePreferredCurrency
   };
 
   return (

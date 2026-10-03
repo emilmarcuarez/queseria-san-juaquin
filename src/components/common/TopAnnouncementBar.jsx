@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { getStoreCurrentScheduleStatus, STORE_OFFICIAL_DATA } from '../../services/storeScheduleService';
+import { useShoppingCart } from '../../hooks/useShoppingCart';
 
 export const TopAnnouncementBar = () => {
+  const { exchangeRateBcv, preferredCurrency, togglePreferredCurrency } = useShoppingCart();
   const [storeStatus, setStoreStatus] = useState(getStoreCurrentScheduleStatus());
 
   useEffect(() => {
@@ -12,43 +14,64 @@ export const TopAnnouncementBar = () => {
     return () => clearInterval(intervalTimer);
   }, []);
 
+  const formattedExchangeRate = typeof exchangeRateBcv === 'number'
+    ? exchangeRateBcv.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+    : '66,56';
+
   return (
-    <div className="bg-[#0b331c] text-white border-b border-emerald-950/40 py-1 px-3 sm:px-6 text-[11px] sm:text-xs font-medium relative z-50">
-      <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
-        <div className="flex items-center gap-1.5 sm:gap-2 truncate mx-auto md:mx-0">
+    <div className="bg-[#062413] text-white border-b border-[#04190d] py-1.5 px-3 sm:px-6 text-[11px] sm:text-xs font-medium relative z-50">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14 2xl:px-16 flex items-center justify-between gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2 truncate">
           <span
             className={`w-2 h-2 rounded-full shrink-0 ${
               storeStatus.isOpen ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'
             }`}
           />
-          <span className="font-bold text-amber-300 text-[10.5px] sm:text-xs shrink-0">
-            {storeStatus.statusBadgeText}
+          <span className="font-bold text-emerald-200 text-[10.5px] sm:text-xs shrink-0">
+            {storeStatus.isOpen ? 'Abierto hoy hasta 7:00 PM' : storeStatus.statusBadgeText}
           </span>
-          <span className="text-emerald-500/60 hidden sm:inline">•</span>
-          <span className="text-white/85 text-[10px] sm:text-xs truncate">
-            {storeStatus.statusDetailText}
+          <span className="text-white/40 shrink-0">•</span>
+          <span className="text-amber-300 font-bold text-[10.5px] sm:text-xs truncate">
+            Tasa BCV: Bs. {formattedExchangeRate}
           </span>
         </div>
 
-        <div className="hidden md:flex items-center gap-4 shrink-0">
-          <div className="flex items-center gap-1.5 text-white/80 hover:text-white transition-colors truncate">
+        <div className="flex items-center gap-3 sm:gap-4 shrink-0">
+          <div className="hidden lg:flex items-center gap-1.5 text-white/80 hover:text-white transition-colors truncate text-[11px]">
             <span className="material-symbols-outlined text-[14px] text-emerald-400 shrink-0">
               location_on
             </span>
             <span className="truncate">{STORE_OFFICIAL_DATA.shortAddress}</span>
           </div>
 
-          <a
-            href={`https://wa.me/${STORE_OFFICIAL_DATA.phoneNumber}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1 text-white/90 hover:text-emerald-300 transition-colors text-[11px] font-semibold"
-          >
-            <span className="material-symbols-outlined text-[14px] text-emerald-400">
-              chat
-            </span>
-            <span>{STORE_OFFICIAL_DATA.formattedPhone}</span>
-          </a>
+          <div className="inline-flex items-center bg-[#03150b] border border-emerald-900/90 rounded-full p-0.5 shadow-2xs">
+            <button
+              type="button"
+              onClick={() => togglePreferredCurrency('BS')}
+              className={`px-2 py-0.5 rounded-full text-[11px] transition-all cursor-pointer ${
+                preferredCurrency === 'BS'
+                  ? 'bg-[#114B2B] text-white font-black shadow-xs'
+                  : 'text-white/60 hover:text-white font-semibold'
+              }`}
+              title="Mostrar precios en Bolívares oficiales"
+              aria-label="Seleccionar moneda Bolívares"
+            >
+              Bs
+            </button>
+            <button
+              type="button"
+              onClick={() => togglePreferredCurrency('USD')}
+              className={`px-2 py-0.5 rounded-full text-[11px] transition-all cursor-pointer ${
+                preferredCurrency === 'USD'
+                  ? 'bg-[#114B2B] text-white font-black shadow-xs'
+                  : 'text-white/60 hover:text-white font-semibold'
+              }`}
+              title="Mostrar precios en Dólares"
+              aria-label="Seleccionar moneda Dólares"
+            >
+              $
+            </button>
+          </div>
         </div>
       </div>
     </div>

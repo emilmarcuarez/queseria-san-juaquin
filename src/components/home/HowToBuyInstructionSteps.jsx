@@ -4,7 +4,7 @@ const purchasingStepsList = [
   {
     stepNumberText: '1',
     stepTitleText: 'Arma tu lista o carrito',
-    stepDescriptionText: 'Selecciona tus víveres y productos de charcutería favoritos desde nuestro catálogo digital.',
+    stepDescriptionText: 'Selecciona tus víveres, quesos y embutidos favoritos desde nuestro catálogo digital.',
     isAccentStyle: false
   },
   {
@@ -21,7 +21,7 @@ const purchasingStepsList = [
   },
   {
     stepNumberText: '4',
-    stepTitleText: 'Paga y recibe tu pedido',
+    stepTitleText: 'Paga y recibe en tu puerta',
     stepDescriptionText: 'Paga por Pago Móvil, Punto de Venta al instante, Zelle o efectivo en mano.',
     isAccentStyle: true
   }
@@ -29,25 +29,25 @@ const purchasingStepsList = [
 
 export const HowToBuyInstructionSteps = () => {
   return (
-    <section className="py-14 bg-surface-alt border-b border-neutral-border overflow-hidden">
+    <section className="py-12 sm:py-16 bg-white border-t border-neutral-200/80 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-12" data-aos="fade-up">
-          <span className="text-xs font-extrabold text-primary uppercase tracking-widest">
+        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12" data-aos="fade-up">
+          <span className="text-xs font-black text-[#114B2B] uppercase tracking-widest">
             Rápido, Fácil y Confiable
           </span>
-          <h2 className="text-2xl lg:text-3xl font-extrabold text-neutral-dark tracking-tight mt-1">
+          <h2 className="text-2xl lg:text-3xl font-black text-neutral-900 tracking-tight mt-1">
             Cómo Comprar en Nuestro Supermercado Online
           </h2>
-          <p className="text-sm text-neutral-muted mt-2 font-medium">
-            Diseñado para que hagas tu compra semanal en 4 sencillos pasos con atención directa.
+          <p className="text-xs sm:text-sm text-neutral-500 mt-2 font-medium">
+            Diseñado para que hagas tu compra semanal en 4 sencillos pasos con atención directa por WhatsApp.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {purchasingStepsList.map((stepItem, stepIndex) => {
             const numberBadgeClasses = stepItem.isAccentStyle
-              ? 'bg-accent-light text-accent-hover ring-1 ring-accent/30'
-              : 'bg-primary-subtle text-primary ring-1 ring-primary/20';
+              ? 'bg-amber-100 text-amber-900 ring-1 ring-amber-400/40'
+              : 'bg-emerald-50 text-[#114B2B] ring-1 ring-emerald-200/50';
 
             const animationDelayMilliseconds = (stepIndex + 1) * 90;
 
@@ -56,15 +56,15 @@ export const HowToBuyInstructionSteps = () => {
                 key={stepItem.stepNumberText}
                 data-aos="fade-up"
                 data-aos-delay={animationDelayMilliseconds}
-                className="bg-white p-6 rounded-xl border border-neutral-border shadow-xs hover:shadow-md transition-all flex flex-col items-start relative"
+                className="bg-neutral-50/70 p-5 sm:p-6 rounded-2xl border border-neutral-200/80 shadow-2xs hover:shadow-md hover:border-[#114B2B]/30 hover:bg-white transition-all duration-300 flex flex-col items-start relative group"
               >
-                <div className={`w-10 h-10 rounded-lg font-black text-lg flex items-center justify-center mb-4 ${numberBadgeClasses}`}>
+                <div className={`w-10 h-10 rounded-xl font-black text-base flex items-center justify-center mb-4 shadow-2xs group-hover:scale-105 transition-transform ${numberBadgeClasses}`}>
                   {stepItem.stepNumberText}
                 </div>
-                <h4 className="text-base font-bold text-neutral-dark mb-1">
+                <h3 className="text-sm sm:text-base font-bold text-neutral-900 mb-1.5">
                   {stepItem.stepTitleText}
-                </h4>
-                <p className="text-xs text-neutral-muted leading-relaxed">
+                </h3>
+                <p className="text-xs text-neutral-500 leading-relaxed">
                   {stepItem.stepDescriptionText}
                 </p>
               </div>

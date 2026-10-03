@@ -1,10 +1,7 @@
 import React from 'react';
 import { HeroOffersCarousel } from './HeroOffersCarousel';
-import { useShoppingCart } from '../../hooks/useShoppingCart';
 
 export const HeroCommercialBanner = ({ onExploreCatalog }) => {
-  const { openCartDrawer } = useShoppingCart();
-
   const handleExploreClick = (clickEvent) => {
     if (onExploreCatalog) {
       clickEvent.preventDefault();
@@ -24,26 +21,22 @@ export const HeroCommercialBanner = ({ onExploreCatalog }) => {
             Todo para tu Hogar en un Solo Lugar
           </h1>
 
-          <p className="text-sm sm:text-base lg:text-lg text-white/90 leading-relaxed mb-8 font-medium max-w-lg drop-shadow-xs">
+          <p className="text-sm sm:text-base lg:text-lg text-white/90 leading-relaxed mb-6 font-medium max-w-lg drop-shadow-xs">
             Charcutería fresca rebanada al gusto, quesos seleccionados y la despensa completa de tu casa con despacho directo a tu puerta con la mejor atención.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
+          <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight leading-tight mb-8">
+            Sabor Criollo &amp; <span className="italic text-amber-300 font-normal">Fresco a tu Mesa</span>
+          </h2>
+
+          <div className="w-full sm:w-auto">
             <button
               type="button"
               onClick={handleExploreClick}
-              className="w-full sm:w-auto inline-flex justify-center items-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 bg-[#114B2B] hover:bg-[#0d3b22] text-white rounded-xl font-extrabold text-xs sm:text-sm shadow-xl transition-all active:scale-95 text-center cursor-pointer"
+              className="w-full sm:w-auto inline-flex justify-center items-center gap-2.5 px-8 py-3.5 sm:py-4 bg-[#114B2B] hover:bg-[#0c3920] border border-emerald-400/50 text-white rounded-xl font-bold text-sm sm:text-base shadow-xl transition-all active:scale-95 text-center cursor-pointer"
             >
-              <span className="material-symbols-outlined text-lg sm:text-xl">shopping_basket</span>
-              <span>Explorar Tienda</span>
-            </button>
-
-            <button
-              onClick={openCartDrawer}
-              className="w-full sm:w-auto inline-flex justify-center items-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 bg-white/15 hover:bg-white/25 text-white border border-white/30 backdrop-blur-md rounded-xl font-extrabold text-xs sm:text-sm transition-all shadow-xl active:scale-95 cursor-pointer text-center"
-            >
-              <span className="material-symbols-outlined text-lg sm:text-xl">shopping_cart</span>
-              <span>Armar Mi Carrito</span>
+              <span className="material-symbols-outlined text-xl">shopping_bag</span>
+              <span>Explorar Catálogo</span>
             </button>
           </div>
         </div>

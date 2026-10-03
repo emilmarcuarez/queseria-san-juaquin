@@ -2,13 +2,21 @@
   {
     "categoryIdentifier": "todos",
     "categoryTitle": "Todos los Productos",
+    "categorySubtitle": "Catálogo General",
+    "categoryIcon": "storefront",
+    "themeBackground": "bg-emerald-50/80 border-emerald-200/90 text-[#114B2B]",
+    "iconBackground": "bg-emerald-100 text-[#114B2B]",
     "categoryAssignedImage": null,
     "matchingProductIds": []
   },
   {
     "categoryIdentifier": "quesos-frescos",
     "categoryTitle": "Quesos Frescos",
-    "categoryAssignedImage": null,
+    "categorySubtitle": "Llanero, Paisa & Nata Criolla",
+    "categoryIcon": "nutrition",
+    "themeBackground": "bg-[#FAF7EE] border-[#E8DFC9] text-amber-950",
+    "iconBackground": "bg-[#F3EAD5] text-[#8C6D23]",
+    "categoryAssignedImage": "/images/categories/quesos-frescos.jpg",
     "matchingProductIds": [
       "queso-blanco-llanero-1kg",
       "queso-paisa-pasteurizado-1kg",
@@ -22,7 +30,11 @@
   {
     "categoryIdentifier": "quesos-madurados",
     "categoryTitle": "Quesos Madurados",
-    "categoryAssignedImage": null,
+    "categorySubtitle": "De Año, Curados & Parmesano",
+    "categoryIcon": "star",
+    "themeBackground": "bg-[#FDF6E8] border-[#EEDEB8] text-amber-950",
+    "iconBackground": "bg-[#F7E6BE] text-[#9A7416]",
+    "categoryAssignedImage": "/images/categories/quesos-madurados.jpg",
     "matchingProductIds": [
       "queso-de-ano-curado-wedge",
       "queso-parmesano-curado-250g"
@@ -31,7 +43,11 @@
   {
     "categoryIdentifier": "jamones-cortes",
     "categoryTitle": "Jamones & Cortes",
-    "categoryAssignedImage": null,
+    "categorySubtitle": "Plumrose, Pavo & Ahumados",
+    "categoryIcon": "lunch_dining",
+    "themeBackground": "bg-[#FDF3F3] border-[#FAD2D2] text-rose-950",
+    "iconBackground": "bg-[#FAD9D9] text-[#B91C1C]",
+    "categoryAssignedImage": "/images/categories/jamones-cortes.jpg",
     "matchingProductIds": [
       "plumrose-jamon-cocido-deli",
       "jamon-espalda-ahumada-500g",
@@ -41,7 +57,11 @@
   {
     "categoryIdentifier": "embutidos-tocineta",
     "categoryTitle": "Embutidos & Tocineta",
-    "categoryAssignedImage": null,
+    "categorySubtitle": "Tocineta, Salchichas & Diablitos",
+    "categoryIcon": "dinner_dining",
+    "themeBackground": "bg-[#FFF6ED] border-[#FEDBBA] text-orange-950",
+    "iconBackground": "bg-[#FFE4CC] text-[#C2410C]",
+    "categoryAssignedImage": "/images/categories/embutidos-tocineta.jpg",
     "matchingProductIds": [
       "plumrose-tocineta-ahumada-lonjas",
       "plumrose-salchichas-wieners",
@@ -52,7 +72,11 @@
   {
     "categoryIdentifier": "harinas-granos",
     "categoryTitle": "Harinas & Granos",
-    "categoryAssignedImage": null,
+    "categorySubtitle": "Harina P.A.N., Arroz & Pastas",
+    "categoryIcon": "grain",
+    "themeBackground": "bg-[#FEFCE8] border-[#FEF08A] text-yellow-950",
+    "iconBackground": "bg-[#FEF9C3] text-[#A16207]",
+    "categoryAssignedImage": "/images/categories/harinas-granos.jpg",
     "matchingProductIds": [
       "harina-pan-blanca-1kg",
       "harina-pan-amarilla-1kg",
@@ -64,7 +88,11 @@
   {
     "categoryIdentifier": "viveres-salsas",
     "categoryTitle": "Víveres & Salsas",
-    "categoryAssignedImage": null,
+    "categorySubtitle": "Mavesa, Salsas, Aceites & Café",
+    "categoryIcon": "kitchen",
+    "themeBackground": "bg-[#F2F8F4] border-[#D3E8DA] text-emerald-950",
+    "iconBackground": "bg-[#DBEDE1] text-[#15803D]",
+    "categoryAssignedImage": "/images/categories/viveres-salsas.jpg",
     "matchingProductIds": [
       "mayonesa-mavesa-frasco-470g",
       "salsa-tomate-pampero-397g",
@@ -75,7 +103,11 @@
   {
     "categoryIdentifier": "panaderia-desayuno",
     "categoryTitle": "Panadería & Desayuno",
-    "categoryAssignedImage": null,
+    "categorySubtitle": "Pan de Jamón, Sandwich & Margarina",
+    "categoryIcon": "bakery_dining",
+    "themeBackground": "bg-[#FAF5EF] border-[#EBDCCB] text-amber-950",
+    "iconBackground": "bg-[#F1E1CD] text-[#9A3412]",
+    "categoryAssignedImage": "/images/categories/panaderia-desayuno.jpg",
     "matchingProductIds": [
       "margarina-mavesa-pote-1kg",
       "pan-de-jamon-artesanal-tradicional",
@@ -85,7 +117,11 @@
   {
     "categoryIdentifier": "dulces-bebidas",
     "categoryTitle": "Dulces & Bebidas",
-    "categoryAssignedImage": null,
+    "categorySubtitle": "Maltín Polar, Pirulín & Galletas",
+    "categoryIcon": "local_bar",
+    "themeBackground": "bg-[#F7F4FD] border-[#DDD5FA] text-purple-950",
+    "iconBackground": "bg-[#EBE4FC] text-[#6D28D9]",
+    "categoryAssignedImage": "/images/categories/dulces-bebidas.jpg",
     "matchingProductIds": [
       "pirulin-lata-avellana-300g",
       "maltin-polar-botella-pack",
