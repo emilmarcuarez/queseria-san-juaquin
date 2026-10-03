@@ -114,7 +114,7 @@ export const buildWhatsAppOrderUrl = ({
     '',
     ...breakdownSection,
     `*Total USD:* $${finalTotalUsd.toFixed(2)}`,
-    `*Total Ref. BCV:* Bs. ${finalTotalBcv.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} (Tasa: Bs. ${exchangeRateBcv.toFixed(2)})`
+    `*Total Ref. BCV:* Bs. ${finalTotalBcv.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} (Tasa: Bs. ${exchangeRateBcv.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })})`
   ].filter(messageLine => messageLine !== null).join('\n');
 
   return `https://wa.me/${cleanDestinationNumber}?text=${encodeURIComponent(fullOrderMessage)}`;

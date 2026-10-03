@@ -66,6 +66,32 @@ export const MobileBottomNavigationBar = ({
     maximumFractionDigits: 2
   });
 
+  const formattedExchangeRateBcv = typeof exchangeRateBcv === 'number'
+    ? exchangeRateBcv.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+    : '866,56';
+
+  const formattedExchangeRateDate = (() => {
+    if (!exchangeRateDateString || typeof exchangeRateDateString !== 'string') {
+      return '';
+    }
+    if (exchangeRateDateString.includes('T')) {
+      const dateSection = exchangeRateDateString.split('T')[0];
+      const datePieces = dateSection.split('-');
+      if (datePieces.length === 3) {
+        const [yearValue, monthValue, dayValue] = datePieces;
+        return `${dayValue}/${monthValue}/${yearValue}`;
+      }
+    }
+    if (exchangeRateDateString.includes('-')) {
+      const datePieces = exchangeRateDateString.split('-');
+      if (datePieces.length === 3) {
+        const [yearValue, monthValue, dayValue] = datePieces;
+        return `${dayValue}/${monthValue}/${yearValue}`;
+      }
+    }
+    return exchangeRateDateString;
+  })();
+
   const matchingSearchResults = mobileSearchQuery.trim() === ''
     ? []
     : productsCatalogData.filter((productItem) => {
@@ -260,10 +286,10 @@ export const MobileBottomNavigationBar = ({
                 Tasa de Referencia del Día
               </span>
               <div className="text-3xl sm:text-4xl font-black text-neutral-900 tracking-tight">
-                Bs. {exchangeRateBcv.toFixed(2)}
+                Bs. {formattedExchangeRateBcv}
               </div>
               <span className="text-xs text-neutral-600 font-medium mt-1 block">
-                1 USD = Bs. {exchangeRateBcv.toFixed(2)} {exchangeRateDateString ? `• ${exchangeRateDateString}` : ''}
+                1 USD = Bs. {formattedExchangeRateBcv} {formattedExchangeRateDate ? `• ${formattedExchangeRateDate}` : ''}
               </span>
             </div>
 

@@ -424,7 +424,7 @@ export const CartDrawerModal = () => {
 
                 <div className="flex items-center justify-between text-xs font-semibold text-neutral-muted">
                   <span>Tasa Oficial BCV:</span>
-                  <span>Bs. {exchangeRateBcv.toFixed(2)}</span>
+                  <span>Bs. {formattedRate}</span>
                 </div>
 
                 <div className="flex items-center justify-between pt-2 border-t border-neutral-border/80">
