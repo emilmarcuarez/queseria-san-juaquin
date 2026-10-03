@@ -55,7 +55,9 @@ export const MainHeaderNavigation = ({
   const mobileCategoryChipsList = [
     { chipIdentifier: 'todos', chipLabel: 'Todos' },
     { chipIdentifier: 'quesos-frescos', chipLabel: 'Quesos Criollos' },
+    { chipIdentifier: 'quesos-madurados', chipLabel: 'Quesos Madurados' },
     { chipIdentifier: 'jamones-cortes', chipLabel: 'Jamones & Cortes' },
+    { chipIdentifier: 'embutidos-tocineta', chipLabel: 'Embutidos & Tocineta' },
     { chipIdentifier: 'harinas-granos', chipLabel: 'Harinas & Granos' },
     { chipIdentifier: 'viveres-salsas', chipLabel: 'Víveres & Salsas' },
     { chipIdentifier: 'panaderia-desayuno', chipLabel: 'Panadería' },

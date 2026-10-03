@@ -132,7 +132,7 @@ const StorefrontContent = () => {
 
             <SupermarketQuickPerks />
 
-            <div id="departamentos" className="hidden md:block">
+            <div id="departamentos" className="w-full">
               <DepartmentGridShowcase
                 onSelectDepartment={handleDepartmentSelectFromHome}
               />

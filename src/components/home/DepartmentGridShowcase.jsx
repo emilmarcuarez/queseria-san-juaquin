@@ -7,7 +7,7 @@ export const DepartmentGridShowcase = ({ onSelectDepartment }) => {
   );
 
   return (
-    <section className="hidden md:block pt-8 pb-12 sm:pt-10 sm:pb-14 bg-white scroll-mt-28" id="departamentos">
+    <section className="w-full pt-8 pb-10 sm:pt-10 sm:pb-14 bg-white scroll-mt-28" id="departamentos">
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14 2xl:px-16">
         <div className="flex items-center justify-between gap-3 mb-6 sm:mb-8 pb-3 border-b border-neutral-100" data-aos="fade-up">
           <div className="flex items-center gap-3 sm:gap-3.5">
@@ -20,7 +20,7 @@ export const DepartmentGridShowcase = ({ onSelectDepartment }) => {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 gap-4 sm:gap-6" data-aos="fade-up" data-aos-delay="100">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6" data-aos="fade-up" data-aos-delay="100">
           {visibleCategoryList.map((categoryItem) => {
             return (
               <button
