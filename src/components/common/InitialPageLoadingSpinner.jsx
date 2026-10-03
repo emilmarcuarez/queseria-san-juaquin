@@ -7,11 +7,11 @@ export const InitialPageLoadingSpinner = () => {
   useEffect(() => {
     const loadingDisplayTimeout = setTimeout(() => {
       setIsLoadingComplete(true);
-    }, 600);
+    }, 150);
 
     const removeElementTimeout = setTimeout(() => {
       setShouldRenderSpinner(false);
-    }, 1100);
+    }, 350);
 
     return () => {
       clearTimeout(loadingDisplayTimeout);

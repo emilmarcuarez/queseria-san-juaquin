@@ -42,7 +42,8 @@ export const fetchLiveBcvExchangeRate = async () => {
     const dolarApiResponse = await fetch('https://ve.dolarapi.com/v1/dolares/oficial', {
       headers: {
         'Accept': 'application/json'
-      }
+      },
+      signal: AbortSignal.timeout ? AbortSignal.timeout(3500) : undefined
     });
 
     if (dolarApiResponse.ok) {
@@ -66,7 +67,8 @@ export const fetchLiveBcvExchangeRate = async () => {
     const dolarVzlaResponse = await fetch('https://rates.dolarvzla.com/bcv/current.json', {
       headers: {
         'Accept': 'application/json'
-      }
+      },
+      signal: AbortSignal.timeout ? AbortSignal.timeout(3500) : undefined
     });
 
     if (dolarVzlaResponse.ok) {
@@ -84,7 +86,10 @@ export const fetchLiveBcvExchangeRate = async () => {
 
   try {
     const proxyCorsResponse = await fetch(
-      `https://api.allorigins.win/raw?url=${encodeURIComponent('https://rates.dolarvzla.com/bcv/current.json')}`
+      `https://api.allorigins.win/raw?url=${encodeURIComponent('https://rates.dolarvzla.com/bcv/current.json')}`,
+      {
+        signal: AbortSignal.timeout ? AbortSignal.timeout(3500) : undefined
+      }
     );
 
     if (proxyCorsResponse.ok) {
