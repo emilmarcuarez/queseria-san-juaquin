@@ -9,7 +9,7 @@ import { MainFooterSection } from './components/common/MainFooterSection';
 import { MobileBottomNavigationBar } from './components/common/MobileBottomNavigationBar';
 import { FlyingCartAnimationOverlay } from './components/common/FlyingCartAnimationOverlay';
 import { CartToastNotification } from './components/common/CartToastNotification';
-import { InitialPageLoadingSpinner } from './components/common/InitialPageLoadingSpinner';
+import { AppErrorBoundary } from './components/common/AppErrorBoundary';
 import { HeroCommercialBanner } from './components/home/HeroCommercialBanner';
 import { SupermarketQuickPerks } from './components/home/SupermarketQuickPerks';
 import { DepartmentGridShowcase } from './components/home/DepartmentGridShowcase';
@@ -111,8 +111,6 @@ const StorefrontContent = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
-      <InitialPageLoadingSpinner />
-
       <header className="fixed top-0 left-0 w-full z-40 bg-white lg:shadow-none shadow-xs">
         <TopAnnouncementBar />
         <MainHeaderNavigation
@@ -194,8 +192,10 @@ const StorefrontContent = () => {
 
 export default function App() {
   return (
-    <ShoppingCartProvider>
-      <StorefrontContent />
-    </ShoppingCartProvider>
+    <AppErrorBoundary>
+      <ShoppingCartProvider>
+        <StorefrontContent />
+      </ShoppingCartProvider>
+    </AppErrorBoundary>
   );
 }
