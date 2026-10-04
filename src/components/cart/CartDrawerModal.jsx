@@ -78,6 +78,10 @@ export const CartDrawerModal = () => {
     maximumFractionDigits: 2
   });
 
+  const formattedExchangeRateBcv = typeof exchangeRateBcv === 'number'
+    ? exchangeRateBcv.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+    : '866,56';
+
   return (
     <div
       className={`fixed inset-0 z-50 overflow-hidden transition-all duration-300 ${
@@ -424,7 +428,7 @@ export const CartDrawerModal = () => {
 
                 <div className="flex items-center justify-between text-xs font-semibold text-neutral-muted">
                   <span>Tasa Oficial BCV:</span>
-                  <span>Bs. {formattedRate}</span>
+                  <span>Bs. {formattedExchangeRateBcv}</span>
                 </div>
 
                 <div className="flex items-center justify-between pt-2 border-t border-neutral-border/80">
