@@ -11,7 +11,6 @@ import { FlyingCartAnimationOverlay } from './components/common/FlyingCartAnimat
 import { CartToastNotification } from './components/common/CartToastNotification';
 import { AppErrorBoundary } from './components/common/AppErrorBoundary';
 import { HeroCommercialBanner } from './components/home/HeroCommercialBanner';
-import { SupermarketQuickPerks } from './components/home/SupermarketQuickPerks';
 import { DepartmentGridShowcase } from './components/home/DepartmentGridShowcase';
 import { HomeFeaturedProductsPreview } from './components/home/HomeFeaturedProductsPreview';
 import { StoreCatalogPage } from './components/pages/StoreCatalogPage';
@@ -127,8 +126,6 @@ const StorefrontContent = () => {
         {activePageIdentifier === 'inicio' && (
           <>
             <HeroCommercialBanner onExploreCatalog={() => handleNavigateToPage('tienda')} />
-
-            <SupermarketQuickPerks />
 
             <div id="departamentos" className="w-full">
               <DepartmentGridShowcase

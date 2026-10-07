@@ -35,7 +35,7 @@ const CategoryCircleItem = ({
             : 'ring-2 ring-neutral-200/90 group-hover:ring-emerald-400 group-hover:scale-105 shadow-2xs'
         }`}
       >
-        <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden relative shadow-inner bg-neutral-100">
+        <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden relative shadow-inner bg-white">
           {categoryProductImages.length > 0 ? (
             categoryProductImages.map((imageUrl, imageIndex) => {
               const isCurrentImage = imageIndex === activeImageIndex;
@@ -44,7 +44,7 @@ const CategoryCircleItem = ({
                   key={imageUrl}
                   src={imageUrl}
                   alt={categoryTitle}
-                  className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-in-out ${
+                  className={`absolute inset-0 w-full h-full object-contain p-1 transition-all duration-700 ease-in-out ${
                     isCurrentImage
                       ? 'opacity-100 scale-100'
                       : 'opacity-0 scale-95 pointer-events-none'
