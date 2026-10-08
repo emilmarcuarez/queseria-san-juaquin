@@ -20,8 +20,6 @@ export const MobileBottomNavigationBar = ({
 
   const [isDollarModalOpen, setIsDollarModalOpen] = useState(false);
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
-
-  const [calculatorInputUsd, setCalculatorInputUsd] = useState('10');
   const [mobileSearchQuery, setMobileSearchQuery] = useState('');
   const searchInputReference = useRef(null);
 
@@ -59,12 +57,6 @@ export const MobileBottomNavigationBar = ({
   const handleCloseDollarModal = () => {
     setIsDollarModalOpen(false);
   };
-
-  const numericUsdAmount = parseFloat(calculatorInputUsd) || 0;
-  const calculatedBolivaresAmount = (numericUsdAmount * exchangeRateBcv).toLocaleString('es-VE', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  });
 
   const formattedExchangeRateBcv = typeof exchangeRateBcv === 'number'
     ? exchangeRateBcv.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
@@ -214,21 +206,21 @@ export const MobileBottomNavigationBar = ({
         >
           <div
             onClick={(clickEvent) => clickEvent.stopPropagation()}
-            className="w-full max-w-md bg-white rounded-t-3xl sm:rounded-2xl p-6 shadow-2xl animate-slideDownDrawer sm:animate-none flex flex-col gap-5 max-h-[85vh] overflow-y-auto"
+            className="w-full max-w-md bg-white rounded-t-3xl sm:rounded-2xl p-5 sm:p-6 shadow-2xl animate-slideDownDrawer sm:animate-none flex flex-col gap-4 max-h-[85vh] overflow-y-auto"
           >
             <div className="w-12 h-1.5 bg-neutral-300 rounded-full mx-auto sm:hidden" />
 
             <div className="flex items-center justify-between pb-2 border-b border-neutral-100">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2.5">
                 <div className="w-9 h-9 rounded-xl bg-emerald-100 text-[#114B2B] flex items-center justify-center">
-                  <span className="material-symbols-outlined text-xl">account_balance</span>
+                  <span className="material-symbols-outlined text-xl">payments</span>
                 </div>
                 <div>
                   <h3 className="text-base font-black text-neutral-900 leading-tight">
-                    Tasa Oficial BCV
+                    Moneda de la Tienda
                   </h3>
                   <span className="text-[11px] text-neutral-500 font-medium">
-                    Banco Central de Venezuela
+                    Precios en Bolívares o Dólares
                   </span>
                 </div>
               </div>
@@ -237,21 +229,22 @@ export const MobileBottomNavigationBar = ({
                 type="button"
                 onClick={handleCloseDollarModal}
                 className="w-8 h-8 rounded-full bg-neutral-100 text-neutral-500 hover:bg-neutral-200 flex items-center justify-center cursor-pointer"
-                aria-label="Cerrar modal de tasa"
+                aria-label="Cerrar selector de moneda"
               >
                 <span className="material-symbols-outlined text-lg">close</span>
               </button>
             </div>
 
-            <div className="bg-neutral-50 p-3.5 rounded-2xl border border-neutral-200">
-              <span className="text-xs font-black text-neutral-800 uppercase tracking-wider block mb-2">
-                Moneda Principal de la Tienda
+            <div className="bg-neutral-50 p-4 rounded-2xl border border-neutral-200">
+              <span className="text-xs font-black text-neutral-800 uppercase tracking-wider block mb-2.5">
+                Selecciona cómo ver los precios
               </span>
-              <div className="grid grid-cols-2 gap-2 bg-neutral-200/70 p-1 rounded-xl">
+
+              <div className="grid grid-cols-2 gap-2 bg-neutral-200/70 p-1.5 rounded-xl">
                 <button
                   type="button"
                   onClick={() => togglePreferredCurrency('USD')}
-                  className={`py-2 px-3 rounded-lg text-xs font-black flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                  className={`py-2.5 px-3 rounded-lg text-xs font-black flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
                     preferredCurrency === 'USD'
                       ? 'bg-white text-[#114B2B] shadow-xs'
                       : 'text-neutral-600 hover:text-neutral-900'
@@ -264,7 +257,7 @@ export const MobileBottomNavigationBar = ({
                 <button
                   type="button"
                   onClick={() => togglePreferredCurrency('BS')}
-                  className={`py-2 px-3 rounded-lg text-xs font-black flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                  className={`py-2.5 px-3 rounded-lg text-xs font-black flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
                     preferredCurrency === 'BS'
                       ? 'bg-[#114B2B] text-white shadow-xs'
                       : 'text-neutral-600 hover:text-neutral-900'
@@ -274,83 +267,34 @@ export const MobileBottomNavigationBar = ({
                   <span>Bolívares (BCV)</span>
                 </button>
               </div>
-              <p className="text-[11px] text-neutral-500 font-medium mt-2 leading-tight">
+
+              <p className="text-[11px] text-neutral-500 font-medium mt-2.5 leading-tight">
                 {preferredCurrency === 'BS'
                   ? '✓ Mostrando precios principales en Bolívares (Bs.) calculados a la tasa oficial del día.'
                   : '✓ Mostrando precios principales en Dólares ($ USD) con referencia en Bolívares.'}
               </p>
             </div>
 
-            <div className="bg-[#FAF7EE] p-5 rounded-2xl border border-[#E8DFC9] text-center">
-              <span className="text-xs font-bold text-[#8C6D23] uppercase tracking-wider block mb-1">
-                Tasa de Referencia del Día
-              </span>
-              <div className="text-3xl sm:text-4xl font-black text-neutral-900 tracking-tight">
+            <div className="bg-emerald-50/70 p-3.5 rounded-2xl border border-emerald-200/80 flex items-center justify-between">
+              <div>
+                <span className="text-[10.5px] font-bold text-emerald-900 uppercase tracking-wider block">
+                  Tasa Oficial BCV
+                </span>
+                <span className="text-[10.5px] text-emerald-700 font-medium">
+                  {formattedExchangeRateDate ? `Actualizada al ${formattedExchangeRateDate}` : 'Banco Central de Venezuela'}
+                </span>
+              </div>
+              <div className="text-base sm:text-lg font-black text-[#114B2B]">
                 Bs. {formattedExchangeRateBcv}
               </div>
-              <span className="text-xs text-neutral-600 font-medium mt-1 block">
-                1 USD = Bs. {formattedExchangeRateBcv} {formattedExchangeRateDate ? `• ${formattedExchangeRateDate}` : ''}
-              </span>
-            </div>
-
-            <div>
-              <label htmlFor="usd-calculator-input" className="block text-xs font-bold text-neutral-700 uppercase tracking-wider mb-2">
-                Calculadora Rápida USD / Bs.
-              </label>
-
-              <div className="relative flex items-center mb-3">
-                <span className="absolute left-3.5 text-base font-black text-neutral-400">
-                  $
-                </span>
-                <input
-                  id="usd-calculator-input"
-                  type="number"
-                  min="0"
-                  step="any"
-                  value={calculatorInputUsd}
-                  onChange={(inputChangeEvent) => setCalculatorInputUsd(inputChangeEvent.target.value)}
-                  placeholder="Monto en USD"
-                  className="w-full bg-neutral-50 border border-neutral-200 rounded-xl pl-8 pr-4 py-2.5 text-base font-bold text-neutral-900 focus:outline-none focus:ring-2 focus:ring-[#114B2B]"
-                />
-              </div>
-
-              <div className="grid grid-cols-4 gap-2 mb-3">
-                {['5', '10', '20', '50'].map((presetAmount) => (
-                  <button
-                    key={presetAmount}
-                    type="button"
-                    onClick={() => setCalculatorInputUsd(presetAmount)}
-                    className={`py-1.5 rounded-lg text-xs font-bold border transition-colors cursor-pointer ${
-                      calculatorInputUsd === presetAmount
-                        ? 'bg-[#114B2B] text-white border-[#114B2B]'
-                        : 'bg-white border-neutral-200 text-neutral-700 hover:bg-neutral-50'
-                    }`}
-                  >
-                    ${presetAmount}
-                  </button>
-                ))}
-              </div>
-
-              <div className="p-3 bg-emerald-50 rounded-xl border border-emerald-200 flex items-center justify-between">
-                <span className="text-xs font-bold text-emerald-900">
-                  Equivalente en Bolívares:
-                </span>
-                <span className="text-base font-black text-[#114B2B]">
-                  Bs. {calculatedBolivaresAmount}
-                </span>
-              </div>
-            </div>
-
-            <div className="text-[11px] text-neutral-500 bg-neutral-50 p-3 rounded-xl border border-neutral-200 leading-relaxed">
-              En Quesería San Joaquín cobramos exactamente a la tasa oficial del BCV. Aceptamos Pago Móvil, tarjetas de débito, Zelle y divisas en efectivo.
             </div>
 
             <button
               type="button"
               onClick={handleCloseDollarModal}
-              className="w-full py-3 rounded-xl bg-[#114B2B] hover:bg-[#0d3b22] text-white font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer"
+              className="w-full py-3 rounded-xl bg-[#114B2B] hover:bg-[#0d3b22] text-white font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer shadow-xs"
             >
-              Continuar Comprando
+              Listo
             </button>
           </div>
         </div>,
