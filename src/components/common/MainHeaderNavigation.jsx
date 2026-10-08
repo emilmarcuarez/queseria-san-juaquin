@@ -52,17 +52,7 @@ export const MainHeaderNavigation = ({
     { labelText: 'Contáctanos', pageKey: 'contacto' }
   ];
 
-  const mobileCategoryChipsList = [
-    { chipIdentifier: 'todos', chipLabel: 'Todos' },
-    { chipIdentifier: 'quesos-frescos', chipLabel: 'Quesos Criollos' },
-    { chipIdentifier: 'quesos-madurados', chipLabel: 'Quesos Madurados' },
-    { chipIdentifier: 'jamones-cortes', chipLabel: 'Jamones & Cortes' },
-    { chipIdentifier: 'embutidos-tocineta', chipLabel: 'Embutidos & Tocineta' },
-    { chipIdentifier: 'harinas-granos', chipLabel: 'Harinas & Granos' },
-    { chipIdentifier: 'viveres-salsas', chipLabel: 'Víveres & Salsas' },
-    { chipIdentifier: 'panaderia-desayuno', chipLabel: 'Panadería' },
-    { chipIdentifier: 'dulces-bebidas', chipLabel: 'Dulces & Bebidas' }
-  ];
+
 
   const handleSearchInputChange = (inputChangeEvent) => {
     if (activePageIdentifier !== 'tienda') {
@@ -87,13 +77,7 @@ export const MainHeaderNavigation = ({
     onNavigateToPage(targetPageKey);
   };
 
-  const handleChipSelection = (chosenCategoryKey) => {
-    if (onSelectDepartment) {
-      onSelectDepartment(chosenCategoryKey);
-    } else {
-      onNavigateToPage('tienda');
-    }
-  };
+
 
   return (
     <>
@@ -193,7 +177,7 @@ export const MainHeaderNavigation = ({
           </div>
 
           <div className="lg:hidden pb-2.5 pt-0.5">
-            <div className="w-full relative flex items-center mb-2">
+            <div className="w-full relative flex items-center">
               <span className="material-symbols-outlined text-neutral-400 absolute left-3.5 text-lg pointer-events-none">
                 search
               </span>
@@ -221,32 +205,6 @@ export const MainHeaderNavigation = ({
                   </span>
                 </div>
               )}
-            </div>
-
-            <div
-              className="flex items-center gap-1.5 overflow-x-auto pb-1 scroll-smooth"
-              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-            >
-              {mobileCategoryChipsList.map((chipItem) => {
-                const isSelected = activePageIdentifier === 'tienda'
-                  ? storeInitialDepartmentKey === chipItem.chipIdentifier
-                  : chipItem.chipIdentifier === 'todos';
-
-                return (
-                  <button
-                    key={chipItem.chipIdentifier}
-                    type="button"
-                    onClick={() => handleChipSelection(chipItem.chipIdentifier)}
-                    className={`whitespace-nowrap px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer shrink-0 ${
-                      isSelected
-                        ? 'bg-[#114B2B] text-white shadow-xs'
-                        : 'bg-white border border-neutral-200/90 text-neutral-800 hover:border-[#114B2B] shadow-2xs'
-                    }`}
-                  >
-                    <span>{chipItem.chipLabel}</span>
-                  </button>
-                );
-              })}
             </div>
           </div>
         </div>
