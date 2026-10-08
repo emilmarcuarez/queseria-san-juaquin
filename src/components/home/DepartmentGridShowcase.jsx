@@ -14,7 +14,7 @@ export const DepartmentGridShowcase = ({ onSelectDepartment }) => {
             <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#114B2B] text-white flex items-center justify-center shrink-0 shadow-xs">
               <span className="material-symbols-outlined text-lg sm:text-xl">grid_view</span>
             </div>
-            <h2 className="font-serif text-xl sm:text-2xl lg:text-3xl font-bold text-neutral-900 tracking-tight leading-none">
+            <h2 className="font-sans text-xl sm:text-2xl lg:text-3xl font-black text-neutral-900 tracking-tight leading-none">
               Explora Nuestras Categorías
             </h2>
           </div>

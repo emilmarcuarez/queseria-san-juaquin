@@ -74,7 +74,7 @@ export const HomeFeaturedProductsPreview = ({
             <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#8C6D23] text-white flex items-center justify-center shrink-0 shadow-xs">
               <span className="material-symbols-outlined text-lg sm:text-xl">nutrition</span>
             </div>
-            <h2 className="font-serif text-xl sm:text-2xl lg:text-3xl font-bold text-neutral-900 tracking-tight leading-none">
+            <h2 className="font-sans text-xl sm:text-2xl lg:text-3xl font-black text-neutral-900 tracking-tight leading-none">
               Quesos Criollos &amp; Tradición del Llano
             </h2>
           </div>
@@ -108,7 +108,7 @@ export const HomeFeaturedProductsPreview = ({
             <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#7A3E20] text-white flex items-center justify-center shrink-0 shadow-xs">
               <span className="material-symbols-outlined text-lg sm:text-xl">lunch_dining</span>
             </div>
-            <h2 className="font-serif text-xl sm:text-2xl lg:text-3xl font-bold text-neutral-900 tracking-tight leading-none">
+            <h2 className="font-sans text-xl sm:text-2xl lg:text-3xl font-black text-neutral-900 tracking-tight leading-none">
               Charcutería Selecta &amp; Embutidos
             </h2>
           </div>
@@ -142,7 +142,7 @@ export const HomeFeaturedProductsPreview = ({
             <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#114B2B] text-white flex items-center justify-center shrink-0 shadow-xs">
               <span className="material-symbols-outlined text-lg sm:text-xl">kitchen</span>
             </div>
-            <h2 className="font-serif text-xl sm:text-2xl lg:text-3xl font-bold text-neutral-900 tracking-tight leading-none">
+            <h2 className="font-sans text-xl sm:text-2xl lg:text-3xl font-black text-neutral-900 tracking-tight leading-none">
               Despensa Básica &amp; Víveres Esenciales
             </h2>
           </div>
@@ -176,7 +176,7 @@ export const HomeFeaturedProductsPreview = ({
             <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#9A5B1E] text-white flex items-center justify-center shrink-0 shadow-xs">
               <span className="material-symbols-outlined text-lg sm:text-xl">bakery_dining</span>
             </div>
-            <h2 className="font-serif text-xl sm:text-2xl lg:text-3xl font-bold text-neutral-900 tracking-tight leading-none">
+            <h2 className="font-sans text-xl sm:text-2xl lg:text-3xl font-black text-neutral-900 tracking-tight leading-none">
               Panadería Artesanal, Café &amp; Antojos
             </h2>
           </div>

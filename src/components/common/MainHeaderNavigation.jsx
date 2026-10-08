@@ -118,7 +118,7 @@ export const MainHeaderNavigation = ({
                   className="w-9 h-9 sm:w-11 sm:h-11 object-contain transition-transform hover:scale-105"
                 />
                 <div className="flex flex-col">
-                  <span className="font-serif font-black text-sm sm:text-base lg:text-lg text-neutral-900 tracking-tight uppercase leading-tight">
+                  <span className="font-sans font-black text-sm sm:text-base lg:text-lg text-neutral-900 tracking-tight uppercase leading-tight">
                     Quesería San Joaquín
                   </span>
                   <span className="text-[9px] sm:text-[10.5px] font-bold text-[#C27803] tracking-widest uppercase">

@@ -25,8 +25,8 @@ export const HeroCommercialBanner = ({ onExploreCatalog }) => {
             Charcutería fresca rebanada al gusto, quesos seleccionados y la despensa completa de tu casa con despacho directo a tu puerta con la mejor atención.
           </p>
 
-          <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight leading-tight mb-8">
-            Sabor Criollo &amp; <span className="italic text-amber-300 font-normal">Fresco a tu Mesa</span>
+          <h2 className="font-sans text-xl sm:text-2xl lg:text-3xl font-black text-white tracking-tight leading-tight mb-8">
+            Sabor Criollo &amp; <span className="text-amber-300">Fresco a tu Mesa</span>
           </h2>
 
           <div className="w-full sm:w-auto">
