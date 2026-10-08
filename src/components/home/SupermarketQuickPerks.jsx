@@ -34,7 +34,7 @@ export const SupermarketQuickPerks = () => {
                 key={perkItem.titleText}
                 className="flex items-center gap-3 p-2 sm:p-2.5 rounded-xl hover:bg-neutral-50 transition-colors"
               >
-                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-emerald-50 text-[#114B2B] flex items-center justify-center shrink-0 border border-emerald-100 shadow-2xs">
+                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-[#F2F9E6] text-[#0B3C1D] flex items-center justify-center shrink-0 border border-[#8DC63F]/30 shadow-2xs">
                   <span className="material-symbols-outlined text-xl sm:text-2xl">
                     {perkItem.iconName}
                   </span>

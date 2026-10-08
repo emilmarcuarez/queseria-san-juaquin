@@ -87,7 +87,7 @@ export const PromotionalBannersCarousel = ({ onSelectPromotion }) => {
               />
 
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover/slide:opacity-100 transition-opacity duration-300 flex items-end p-4 sm:p-6">
-                <span className="text-white text-xs sm:text-sm font-bold bg-[#114B2B] hover:bg-[#0d3b22] px-3.5 py-1.5 rounded-full shadow-lg flex items-center gap-1.5 transition-all">
+                <span className="text-white text-xs sm:text-sm font-bold bg-[#0B3C1D] hover:bg-[#062612] px-3.5 py-1.5 rounded-full shadow-lg flex items-center gap-1.5 transition-all">
                   <span>Ver productos del combo</span>
                   <span className="material-symbols-outlined text-sm">arrow_forward</span>
                 </span>

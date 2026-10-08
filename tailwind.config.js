@@ -7,16 +7,29 @@ export default {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#165B33',
-          dark: '#0e3d22',
-          light: '#237a47',
-          subtle: '#eaf4ee'
+          DEFAULT: '#0B3C1D',
+          dark: '#062612',
+          light: '#8DC63F',
+          subtle: '#F2F9E6'
+        },
+        brand: {
+          lime: '#8DC63F',
+          'lime-light': '#F2F9E6',
+          'lime-hover': '#78AD2F',
+          'lime-dark': '#629320',
+          forest: '#0B3C1D',
+          'forest-dark': '#062612',
+          'forest-light': '#145A2E',
+          cheese: '#F59E0B',
+          'cheese-light': '#FEF3C7',
+          'cheese-dark': '#D97706',
+          wave: '#16A34A'
         },
         accent: {
-          DEFAULT: '#F5A623',
-          hover: '#e59616',
-          bright: '#FFB703',
-          light: '#fff8e6'
+          DEFAULT: '#F59E0B',
+          hover: '#D97706',
+          bright: '#FBBF24',
+          light: '#FEF3C7'
         },
         surface: {
           DEFAULT: '#ffffff',
@@ -24,9 +37,9 @@ export default {
           muted: '#f0f3f1'
         },
         neutral: {
-          dark: '#1e2621',
-          muted: '#5e6d62',
-          border: '#e1e7e3'
+          dark: '#142118',
+          muted: '#5a6b60',
+          border: '#dbe5de'
         }
       },
       fontFamily: {

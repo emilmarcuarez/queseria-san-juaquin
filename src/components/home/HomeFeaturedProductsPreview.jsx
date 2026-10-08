@@ -139,7 +139,7 @@ export const HomeFeaturedProductsPreview = ({
       <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14 2xl:px-16">
         <div className="flex items-center justify-between gap-3 mb-6 sm:mb-8 pb-3 border-b border-neutral-100" data-aos="fade-up">
           <div className="flex items-center gap-3 sm:gap-3.5">
-            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#114B2B] text-white flex items-center justify-center shrink-0 shadow-xs">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#0B3C1D] text-[#8DC63F] flex items-center justify-center shrink-0 shadow-xs">
               <span className="material-symbols-outlined text-lg sm:text-xl">kitchen</span>
             </div>
             <h2 className="font-sans text-xl sm:text-2xl lg:text-3xl font-black text-neutral-900 tracking-tight leading-none">
@@ -150,7 +150,7 @@ export const HomeFeaturedProductsPreview = ({
           <button
             type="button"
             onClick={() => onNavigateToStore('tienda')}
-            className="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-[#114B2B] hover:text-[#0a351e] transition-colors cursor-pointer group shrink-0"
+            className="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-[#0B3C1D] hover:text-[#8DC63F] transition-colors cursor-pointer group shrink-0"
           >
             <span>Ver todo</span>
             <span className="material-symbols-outlined text-sm sm:text-base group-hover:translate-x-1 transition-transform">
@@ -207,7 +207,7 @@ export const HomeFeaturedProductsPreview = ({
           <button
             type="button"
             onClick={() => onNavigateToStore('tienda')}
-            className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full bg-[#114B2B] hover:bg-[#0c3820] text-white text-xs sm:text-sm font-black uppercase tracking-wider transition-all shadow-md hover:shadow-xl active:scale-95 cursor-pointer"
+            className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full bg-[#0B3C1D] hover:bg-[#8DC63F] hover:text-[#062612] text-white text-xs sm:text-sm font-black uppercase tracking-wider transition-all shadow-md hover:shadow-xl active:scale-95 cursor-pointer border border-[#8DC63F]/30"
           >
             <span className="material-symbols-outlined text-lg">storefront</span>
             <span>Ver Todo el Catálogo</span>

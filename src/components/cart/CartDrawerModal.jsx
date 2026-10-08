@@ -148,7 +148,7 @@ export const CartDrawerModal = () => {
                         className="p-3 bg-gradient-to-r from-emerald-50 via-teal-50 to-amber-50 border border-emerald-300 rounded-2xl flex items-center justify-between gap-3 shadow-2xs"
                       >
                         <div className="flex items-center gap-2.5">
-                          <div className="w-8 h-8 rounded-xl bg-[#114B2B] text-white flex items-center justify-center shrink-0">
+                          <div className="w-8 h-8 rounded-xl bg-[#0B3C1D] text-white flex items-center justify-center shrink-0">
                             <span className="material-symbols-outlined text-lg">celebration</span>
                           </div>
                           <div>
@@ -157,7 +157,7 @@ export const CartDrawerModal = () => {
                                 ¡{appliedComboItem.promoTitle} detectado!
                               </span>
                               {appliedComboItem.completedCombos > 1 && (
-                                <span className="text-[10px] bg-[#114B2B] text-white font-extrabold px-1.5 py-0.5 rounded-full">
+                                <span className="text-[10px] bg-[#0B3C1D] text-white font-extrabold px-1.5 py-0.5 rounded-full">
                                   x{appliedComboItem.completedCombos}
                                 </span>
                               )}
@@ -173,7 +173,7 @@ export const CartDrawerModal = () => {
                         </div>
 
                         <div className="text-right shrink-0">
-                          <span className="text-xs font-black text-[#114B2B] block">
+                          <span className="text-xs font-black text-[#0B3C1D] block">
                             ${appliedComboItem.finalComboPrice.toFixed(2)}
                           </span>
                           <span className="text-[10px] font-bold text-neutral-400 block">

@@ -518,7 +518,7 @@ export const ProductDetailPage = ({
                 value={productInstructionNote}
                 onChange={(inputEvent) => setProductInstructionNote(inputEvent.target.value)}
                 placeholder="Ej: punto de sal, empaque sellado, etc."
-                className="w-full text-xs bg-neutral-50 border border-neutral-200 rounded-xl px-3 py-2 text-neutral-800 placeholder:text-neutral-400 focus:outline-none focus:ring-1 focus:ring-[#114B2B]"
+                className="w-full text-xs bg-neutral-50 border border-neutral-200 rounded-xl px-3 py-2 text-neutral-800 placeholder:text-neutral-400 focus:outline-none focus:ring-1 focus:ring-[#8DC63F] focus:border-[#8DC63F]"
               />
             </div>
 

@@ -4,8 +4,8 @@
     "categoryTitle": "Todos los Productos",
     "categorySubtitle": "Catálogo General",
     "categoryIcon": "storefront",
-    "themeBackground": "bg-emerald-50/80 border-emerald-200/90 text-[#114B2B]",
-    "iconBackground": "bg-emerald-100 text-[#114B2B]",
+    "themeBackground": "bg-emerald-50/80 border-emerald-200/90 text-[#0B3C1D]",
+    "iconBackground": "bg-emerald-100 text-[#0B3C1D]",
     "categoryAssignedImage": "/images/categories/todos.jpg",
     "matchingProductIds": []
   },

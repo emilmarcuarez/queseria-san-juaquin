@@ -33,7 +33,7 @@ export class AppErrorBoundary extends Component {
     if (this.state.hasCapturedError) {
       return (
         <div className="min-h-screen bg-[#fafafa] flex flex-col items-center justify-center p-6 text-center">
-          <div className="w-16 h-16 rounded-full bg-emerald-50 text-[#114B2B] flex items-center justify-center mb-4 border border-emerald-200">
+          <div className="w-16 h-16 rounded-full bg-emerald-50 text-[#0B3C1D] flex items-center justify-center mb-4 border border-emerald-200">
             <span className="material-symbols-outlined text-3xl">storefront</span>
           </div>
 
@@ -52,7 +52,7 @@ export class AppErrorBoundary extends Component {
           <button
             type="button"
             onClick={this.handleReloadApplication}
-            className="bg-[#114B2B] hover:bg-[#0c3820] text-white px-6 py-2.5 rounded-xl font-bold text-sm shadow-md hover:shadow-lg transition-all cursor-pointer"
+            className="bg-[#0B3C1D] hover:bg-[#062612] text-white px-6 py-2.5 rounded-xl font-bold text-sm shadow-md hover:shadow-lg transition-all cursor-pointer"
           >
             Recargar tienda
           </button>

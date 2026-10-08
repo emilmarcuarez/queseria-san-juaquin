@@ -140,16 +140,16 @@ export const FlyingCartAnimationOverlay = () => {
         offscreenContext.save();
         offscreenContext.beginPath();
         offscreenContext.roundRect(cardPaddingPixels + 6, cardPaddingPixels + 6, 76, 18, 5);
-        offscreenContext.fillStyle = currentAnimationItem.promotionalBadgeStyle === 'bright' ? '#F59E0B' : '#114B2B';
+        offscreenContext.fillStyle = currentAnimationItem.promotionalBadgeStyle === 'bright' ? '#FBBF24' : '#8DC63F';
         offscreenContext.fill();
-        offscreenContext.fillStyle = '#FFFFFF';
+        offscreenContext.fillStyle = currentAnimationItem.promotionalBadgeStyle === 'bright' ? '#111827' : '#062612';
         offscreenContext.font = 'bold 8.5px system-ui, -apple-system, sans-serif';
         offscreenContext.fillText(currentAnimationItem.promotionalBadgeText.toUpperCase(), cardPaddingPixels + 12, cardPaddingPixels + 18);
         offscreenContext.restore();
       }
 
       const categoryTopPosition = cardPaddingPixels + imageDisplayHeight + 15;
-      offscreenContext.fillStyle = '#114B2B';
+      offscreenContext.fillStyle = '#0B3C1D';
       offscreenContext.font = 'bold 10px system-ui, -apple-system, sans-serif';
       offscreenContext.fillText((currentAnimationItem.productCategoryName || 'QUESERÍA & LÁCTEOS').toUpperCase(), cardPaddingPixels, categoryTopPosition);
 
@@ -198,7 +198,7 @@ export const FlyingCartAnimationOverlay = () => {
       offscreenContext.fillText(`Ref. BCV: Bs. ${currentAnimationItem.priceBcvEquivalent || '0,00'}`, cardPaddingPixels, priceBcvTopPosition);
 
       const buttonVerticalTop = offscreenCanvasHeight - 34;
-      offscreenContext.fillStyle = '#114B2B';
+      offscreenContext.fillStyle = '#0B3C1D';
       offscreenContext.beginPath();
       offscreenContext.roundRect(cardPaddingPixels, buttonVerticalTop, contentInnerWidth, 26, 8);
       offscreenContext.fill();
