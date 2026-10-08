@@ -27,35 +27,29 @@ export const DepartmentGridShowcase = ({ onSelectDepartment }) => {
                 key={categoryItem.categoryIdentifier}
                 type="button"
                 onClick={() => onSelectDepartment(categoryItem.categoryIdentifier)}
-                className="group text-left p-2.5 sm:p-3.5 rounded-2xl bg-white border border-neutral-200/90 shadow-2xs hover:shadow-xl hover:border-[#114B2B]/40 transition-all duration-300 hover:-translate-y-1.5 cursor-pointer flex flex-col justify-between"
+                className="group p-4 sm:p-5 md:p-6 rounded-2xl sm:rounded-3xl bg-white border border-neutral-200/80 shadow-2xs hover:shadow-lg hover:border-[#114B2B]/40 transition-all duration-300 hover:-translate-y-1 cursor-pointer flex flex-col items-center justify-center text-center"
                 aria-label={`Ver productos de ${categoryItem.categoryTitle}`}
               >
-                <div className="w-full aspect-square sm:aspect-[4/3] rounded-xl overflow-hidden mb-3 relative bg-white border border-neutral-100 p-2.5 sm:p-3.5 flex items-center justify-center">
+                <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 mb-3 sm:mb-4 flex items-center justify-center">
                   {categoryItem.categoryAssignedImage ? (
                     <img
                       src={categoryItem.categoryAssignedImage}
                       alt={categoryItem.categoryTitle}
-                      className="w-full h-full object-contain group-hover:scale-108 transition-transform duration-300"
+                      className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
                       loading="lazy"
                     />
                   ) : (
-                    <div className={`w-full h-full flex items-center justify-center ${categoryItem.iconBackground}`}>
-                      <span className="material-symbols-outlined text-3xl">
+                    <div className={`w-full h-full rounded-2xl flex items-center justify-center ${categoryItem.iconBackground}`}>
+                      <span className="material-symbols-outlined text-4xl">
                         {categoryItem.categoryIcon}
                       </span>
                     </div>
                   )}
-
-                  <div className="absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-neutral-100/90 text-[#114B2B] flex items-center justify-center shadow-xs opacity-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300">
-                    <span className="material-symbols-outlined text-base">arrow_forward</span>
-                  </div>
                 </div>
 
-                <div className="px-1 pb-1">
-                  <h3 className="text-xs sm:text-sm md:text-base font-extrabold text-neutral-900 group-hover:text-[#114B2B] transition-colors leading-tight">
-                    {categoryItem.categoryTitle}
-                  </h3>
-                </div>
+                <h3 className="text-xs sm:text-sm font-black text-neutral-800 uppercase tracking-wider group-hover:text-[#114B2B] transition-colors leading-tight">
+                  {categoryItem.categoryTitle}
+                </h3>
               </button>
             );
           })}

@@ -6,7 +6,7 @@
     "categoryIcon": "storefront",
     "themeBackground": "bg-emerald-50/80 border-emerald-200/90 text-[#114B2B]",
     "iconBackground": "bg-emerald-100 text-[#114B2B]",
-    "categoryAssignedImage": null,
+    "categoryAssignedImage": "/images/categories/todos.jpg",
     "matchingProductIds": []
   },
   {
