@@ -33,9 +33,9 @@ export const HeroCommercialBanner = ({ onExploreCatalog }) => {
             <button
               type="button"
               onClick={handleExploreClick}
-              className="w-full sm:w-auto inline-flex justify-center items-center gap-2.5 px-8 py-3.5 sm:py-4 bg-[#8DC63F] hover:bg-[#78AD2F] text-[#062612] rounded-2xl font-black text-sm sm:text-base shadow-xl shadow-black/30 hover:scale-105 transition-all active:scale-95 text-center cursor-pointer border border-[#8DC63F]"
+              className="w-full sm:w-auto inline-flex justify-center items-center gap-2.5 px-8 py-3.5 sm:py-4 bg-gradient-to-r from-[#F59E0B] via-[#EA580C] to-[#D97706] hover:from-[#EA580C] hover:to-[#B45309] text-white rounded-2xl font-black text-sm sm:text-base shadow-xl shadow-orange-950/40 hover:scale-105 transition-all active:scale-95 text-center cursor-pointer border border-amber-300/40"
             >
-              <span className="material-symbols-outlined text-xl text-[#062612]">shopping_bag</span>
+              <span className="material-symbols-outlined text-xl text-white">shopping_bag</span>
               <span>Explorar Catálogo</span>
             </button>
           </div>

@@ -518,7 +518,7 @@ export const ProductDetailPage = ({
                 value={productInstructionNote}
                 onChange={(inputEvent) => setProductInstructionNote(inputEvent.target.value)}
                 placeholder="Ej: punto de sal, empaque sellado, etc."
-                className="w-full text-xs bg-neutral-50 border border-neutral-200 rounded-xl px-3 py-2 text-neutral-800 placeholder:text-neutral-400 focus:outline-none focus:ring-1 focus:ring-[#8DC63F] focus:border-[#8DC63F]"
+                className="w-full text-xs bg-neutral-50 border border-neutral-200 rounded-xl px-3 py-2 text-neutral-800 placeholder:text-neutral-400 focus:outline-none focus:ring-1 focus:ring-[#F59E0B] focus:border-[#EA580C]"
               />
             </div>
 
@@ -529,8 +529,8 @@ export const ProductDetailPage = ({
                 onClick={handleAddToCart}
                 className={`w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-extrabold text-xs sm:text-sm shadow-md transition-all cursor-pointer active:scale-95 ${
                   addedFeedbackActive
-                    ? 'bg-accent-bright text-neutral-dark'
-                    : 'bg-primary hover:bg-primary-dark text-white'
+                    ? 'bg-emerald-600 text-white'
+                    : 'bg-gradient-to-r from-[#EA580C] to-[#F97316] hover:from-[#C2410C] hover:to-[#EA580C] text-white shadow-orange-950/20'
                 }`}
               >
                 <span className="material-symbols-outlined text-xl">

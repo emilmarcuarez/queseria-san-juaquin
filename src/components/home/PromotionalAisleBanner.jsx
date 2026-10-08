@@ -11,11 +11,11 @@ export const PromotionalAisleBanner = ({ onShowAllProducts }) => {
           data-aos="fade-up"
           className="bg-gradient-to-r from-[#062612] via-[#0B3C1D] to-[#124b26] rounded-3xl p-6 sm:p-10 text-white shadow-xl relative overflow-hidden"
         >
-          <div className="absolute -right-10 -bottom-10 w-64 h-64 bg-[#8DC63F]/15 rounded-full blur-3xl pointer-events-none"></div>
+          <div className="absolute -right-10 -bottom-10 w-64 h-64 bg-amber-400/20 rounded-full blur-3xl pointer-events-none"></div>
 
           <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="max-w-xl text-center md:text-left">
-              <span className="bg-[#8DC63F] text-[#062612] px-3.5 py-1 rounded-full text-xs font-black uppercase tracking-wider inline-block mb-3 shadow-xs">
+              <span className="bg-[#FBBF24] text-neutral-950 px-3.5 py-1 rounded-full text-xs font-black uppercase tracking-wider inline-block mb-3 shadow-xs">
                 Despensa y Charcutería
               </span>
               <h3 className="text-2xl sm:text-3xl font-black tracking-tight leading-tight">
@@ -30,7 +30,7 @@ export const PromotionalAisleBanner = ({ onShowAllProducts }) => {
               <button
                 type="button"
                 onClick={openCartDrawer}
-                className="w-full sm:w-auto px-6 py-3.5 rounded-full bg-[#8DC63F] hover:bg-[#7cb332] text-[#062612] font-black text-xs sm:text-sm text-center shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95"
+                className="w-full sm:w-auto px-6 py-3.5 rounded-full bg-gradient-to-r from-[#EA580C] to-[#F59E0B] hover:from-[#C2410C] hover:to-[#EA580C] text-white font-black text-xs sm:text-sm text-center shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95"
               >
                 <span className="material-symbols-outlined text-lg">receipt_long</span>
                 <span>Enviar Lista al WhatsApp</span>

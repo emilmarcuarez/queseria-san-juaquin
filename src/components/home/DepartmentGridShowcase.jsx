@@ -11,7 +11,7 @@ export const DepartmentGridShowcase = ({ onSelectDepartment }) => {
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14 2xl:px-16">
         <div className="flex items-center justify-between gap-3 mb-6 sm:mb-8 pb-3 border-b border-neutral-100" data-aos="fade-up">
           <div className="flex items-center gap-3 sm:gap-3.5">
-            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#0B3C1D] text-[#8DC63F] flex items-center justify-center shrink-0 shadow-xs">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#0B3C1D] text-[#FBBF24] flex items-center justify-center shrink-0 shadow-xs">
               <span className="material-symbols-outlined text-lg sm:text-xl">grid_view</span>
             </div>
             <h2 className="font-sans text-xl sm:text-2xl lg:text-3xl font-black text-neutral-900 tracking-tight leading-none">
@@ -27,7 +27,7 @@ export const DepartmentGridShowcase = ({ onSelectDepartment }) => {
                 key={categoryItem.categoryIdentifier}
                 type="button"
                 onClick={() => onSelectDepartment(categoryItem.categoryIdentifier)}
-                className="group p-4 sm:p-5 md:p-6 rounded-2xl sm:rounded-3xl bg-white border border-neutral-200/80 shadow-2xs hover:shadow-lg hover:border-[#8DC63F]/70 transition-all duration-300 hover:-translate-y-1 cursor-pointer flex flex-col items-center justify-center text-center"
+                className="group p-4 sm:p-5 md:p-6 rounded-2xl sm:rounded-3xl bg-white border border-neutral-200/80 shadow-2xs hover:shadow-lg hover:border-amber-400/80 transition-all duration-300 hover:-translate-y-1 cursor-pointer flex flex-col items-center justify-center text-center"
                 aria-label={`Ver productos de ${categoryItem.categoryTitle}`}
               >
                 <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 mb-3 sm:mb-4 flex items-center justify-center">
@@ -47,7 +47,7 @@ export const DepartmentGridShowcase = ({ onSelectDepartment }) => {
                   )}
                 </div>
 
-                <h3 className="text-xs sm:text-sm font-black text-neutral-800 uppercase tracking-wider group-hover:text-[#0B3C1D] transition-colors leading-tight">
+                <h3 className="text-xs sm:text-sm font-black text-neutral-800 uppercase tracking-wider group-hover:text-[#EA580C] transition-colors leading-tight">
                   {categoryItem.categoryTitle}
                 </h3>
               </button>

@@ -121,7 +121,7 @@ export const MainHeaderNavigation = ({
                   <span className="font-sans font-black text-sm sm:text-base lg:text-lg text-neutral-900 tracking-tight uppercase leading-tight">
                     Quesería San Joaquín
                   </span>
-                  <span className="text-[9px] sm:text-[10.5px] font-black text-[#8DC63F] tracking-widest uppercase">
+                  <span className="text-[9px] sm:text-[10.5px] font-black text-[#EA580C] tracking-widest uppercase">
                     Mercado &amp; Charcutería
                   </span>
                 </div>
@@ -135,7 +135,7 @@ export const MainHeaderNavigation = ({
                 </span>
                 <input
                   id="tour-search-bar"
-                  className="w-full bg-neutral-50/90 border border-neutral-200/90 rounded-full pl-11 pr-28 py-2.5 text-sm text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#8DC63F] focus:border-[#8DC63F] transition-all shadow-2xs"
+                  className="w-full bg-neutral-50/90 border border-neutral-200/90 rounded-full pl-11 pr-28 py-2.5 text-sm text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#F59E0B] focus:border-[#EA580C] transition-all shadow-2xs"
                   placeholder="Buscar víveres, quesos llaneros, jamones, café, refrescos..."
                   type="text"
                   value={searchQueryString}
@@ -164,12 +164,12 @@ export const MainHeaderNavigation = ({
               <button
                 id="tour-cart-button"
                 onClick={openCartDrawer}
-                className="relative inline-flex items-center gap-1.5 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-[#0B3C1D] hover:bg-[#062612] text-white text-xs sm:text-sm font-bold transition-all shadow-sm cursor-pointer active:scale-95 border border-[#8DC63F]/30"
+                className="relative inline-flex items-center gap-1.5 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-gradient-to-r from-[#EA580C] to-[#F97316] hover:from-[#C2410C] hover:to-[#EA580C] text-white text-xs sm:text-sm font-bold transition-all shadow-md shadow-orange-950/15 cursor-pointer active:scale-95"
                 aria-label="Abrir mi lista de compras"
               >
                 <span className="material-symbols-outlined text-lg sm:text-xl">shopping_cart</span>
                 <span className="hidden sm:inline">Mi Lista</span>
-                <span className="inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 text-[11px] font-black rounded-full bg-[#8DC63F] text-[#062612] shadow-xs">
+                <span className="inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 text-[11px] font-black rounded-full bg-[#FBBF24] text-neutral-950 shadow-xs">
                   {totalItemsCount}
                 </span>
               </button>
@@ -183,7 +183,7 @@ export const MainHeaderNavigation = ({
               </span>
               <input
                 id="mobile-header-search-input"
-                className="w-full bg-neutral-50/90 border border-neutral-200/90 rounded-xl pl-10 pr-24 py-2 text-xs text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#8DC63F] transition-all shadow-2xs"
+                className="w-full bg-neutral-50/90 border border-neutral-200/90 rounded-xl pl-10 pr-24 py-2 text-xs text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#F59E0B] focus:border-[#EA580C] transition-all shadow-2xs"
                 placeholder="Busca queso telita, jamón ahumado, harina..."
                 type="text"
                 value={searchQueryString}
@@ -209,13 +209,13 @@ export const MainHeaderNavigation = ({
           </div>
         </div>
 
-        <nav className="hidden lg:block w-full bg-[#0B3C1D] text-white">
+        <nav className="hidden lg:block w-full bg-white border-b border-neutral-200 text-neutral-700">
           <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14 2xl:px-16 h-11 flex items-center justify-start gap-8">
             {navigationMenuItems.map((menuItem) => {
               const isItemActive = activePageIdentifier === menuItem.pageKey;
               const borderActiveClass = isItemActive
-                ? 'border-[#8DC63F] text-[#8DC63F] font-black'
-                : 'border-transparent text-white/80 hover:text-[#8DC63F] font-semibold';
+                ? 'border-[#EA580C] text-[#EA580C] font-black'
+                : 'border-transparent text-neutral-600 hover:text-[#0B3C1D] font-semibold';
 
               return (
                 <button
@@ -244,7 +244,7 @@ export const MainHeaderNavigation = ({
                     onClick={() => handleNavigationSelect(menuItem.pageKey)}
                     className={`w-full text-left py-2.5 px-3 rounded-lg text-sm font-semibold transition-all duration-150 cursor-pointer ${
                       isItemActive
-                        ? 'bg-[#0B3C1D] text-[#8DC63F] font-black'
+                        ? 'bg-amber-50 text-[#EA580C] font-black'
                         : 'text-neutral-700 hover:bg-neutral-50 active:bg-neutral-100'
                     }`}
                   >

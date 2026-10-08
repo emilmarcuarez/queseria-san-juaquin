@@ -32,7 +32,7 @@ export const HowToBuyInstructionSteps = () => {
     <section className="py-12 sm:py-16 bg-white border-t border-neutral-200/80 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12" data-aos="fade-up">
-          <span className="text-xs font-black text-[#0B3C1D] uppercase tracking-widest">
+          <span className="text-xs font-black text-[#EA580C] uppercase tracking-widest">
             Rápido, Fácil y Confiable
           </span>
           <h2 className="text-2xl lg:text-3xl font-black text-neutral-900 tracking-tight mt-1">
@@ -47,7 +47,7 @@ export const HowToBuyInstructionSteps = () => {
           {purchasingStepsList.map((stepItem, stepIndex) => {
             const numberBadgeClasses = stepItem.isAccentStyle
               ? 'bg-amber-100 text-amber-900 ring-1 ring-amber-400/40'
-              : 'bg-emerald-50 text-[#0B3C1D] ring-1 ring-emerald-200/50';
+              : 'bg-amber-50 text-[#EA580C] ring-1 ring-amber-200/50';
 
             const animationDelayMilliseconds = (stepIndex + 1) * 90;
 
@@ -56,7 +56,7 @@ export const HowToBuyInstructionSteps = () => {
                 key={stepItem.stepNumberText}
                 data-aos="fade-up"
                 data-aos-delay={animationDelayMilliseconds}
-                className="bg-neutral-50/70 p-5 sm:p-6 rounded-2xl border border-neutral-200/80 shadow-2xs hover:shadow-md hover:border-[#8DC63F]/50 hover:bg-white transition-all duration-300 flex flex-col items-start relative group"
+                className="bg-neutral-50/70 p-5 sm:p-6 rounded-2xl border border-neutral-200/80 shadow-2xs hover:shadow-md hover:border-amber-400/60 hover:bg-white transition-all duration-300 flex flex-col items-start relative group"
               >
                 <div className={`w-10 h-10 rounded-xl font-black text-base flex items-center justify-center mb-4 shadow-2xs group-hover:scale-105 transition-transform ${numberBadgeClasses}`}>
                   {stepItem.stepNumberText}

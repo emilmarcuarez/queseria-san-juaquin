@@ -137,7 +137,7 @@ export const ProductCardItem = ({ productItem, onSelectProduct, cardVariant = 'd
 
   const isAddButtonDisabled = isOutOfStock || isStockExhaustedInCart;
 
-  const cardContainerClasses = `h-full bg-white rounded-2xl border border-neutral-200/80 p-3 sm:p-4 flex flex-col justify-between shadow-sm sm:shadow-md hover:shadow-xl hover:border-[#8DC63F]/70 hover:-translate-y-1.5 transition-all duration-300 relative group ${isOutOfStock ? 'opacity-65' : ''}`;
+  const cardContainerClasses = `h-full bg-white rounded-2xl border border-neutral-200/80 p-3 sm:p-4 flex flex-col justify-between shadow-sm sm:shadow-md hover:shadow-xl hover:border-amber-400/80 hover:-translate-y-1.5 transition-all duration-300 relative group ${isOutOfStock ? 'opacity-65' : ''}`;
   const cardImageWrapperClasses = 'w-full aspect-square rounded-xl bg-neutral-50/70 group-hover:bg-white overflow-hidden mb-3 relative cursor-pointer flex items-center justify-center border border-neutral-100 transition-colors';
 
   return (
@@ -160,7 +160,7 @@ export const ProductCardItem = ({ productItem, onSelectProduct, cardVariant = 'd
             />
 
             {productItem.promotionalBadgeText && !isOutOfStock && (
-              <span className="absolute top-2 left-2 text-[9.5px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-[#8DC63F] text-[#062612] shadow-xs">
+              <span className="absolute top-2 left-2 text-[9.5px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-gradient-to-r from-[#EA580C] to-[#F59E0B] text-white shadow-xs">
                 {productItem.promotionalBadgeText}
               </span>
             )}
@@ -248,7 +248,7 @@ export const ProductCardItem = ({ productItem, onSelectProduct, cardVariant = 'd
                   </span>
                 </div>
 
-                <div className="text-[10px] sm:text-[11px] font-bold text-[#0B3C1D] mt-1 leading-none truncate">
+                <div className="text-[10px] sm:text-[11px] font-bold text-neutral-500 mt-1 leading-none truncate">
                   Bs. {priceBcvEquivalent}
                 </div>
               </>
@@ -265,12 +265,12 @@ export const ProductCardItem = ({ productItem, onSelectProduct, cardVariant = 'd
             type="button"
             onClick={handleAddToCartClick}
             disabled={isAddButtonDisabled}
-            className={`w-9 h-9 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center transition-all duration-200 cursor-pointer shadow-xs active:scale-90 shrink-0 border border-[#8DC63F]/20 ${
+            className={`w-9 h-9 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center transition-all duration-200 cursor-pointer shadow-xs active:scale-90 shrink-0 ${
               isAddButtonDisabled
                 ? 'bg-neutral-100 text-neutral-400 cursor-not-allowed shadow-none'
                 : addedFeedbackActive
-                  ? 'bg-[#8DC63F] text-[#062612] ring-2 ring-[#8DC63F]/40'
-                  : 'bg-[#0B3C1D] hover:bg-[#8DC63F] hover:text-[#062612] text-white shadow-sm hover:shadow-md hover:scale-105'
+                  ? 'bg-emerald-600 text-white ring-2 ring-emerald-400/40'
+                  : 'bg-gradient-to-r from-[#EA580C] to-[#F97316] hover:from-[#C2410C] hover:to-[#EA580C] text-white shadow-sm hover:shadow-md hover:scale-105'
             }`}
             aria-label={`Agregar ${productItem.productTitle} al carrito`}
           >
