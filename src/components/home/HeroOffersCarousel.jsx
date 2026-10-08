@@ -102,12 +102,12 @@ export const HeroOffersCarousel = () => {
             <img
               src={offerItem.imageSourceUrl}
               alt={offerItem.imageAltText}
-              className={`w-full h-full object-cover transition-transform duration-1200 ease-out ${
+              className={`w-full h-full object-cover object-center lg:object-right transition-transform duration-1200 ease-out ${
                 isCurrentSlideActive ? 'scale-105' : 'scale-100'
               }`}
             />
 
-            <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/25 to-black/50"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-[#0a2f1b]/50 via-transparent to-black/15"></div>
           </div>
         );
       })}
