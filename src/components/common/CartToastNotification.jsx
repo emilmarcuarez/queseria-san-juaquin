@@ -81,7 +81,7 @@ export const CartToastNotification = () => {
             <button
               type="button"
               onClick={handleOpenCartFromToast}
-              className="px-3 py-1.5 bg-[#EA580C] hover:bg-[#C2410C] text-white rounded-lg text-[11px] font-extrabold transition-all cursor-pointer shadow-xs active:scale-95 whitespace-nowrap"
+              className="px-3 py-1.5 bg-[#0B3C1D] hover:bg-[#062612] text-white rounded-lg text-[11px] font-extrabold transition-all cursor-pointer shadow-xs active:scale-95 whitespace-nowrap"
             >
               Ver Carrito
             </button>
@@ -97,7 +97,7 @@ export const CartToastNotification = () => {
         </div>
 
         <div className="h-1 bg-neutral-100 w-full overflow-hidden">
-          <div className="h-full bg-gradient-to-r from-amber-400 via-[#EA580C] to-[#0B3C1D] animate-toastProgressBar" />
+          <div className="h-full bg-gradient-to-r from-amber-400 via-[#8DC63F] to-[#0B3C1D] animate-toastProgressBar" />
         </div>
       </div>
     </div>

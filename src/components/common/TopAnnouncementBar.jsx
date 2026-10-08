@@ -50,7 +50,7 @@ export const TopAnnouncementBar = () => {
               onClick={() => togglePreferredCurrency('BS')}
               className={`px-2 py-0.5 rounded-full text-[11px] transition-all cursor-pointer ${
                 preferredCurrency === 'BS'
-                  ? 'bg-[#FBBF24] text-neutral-950 font-black shadow-xs'
+                  ? 'bg-[#8DC63F] text-[#062612] font-black shadow-xs'
                   : 'text-white/60 hover:text-white font-semibold'
               }`}
               title="Mostrar precios en Bolívares oficiales"
@@ -63,7 +63,7 @@ export const TopAnnouncementBar = () => {
               onClick={() => togglePreferredCurrency('USD')}
               className={`px-2 py-0.5 rounded-full text-[11px] transition-all cursor-pointer ${
                 preferredCurrency === 'USD'
-                  ? 'bg-[#FBBF24] text-neutral-950 font-black shadow-xs'
+                  ? 'bg-[#8DC63F] text-[#062612] font-black shadow-xs'
                   : 'text-white/60 hover:text-white font-semibold'
               }`}
               title="Mostrar precios en Dólares"

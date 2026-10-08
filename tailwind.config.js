@@ -9,36 +9,37 @@ export default {
         primary: {
           DEFAULT: '#0B3C1D',
           dark: '#062612',
-          light: '#165B2E',
-          subtle: '#F4F8F5'
+          light: '#8DC63F',
+          subtle: '#F2F9E6'
         },
         brand: {
+          lime: '#8DC63F',
+          'lime-light': '#F2F9E6',
+          'lime-hover': '#78AD2F',
+          'lime-dark': '#629320',
           forest: '#0B3C1D',
           'forest-dark': '#062612',
           'forest-light': '#145A2E',
-          orange: '#EA580C',
-          'orange-hover': '#C2410C',
-          'orange-light': '#FFF7ED',
           cheese: '#F59E0B',
-          'cheese-gold': '#FBBF24',
           'cheese-light': '#FEF3C7',
-          'cheese-dark': '#D97706'
+          'cheese-dark': '#D97706',
+          wave: '#16A34A'
         },
         accent: {
-          DEFAULT: '#EA580C',
-          hover: '#C2410C',
-          bright: '#F59E0B',
-          light: '#FFF7ED'
+          DEFAULT: '#F59E0B',
+          hover: '#D97706',
+          bright: '#FBBF24',
+          light: '#FEF3C7'
         },
         surface: {
           DEFAULT: '#ffffff',
-          alt: '#fdfbf7',
-          muted: '#f5f5f4'
+          alt: '#f8faf9',
+          muted: '#f0f3f1'
         },
         neutral: {
-          dark: '#1c1917',
-          muted: '#78716c',
-          border: '#e7e5e4'
+          dark: '#142118',
+          muted: '#5a6b60',
+          border: '#dbe5de'
         }
       },
       fontFamily: {

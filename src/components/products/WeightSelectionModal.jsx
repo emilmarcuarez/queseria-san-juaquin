@@ -107,8 +107,8 @@ export const WeightSelectionModal = ({
         {/* Header */}
         <div className="px-5 pt-4 pb-4 flex items-start justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-amber-100 text-[#EA580C] flex items-center justify-center shrink-0">
-              <span className="material-symbols-outlined text-[#EA580C] text-xl">scale</span>
+            <div className="w-10 h-10 rounded-2xl bg-[#0B3C1D]/10 flex items-center justify-center shrink-0">
+              <span className="material-symbols-outlined text-[#0B3C1D] text-xl">scale</span>
             </div>
             <div>
               <h3 className="text-sm font-black text-neutral-900 leading-tight">Elige tu porción</h3>
@@ -161,16 +161,16 @@ export const WeightSelectionModal = ({
                   onClick={() => setSelectedPresetKey(preset.key)}
                   className={`py-3 px-1 rounded-2xl border-2 text-center transition-all cursor-pointer flex flex-col items-center justify-center gap-0.5 ${
                     isSelected
-                      ? 'bg-gradient-to-r from-[#EA580C] to-[#F97316] border-[#EA580C] text-white shadow-sm scale-[1.03]'
-                      : 'bg-white border-neutral-150 text-neutral-700 hover:border-amber-400'
+                      ? 'bg-[#0B3C1D] border-[#0B3C1D] text-white shadow-sm scale-[1.03]'
+                      : 'bg-white border-neutral-150 text-neutral-700 hover:border-[#8DC63F]'
                   }`}
                 >
                   <span className="text-xs font-black leading-tight block">{preset.label}</span>
-                  <span className={`text-[9px] font-medium ${isSelected ? 'text-white/80' : 'text-neutral-400'}`}>
+                  <span className={`text-[9px] font-medium ${isSelected ? 'text-white/70' : 'text-neutral-400'}`}>
                     {preset.sublabel}
                   </span>
                   {presetPrice && (
-                    <span className={`text-[10px] font-bold mt-0.5 ${isSelected ? 'text-amber-200' : 'text-[#EA580C]'}`}>
+                    <span className={`text-[10px] font-bold mt-0.5 ${isSelected ? 'text-[#8DC63F]' : 'text-[#0B3C1D]'}`}>
                       {presetPrice}
                     </span>
                   )}
@@ -204,7 +204,7 @@ export const WeightSelectionModal = ({
                     step="10"
                     value={customGramsInput}
                     onChange={handleCustomGramsChange}
-                    className="w-full border border-neutral-200 rounded-xl py-2 pl-3 pr-10 text-center text-sm font-black text-neutral-900 focus:outline-none focus:ring-2 focus:ring-[#F59E0B]/30 focus:border-[#EA580C] [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                    className="w-full border border-neutral-200 rounded-xl py-2 pl-3 pr-10 text-center text-sm font-black text-neutral-900 focus:outline-none focus:ring-2 focus:ring-[#8DC63F]/30 focus:border-[#8DC63F] [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                   />
                   <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-bold text-neutral-400 pointer-events-none">g</span>
                 </div>
@@ -266,17 +266,17 @@ export const WeightSelectionModal = ({
               value={customNote}
               onChange={(changeEvent) => setCustomNote(changeEvent.target.value)}
               placeholder="Ej: punto de sal, empaque sellado..."
-              className="w-full text-xs bg-neutral-50 border border-neutral-200 rounded-xl px-3 py-2.5 text-neutral-800 placeholder:text-neutral-300 focus:outline-none focus:ring-2 focus:ring-[#F59E0B]/30 focus:border-[#EA580C]"
+              className="w-full text-xs bg-neutral-50 border border-neutral-200 rounded-xl px-3 py-2.5 text-neutral-800 placeholder:text-neutral-300 focus:outline-none focus:ring-2 focus:ring-[#8DC63F]/20 focus:border-[#8DC63F]"
             />
           </div>
 
           {/* Subtotal */}
-          <div className="rounded-2xl bg-amber-50/80 border border-amber-200/80 px-4 py-3 flex items-center justify-between">
+          <div className="rounded-2xl bg-[#0B3C1D]/5 border border-[#0B3C1D]/10 px-4 py-3 flex items-center justify-between">
             <div>
               <span className="text-[10px] text-neutral-500 block">Total a pagar</span>
               <span className="text-[10px] text-neutral-400">Bs. {formattedTotalBcv}</span>
             </div>
-            <span className="text-xl font-black text-[#EA580C]">${totalPriceUsd.toFixed(2)}</span>
+            <span className="text-xl font-black text-[#0B3C1D]">${totalPriceUsd.toFixed(2)}</span>
           </div>
         </div>
 
@@ -293,7 +293,7 @@ export const WeightSelectionModal = ({
             type="button"
             id="tour-weight-modal-confirm-btn"
             onClick={handleConfirm}
-            className="flex-1 py-3 px-4 rounded-2xl bg-gradient-to-r from-[#EA580C] to-[#F97316] hover:from-[#C2410C] hover:to-[#EA580C] text-white font-extrabold text-sm flex items-center justify-center gap-2 shadow-md shadow-orange-950/20 transition-all active:scale-95 cursor-pointer"
+            className="flex-1 py-3 px-4 rounded-2xl bg-[#0B3C1D] hover:bg-[#062612] text-white font-extrabold text-sm flex items-center justify-center gap-2 shadow-sm transition-all active:scale-95 cursor-pointer"
           >
             <span className="material-symbols-outlined text-lg">add_shopping_cart</span>
             <span>Agregar · ${totalPriceUsd.toFixed(2)}</span>

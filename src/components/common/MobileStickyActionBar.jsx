@@ -38,9 +38,9 @@ export const MobileStickyActionBar = () => {
         <button
           id="mobile-floating-cart-button"
           onClick={openCartDrawer}
-          className={`relative w-[52px] h-[52px] rounded-full bg-gradient-to-tr from-[#EA580C] via-[#F97316] to-[#F59E0B] text-white flex items-center justify-center shadow-2xl shadow-orange-950/40 border-2 border-white/90 transition-all duration-300 active:scale-90 cursor-pointer ${
+          className={`relative w-[52px] h-[52px] rounded-full bg-gradient-to-tr from-[#062612] via-[#0B3C1D] to-[#124b26] text-white flex items-center justify-center shadow-2xl shadow-emerald-950/60 border-2 border-white/90 transition-all duration-300 active:scale-90 cursor-pointer ${
             isCartBumpingActive
-              ? 'scale-125 ring-4 ring-amber-400 shadow-amber-400/50'
+              ? 'scale-125 ring-4 ring-[#8DC63F] shadow-[#8DC63F]/50'
               : 'scale-100'
           }`}
           aria-label="Abrir carrito de compras"
@@ -48,7 +48,7 @@ export const MobileStickyActionBar = () => {
           <span className="material-symbols-outlined text-2xl">shopping_cart</span>
 
           {totalItemsCount > 0 && (
-            <span className="absolute -top-1.5 -right-1.5 min-w-[21px] h-[21px] px-1 bg-[#0B3C1D] text-white text-[10px] font-black rounded-full flex items-center justify-center shadow-md border-2 border-white animate-bounce">
+            <span className="absolute -top-1.5 -right-1.5 min-w-[21px] h-[21px] px-1 bg-gradient-to-r from-[#8DC63F] to-[#7cb332] text-[#062612] text-[10px] font-black rounded-full flex items-center justify-center shadow-md border-2 border-white animate-bounce">
               {totalItemsCount}
             </span>
           )}

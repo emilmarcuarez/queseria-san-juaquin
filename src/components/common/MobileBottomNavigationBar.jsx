@@ -122,13 +122,13 @@ export const MobileBottomNavigationBar = ({
 
       <nav
         aria-label="Navegación principal para móviles"
-        className="fixed bottom-0 left-0 right-0 z-40 lg:hidden bg-white/95 backdrop-blur-md border-t border-neutral-200/90 shadow-2xl px-2 pt-2 pb-[calc(0.5rem+env(safe-area-inset-bottom,0px))] flex items-center justify-around"
+        className="fixed bottom-0 left-0 right-0 z-40 lg:hidden bg-[#0B3C1D] border-t border-[#062612] shadow-2xl px-2 pt-2 pb-[calc(0.5rem+env(safe-area-inset-bottom,0px))] flex items-center justify-around"
       >
         <button
           type="button"
           onClick={handleNavigateHome}
           className={`flex flex-col items-center justify-center py-1 px-2.5 rounded-xl transition-colors cursor-pointer ${
-            activePageIdentifier === 'inicio' ? 'text-[#EA580C]' : 'text-neutral-500 hover:text-neutral-900'
+            activePageIdentifier === 'inicio' ? 'text-[#8DC63F]' : 'text-emerald-100/75 hover:text-white'
           }`}
         >
           <span className="material-symbols-outlined text-2xl leading-none">home</span>
@@ -141,13 +141,13 @@ export const MobileBottomNavigationBar = ({
           type="button"
           onClick={handleOpenDollarModal}
           className={`flex flex-col items-center justify-center py-1 px-2.5 rounded-xl transition-colors cursor-pointer ${
-            preferredCurrency === 'BS' ? 'text-[#EA580C]' : 'text-neutral-500 hover:text-neutral-900'
+            preferredCurrency === 'BS' ? 'text-[#8DC63F]' : 'text-emerald-100/75 hover:text-white'
           }`}
         >
           <div className={`w-6 h-6 rounded-full flex items-center justify-center leading-none transition-colors ${
             preferredCurrency === 'BS'
-              ? 'bg-[#EA580C] text-white font-black shadow-xs'
-              : 'border border-neutral-300 text-neutral-700 font-bold'
+              ? 'bg-[#8DC63F] text-[#062612] font-black shadow-xs'
+              : 'border border-white/70 text-white font-bold'
           }`}>
             <span className="text-xs leading-none">{preferredCurrency === 'BS' ? 'Bs' : '$'}</span>
           </div>
@@ -159,7 +159,7 @@ export const MobileBottomNavigationBar = ({
         <button
           type="button"
           onClick={handleOpenSearch}
-          className="flex flex-col items-center justify-center py-1 px-2.5 rounded-xl text-neutral-500 hover:text-neutral-900 transition-colors cursor-pointer"
+          className="flex flex-col items-center justify-center py-1 px-2.5 rounded-xl text-emerald-100/75 hover:text-white transition-colors cursor-pointer"
         >
           <span className="material-symbols-outlined text-2xl leading-none">search</span>
           <span className="text-[10px] font-medium mt-1">
@@ -171,7 +171,7 @@ export const MobileBottomNavigationBar = ({
           type="button"
           onClick={handleNavigateStore}
           className={`flex flex-col items-center justify-center py-1 px-2.5 rounded-xl transition-colors cursor-pointer ${
-            activePageIdentifier === 'tienda' ? 'text-[#EA580C]' : 'text-neutral-500 hover:text-neutral-900'
+            activePageIdentifier === 'tienda' ? 'text-[#8DC63F]' : 'text-emerald-100/75 hover:text-white'
           }`}
         >
           <span className="material-symbols-outlined text-2xl leading-none">storefront</span>
@@ -183,12 +183,12 @@ export const MobileBottomNavigationBar = ({
         <button
           type="button"
           onClick={openCartDrawer}
-          className="flex flex-col items-center justify-center py-1 px-2.5 rounded-xl text-neutral-500 hover:text-neutral-900 transition-colors cursor-pointer relative"
+          className="flex flex-col items-center justify-center py-1 px-2.5 rounded-xl text-emerald-100/75 hover:text-white transition-colors cursor-pointer relative"
         >
           <div className="relative leading-none">
             <span className="material-symbols-outlined text-2xl leading-none">shopping_cart</span>
             {totalItemsCount > 0 && (
-              <span className="absolute -top-1.5 -right-2 min-w-[18px] h-[18px] px-1 bg-[#EA580C] text-white text-[9.5px] font-black rounded-full flex items-center justify-center shadow-xs">
+              <span className="absolute -top-1.5 -right-2 min-w-[18px] h-[18px] px-1 bg-[#8DC63F] text-[#062612] text-[9.5px] font-black rounded-full flex items-center justify-center shadow-xs">
                 {totalItemsCount}
               </span>
             )}
@@ -212,7 +212,7 @@ export const MobileBottomNavigationBar = ({
 
             <div className="flex items-center justify-between pb-2 border-b border-neutral-100">
               <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-xl bg-amber-100 text-[#EA580C] flex items-center justify-center">
+                <div className="w-9 h-9 rounded-xl bg-[#F2F9E6] text-[#0B3C1D] flex items-center justify-center">
                   <span className="material-symbols-outlined text-xl">payments</span>
                 </div>
                 <div>
@@ -259,7 +259,7 @@ export const MobileBottomNavigationBar = ({
                   onClick={() => togglePreferredCurrency('BS')}
                   className={`py-2.5 px-3 rounded-lg text-xs font-black flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
                     preferredCurrency === 'BS'
-                      ? 'bg-[#EA580C] text-white shadow-xs'
+                      ? 'bg-[#0B3C1D] text-[#8DC63F] shadow-xs'
                       : 'text-neutral-600 hover:text-neutral-900'
                   }`}
                 >
@@ -275,16 +275,16 @@ export const MobileBottomNavigationBar = ({
               </p>
             </div>
 
-            <div className="bg-amber-50 p-3.5 rounded-2xl border border-amber-200/80 flex items-center justify-between">
+            <div className="bg-[#F2F9E6] p-3.5 rounded-2xl border border-[#8DC63F]/30 flex items-center justify-between">
               <div>
                 <span className="text-[10.5px] font-black text-[#0B3C1D] uppercase tracking-wider block">
                   Tasa Oficial BCV
                 </span>
-                <span className="text-[10.5px] text-neutral-500 font-medium">
+                <span className="text-[10.5px] text-[#5a6b60] font-medium">
                   {formattedExchangeRateDate ? `Actualizada al ${formattedExchangeRateDate}` : 'Banco Central de Venezuela'}
                 </span>
               </div>
-              <div className="text-base sm:text-lg font-black text-[#EA580C]">
+              <div className="text-base sm:text-lg font-black text-[#0B3C1D]">
                 Bs. {formattedExchangeRateBcv}
               </div>
             </div>
@@ -292,7 +292,7 @@ export const MobileBottomNavigationBar = ({
             <button
               type="button"
               onClick={handleCloseDollarModal}
-              className="w-full py-3 rounded-xl bg-gradient-to-r from-[#EA580C] to-[#F97316] hover:from-[#C2410C] hover:to-[#EA580C] text-white font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer shadow-xs"
+              className="w-full py-3 rounded-xl bg-[#0B3C1D] hover:bg-[#062612] text-white font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer shadow-xs border border-[#8DC63F]/30"
             >
               Listo
             </button>
@@ -321,7 +321,7 @@ export const MobileBottomNavigationBar = ({
                   value={mobileSearchQuery}
                   onChange={(inputChangeEvent) => setMobileSearchQuery(inputChangeEvent.target.value)}
                   placeholder="Buscar quesos, jamones, café, harinas..."
-                  className="w-full bg-neutral-100 border-none rounded-xl pl-10 pr-9 py-2.5 text-sm text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#F59E0B]"
+                  className="w-full bg-neutral-100 border-none rounded-xl pl-10 pr-9 py-2.5 text-sm text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#8DC63F]"
                 />
                 {mobileSearchQuery && (
                   <button
@@ -405,7 +405,7 @@ export const MobileBottomNavigationBar = ({
                           clickEvent.stopPropagation();
                           addProductToCart(searchProductItem, 1, 1);
                         }}
-                        className="w-8 h-8 rounded-lg bg-gradient-to-r from-[#EA580C] to-[#F97316] hover:from-[#C2410C] hover:to-[#EA580C] text-white transition-colors flex items-center justify-center shrink-0 cursor-pointer shadow-xs"
+                        className="w-8 h-8 rounded-lg bg-[#0B3C1D] hover:bg-[#8DC63F] hover:text-[#062612] text-white transition-colors flex items-center justify-center shrink-0 cursor-pointer"
                         aria-label="Agregar al carrito"
                       >
                         <span className="material-symbols-outlined text-base">add</span>

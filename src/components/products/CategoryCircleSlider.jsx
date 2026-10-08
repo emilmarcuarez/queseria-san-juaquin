@@ -31,8 +31,8 @@ const CategoryCircleItem = ({
       <div
         className={`relative p-1 rounded-full transition-all duration-300 ${
           isSelectedCategory
-            ? 'ring-3 ring-[#EA580C] shadow-md scale-105'
-            : 'ring-2 ring-neutral-200/90 group-hover:ring-amber-400 group-hover:scale-105 shadow-2xs'
+            ? 'ring-3 ring-[#8DC63F] shadow-md scale-105'
+            : 'ring-2 ring-neutral-200/90 group-hover:ring-[#8DC63F] group-hover:scale-105 shadow-2xs'
         }`}
       >
         <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden relative shadow-inner bg-white">
@@ -54,7 +54,7 @@ const CategoryCircleItem = ({
               );
             })
           ) : (
-            <div className="w-full h-full flex items-center justify-center bg-amber-50 text-[#EA580C]">
+            <div className="w-full h-full flex items-center justify-center bg-[#F2F9E6] text-[#0B3C1D]">
               <span className="material-symbols-outlined text-2xl">storefront</span>
             </div>
           )}
@@ -64,7 +64,7 @@ const CategoryCircleItem = ({
       <span
         className={`text-[11px] sm:text-xs font-bold text-center leading-tight mt-2 max-w-[76px] sm:max-w-[92px] line-clamp-2 transition-colors ${
           isSelectedCategory
-            ? 'text-[#EA580C] font-black'
+            ? 'text-[#0B3C1D] font-black'
             : 'text-neutral-700 group-hover:text-[#0B3C1D]'
         }`}
       >
@@ -206,7 +206,7 @@ export const CategoryCircleSlider = ({
         type="button"
         onClick={() => handleScrollSlider('left')}
         disabled={!canScrollLeft}
-        className={`absolute left-0.5 sm:left-1 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-9 sm:h-9 bg-white/95 hover:bg-white text-neutral-700 hover:text-[#EA580C] hover:border-amber-400 rounded-full shadow-md border border-neutral-200 flex items-center justify-center transition-all cursor-pointer ${
+        className={`absolute left-0.5 sm:left-1 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-9 sm:h-9 bg-white/95 hover:bg-white text-neutral-700 hover:text-[#0B3C1D] hover:border-[#8DC63F] rounded-full shadow-md border border-neutral-200 flex items-center justify-center transition-all cursor-pointer ${
           canScrollLeft ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
         aria-label="Desplazar categorías a la izquierda"
@@ -243,7 +243,7 @@ export const CategoryCircleSlider = ({
         type="button"
         onClick={() => handleScrollSlider('right')}
         disabled={!canScrollRight}
-        className={`absolute right-0.5 sm:right-1 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-9 sm:h-9 bg-white/95 hover:bg-white text-neutral-700 hover:text-[#EA580C] hover:border-amber-400 rounded-full shadow-md border border-neutral-200 flex items-center justify-center transition-all cursor-pointer ${
+        className={`absolute right-0.5 sm:right-1 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-9 sm:h-9 bg-white/95 hover:bg-white text-neutral-700 hover:text-[#0B3C1D] hover:border-[#8DC63F] rounded-full shadow-md border border-neutral-200 flex items-center justify-center transition-all cursor-pointer ${
           canScrollRight ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
         aria-label="Desplazar categorías a la derecha"

@@ -147,7 +147,7 @@ export const StoreCatalogPage = ({
                   value={inPageSearchQuery}
                   onChange={(inputEvent) => setInPageSearchQuery(inputEvent.target.value)}
                   placeholder="Buscar en la tienda: Harina PAN, queso, tocineta..."
-                  className="w-full bg-neutral-50 border border-neutral-200 rounded-xl pl-11 pr-10 py-2.5 sm:py-3 text-sm text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#F59E0B] focus:border-[#EA580C] transition-all shadow-xs"
+                  className="w-full bg-neutral-50 border border-neutral-200 rounded-xl pl-11 pr-10 py-2.5 sm:py-3 text-sm text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#8DC63F] focus:border-[#8DC63F] transition-all shadow-xs"
                 />
                 {inPageSearchQuery && (
                   <button
@@ -179,15 +179,15 @@ export const StoreCatalogPage = ({
                 onClick={() => setIsFilterModalOpen(true)}
                 className={`h-9 px-3.5 rounded-xl text-xs font-bold transition-all cursor-pointer inline-flex items-center gap-2 border shadow-2xs active:scale-95 ${
                   selectedDepartmentFilter !== 'todos'
-                    ? 'bg-amber-50 text-amber-900 border-amber-400 shadow-xs font-black'
+                    ? 'bg-[#F2F9E6] text-[#0B3C1D] border-[#8DC63F] shadow-xs font-black'
                     : 'bg-white text-neutral-800 border-neutral-200 hover:bg-neutral-50 hover:border-neutral-300'
                 }`}
                 aria-label="Abrir filtros de categorías"
               >
-                <span className="material-symbols-outlined text-base text-[#EA580C]">tune</span>
+                <span className="material-symbols-outlined text-base text-[#0B3C1D]">tune</span>
                 <span>Filtros</span>
                 {selectedDepartmentFilter !== 'todos' && (
-                  <span className="w-2 h-2 rounded-full bg-[#EA580C]"></span>
+                  <span className="w-2 h-2 rounded-full bg-[#8DC63F]"></span>
                 )}
                 <span className="material-symbols-outlined text-xs text-neutral-400">expand_more</span>
               </button>
@@ -229,7 +229,7 @@ export const StoreCatalogPage = ({
                 onClick={() => setIsGroupedByCategoryActive(!isGroupedByCategoryActive)}
                 className={`h-9 px-3.5 rounded-xl text-xs font-bold border transition-all cursor-pointer inline-flex items-center gap-2 whitespace-nowrap ${
                   isGroupedByCategoryActive
-                    ? 'bg-amber-50 text-amber-900 border-amber-400 font-black shadow-xs'
+                    ? 'bg-[#F2F9E6] text-[#0B3C1D] border-[#8DC63F] font-black shadow-xs'
                     : 'bg-white text-neutral-700 border-neutral-200 hover:bg-neutral-50 shadow-2xs'
                 }`}
                 aria-label="Alternar agrupación por categoría"
@@ -260,7 +260,7 @@ export const StoreCatalogPage = ({
             <button
               type="button"
               onClick={handleResetAllStoreFilters}
-              className="px-6 py-3 bg-gradient-to-r from-[#EA580C] to-[#F59E0B] hover:from-[#C2410C] hover:to-[#EA580C] text-white text-xs font-bold rounded-xl transition-all shadow-md cursor-pointer"
+              className="px-6 py-3 bg-[#0B3C1D] hover:bg-[#8DC63F] hover:text-[#062612] text-white text-xs font-bold rounded-xl transition-all shadow-md cursor-pointer border border-[#8DC63F]/30"
             >
               Ver Todos los Productos
             </button>
@@ -341,7 +341,7 @@ export const StoreCatalogPage = ({
                         }}
                         className={`w-9 h-9 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
                           isSelected
-                            ? 'bg-[#0B3C1D] text-white shadow-sm'
+                            ? 'bg-[#0B3C1D] text-white border border-[#8DC63F]/40 shadow-sm'
                             : 'bg-white border border-neutral-200 text-neutral-700 hover:bg-neutral-50'
                         }`}
                       >
@@ -410,13 +410,13 @@ export const StoreCatalogPage = ({
                     onClick={() => setSelectedDepartmentFilter('todos')}
                     className={`w-full p-3 rounded-xl border text-left flex items-center justify-between transition-all cursor-pointer ${
                       selectedDepartmentFilter === 'todos'
-                        ? 'border-amber-400 bg-amber-50 text-amber-950 font-bold shadow-xs'
+                        ? 'border-[#8DC63F] bg-[#F2F9E6] text-[#0B3C1D] font-bold shadow-xs'
                         : 'border-neutral-200 hover:border-neutral-300 bg-white text-neutral-800'
                     }`}
                   >
                     <div className="flex items-center gap-3">
                       <span className={`material-symbols-outlined text-lg ${
-                        selectedDepartmentFilter === 'todos' ? 'text-[#EA580C]' : 'text-neutral-400'
+                        selectedDepartmentFilter === 'todos' ? 'text-[#0B3C1D]' : 'text-neutral-400'
                       }`}>
                         storefront
                       </span>
@@ -427,7 +427,7 @@ export const StoreCatalogPage = ({
                         {departmentCountLookup.todos}
                       </span>
                       <span className={`material-symbols-outlined text-base ${
-                        selectedDepartmentFilter === 'todos' ? 'text-[#EA580C]' : 'text-neutral-300'
+                        selectedDepartmentFilter === 'todos' ? 'text-[#0B3C1D]' : 'text-neutral-300'
                       }`}>
                         {selectedDepartmentFilter === 'todos' ? 'radio_button_checked' : 'radio_button_unchecked'}
                       </span>
@@ -445,13 +445,13 @@ export const StoreCatalogPage = ({
                         onClick={() => setSelectedDepartmentFilter(departmentItem.departmentIdentifier)}
                         className={`w-full p-3 rounded-xl border text-left flex items-center justify-between transition-all cursor-pointer ${
                           isSelected
-                            ? 'border-amber-400 bg-amber-50 text-amber-950 font-bold shadow-xs'
+                            ? 'border-[#8DC63F] bg-[#F2F9E6] text-[#0B3C1D] font-bold shadow-xs'
                             : 'border-neutral-200 hover:border-neutral-300 bg-white text-neutral-800'
                         }`}
                       >
                         <div className="flex items-center gap-3">
                           <span className={`material-symbols-outlined text-lg ${
-                            isSelected ? 'text-[#EA580C]' : 'text-neutral-400'
+                            isSelected ? 'text-[#0B3C1D]' : 'text-neutral-400'
                           }`}>
                             category
                           </span>
@@ -469,7 +469,7 @@ export const StoreCatalogPage = ({
                             {productCount}
                           </span>
                           <span className={`material-symbols-outlined text-base ${
-                            isSelected ? 'text-[#EA580C]' : 'text-neutral-300'
+                            isSelected ? 'text-[#0B3C1D]' : 'text-neutral-300'
                           }`}>
                             {isSelected ? 'radio_button_checked' : 'radio_button_unchecked'}
                           </span>
@@ -500,12 +500,12 @@ export const StoreCatalogPage = ({
                         onClick={() => setSelectedSortingOption(sortingOptionItem.key)}
                         className={`p-2.5 rounded-xl border text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer ${
                           isSortingActive
-                            ? 'border-amber-400 bg-amber-50 text-amber-950 font-bold shadow-xs'
+                            ? 'border-[#8DC63F] bg-[#F2F9E6] text-[#0B3C1D] font-bold shadow-xs'
                             : 'border-neutral-200 bg-white text-neutral-700 hover:bg-neutral-50'
                         }`}
                       >
                         <span className={`material-symbols-outlined text-sm ${
-                          isSortingActive ? 'text-[#EA580C]' : 'text-neutral-400'
+                          isSortingActive ? 'text-[#0B3C1D]' : 'text-neutral-400'
                         }`}>
                           {sortingOptionItem.icon}
                         </span>
@@ -529,7 +529,7 @@ export const StoreCatalogPage = ({
               <button
                 type="button"
                 onClick={() => setIsFilterModalOpen(false)}
-                className="px-5 py-2.5 bg-gradient-to-r from-[#EA580C] to-[#F59E0B] hover:from-[#C2410C] hover:to-[#EA580C] text-white text-xs font-extrabold rounded-xl transition-all shadow-sm cursor-pointer active:scale-95"
+                className="px-5 py-2.5 bg-[#0B3C1D] hover:bg-[#8DC63F] hover:text-[#062612] text-white text-xs font-extrabold rounded-xl transition-all shadow-sm cursor-pointer active:scale-95 border border-[#8DC63F]/30"
               >
                 Ver {filteredAndSortedProducts.length} Productos
               </button>
