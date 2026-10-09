@@ -36,7 +36,7 @@ export const FloatingCartQuickButton = () => {
         type="button"
         onClick={openCartDrawer}
         aria-label={`Ver carrito de compras con ${totalItemsCount} productos por ${formattedDisplayedPrice}`}
-        className={`group relative w-[54px] h-[54px] sm:w-14 sm:h-14 rounded-full bg-[#0B3C1D] hover:bg-[#062612] text-white shadow-xl hover:shadow-2xl border-2 border-white/90 flex items-center justify-center cursor-pointer transition-all duration-300 hover:scale-110 active:scale-95 ${
+        className={`group relative w-[54px] h-[54px] sm:w-14 sm:h-14 rounded-full bg-gradient-to-tr from-[#ea580c] to-[#f97316] hover:from-[#c2410c] hover:to-[#ea580c] text-white shadow-xl hover:shadow-2xl border-2 border-white flex items-center justify-center cursor-pointer transition-all duration-300 hover:scale-110 active:scale-95 ${
           hasRecentItemAdded ? 'scale-115 ring-4 ring-[#8DC63F]/60' : ''
         }`}
       >
@@ -45,7 +45,7 @@ export const FloatingCartQuickButton = () => {
         </span>
 
         {totalItemsCount > 0 && (
-          <span className="absolute -top-1.5 -right-1.5 min-w-[22px] h-[22px] px-1.5 rounded-full bg-[#8DC63F] text-[#062612] font-black text-[11px] flex items-center justify-center border-2 border-white shadow-md animate-scaleIn leading-none">
+          <span className="absolute -top-1 -right-1 min-w-[22px] h-[22px] px-1 rounded-full bg-[#062612] text-[#8DC63F] font-black text-[11px] flex items-center justify-center border-2 border-white shadow-md animate-scaleIn leading-none">
             {totalItemsCount}
           </span>
         )}

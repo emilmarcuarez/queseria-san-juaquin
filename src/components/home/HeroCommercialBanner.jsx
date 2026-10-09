@@ -10,39 +10,57 @@ export const HeroCommercialBanner = ({ onExploreCatalog }) => {
   };
 
   return (
-    <section className="relative w-full min-h-[580px] sm:min-h-[660px] lg:min-h-[720px] flex items-center overflow-hidden">
-      <HeroOffersCarousel />
-
-      <div className="absolute inset-0 bg-[#0B3C1D]/80 sm:bg-transparent z-15 pointer-events-none sm:hidden"></div>
-
-      <div className="absolute left-0 top-0 bottom-0 w-full lg:w-[48rem] xl:w-[54rem] h-full z-20 bg-gradient-to-r from-[#0B3C1D]/95 via-[#0B3C1D]/75 to-transparent flex flex-col justify-center px-6 sm:px-10 lg:pl-16 xl:pl-20 lg:pr-12 py-12 lg:py-16">
-        <div className="w-full max-w-xl xl:max-w-2xl flex flex-col items-start" data-aos="fade-right">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black text-white leading-[1.12] tracking-tight mb-4 drop-shadow-md">
-            Todo para tu Hogar en un Solo Lugar
+    <section className="w-full bg-white pt-3 sm:pt-6 pb-3 sm:pb-6">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14 2xl:px-16">
+        <div className="flex flex-col items-start pb-4 sm:pb-6" data-aos="fade-up">
+          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-neutral-900 tracking-tight leading-tight">
+            Todo en un solo lugar
+            <span className="text-[#3B7011] block mt-0.5 sm:mt-1 font-black">Frescura y Calidad a tu Mesa</span>
           </h1>
 
-          <p className="text-sm sm:text-base lg:text-lg text-white/90 leading-relaxed mb-6 font-medium max-w-lg drop-shadow-xs">
-            Charcutería fresca rebanada al gusto, quesos seleccionados y la despensa completa de tu casa con despacho directo a tu puerta con la mejor atención.
-          </p>
+          <button
+            type="button"
+            onClick={handleExploreClick}
+            className="inline-flex items-center justify-center mt-3 sm:mt-4 px-6 sm:px-7 py-2.5 sm:py-3 rounded-full bg-[#8DC63F] hover:bg-[#78AD2F] text-[#062612] font-black text-xs sm:text-sm uppercase tracking-wider transition-all shadow-sm hover:shadow-md cursor-pointer active:scale-95 border border-[#78AD2F]/40"
+          >
+            COMIENZA A COMPRAR
+          </button>
 
-          <h2 className="font-sans text-xl sm:text-2xl lg:text-3xl font-black text-white tracking-tight leading-tight mb-8">
-            Sabor Criollo &amp; <span className="text-[#FBBF24]">Fresco a tu Mesa</span>
-          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-4 mt-4 w-full max-w-2xl">
+            <div className="flex items-center gap-3 p-3 sm:p-3.5 rounded-2xl border border-neutral-100 bg-white shadow-2xs hover:shadow-xs hover:border-[#8DC63F]/50 transition-all">
+              <div className="w-9 h-9 rounded-xl bg-[#F2F9E6] text-[#4C821D] flex items-center justify-center shrink-0">
+                <span className="material-symbols-outlined text-xl">workspace_premium</span>
+              </div>
+              <div>
+                <h4 className="text-xs sm:text-sm font-bold text-neutral-900 leading-tight">
+                  Calidad y Frescura Total
+                </h4>
+                <p className="text-[11px] sm:text-xs text-neutral-500 font-medium leading-tight mt-0.5">
+                  Auténticos quesos tradicionales y víveres selectos a tu mesa.
+                </p>
+              </div>
+            </div>
 
-          <div className="w-full sm:w-auto">
-            <button
-              type="button"
-              onClick={handleExploreClick}
-              className="w-full sm:w-auto inline-flex justify-center items-center gap-2.5 px-8 py-3.5 sm:py-4 bg-[#8DC63F] hover:bg-[#78AD2F] text-[#062612] rounded-2xl font-black text-sm sm:text-base shadow-xl shadow-black/30 hover:scale-105 transition-all active:scale-95 text-center cursor-pointer border border-[#8DC63F]"
-            >
-              <span className="material-symbols-outlined text-xl text-[#062612]">shopping_bag</span>
-              <span>Explorar Catálogo</span>
-            </button>
+            <div className="flex items-center gap-3 p-3 sm:p-3.5 rounded-2xl border border-neutral-100 bg-white shadow-2xs hover:shadow-xs hover:border-[#F59E0B]/50 transition-all">
+              <div className="w-9 h-9 rounded-xl bg-[#FEF3C7] text-[#D97706] flex items-center justify-center shrink-0">
+                <span className="material-symbols-outlined text-xl">moped</span>
+              </div>
+              <div>
+                <h4 className="text-xs sm:text-sm font-bold text-neutral-900 leading-tight">
+                  Delivery Rápido y Seguro
+                </h4>
+                <p className="text-[11px] sm:text-xs text-neutral-500 font-medium leading-tight mt-0.5">
+                  Despacho puntual y confiable directo a tu puerta en Maracaibo.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="absolute bottom-0 inset-x-0 h-16 sm:h-24 bg-gradient-to-t from-[#fafafa] via-[#fafafa]/40 to-transparent z-30 pointer-events-none"></div>
+        <div className="mt-1 sm:mt-2" data-aos="fade-up">
+          <HeroOffersCarousel />
+        </div>
+      </div>
     </section>
   );
 };

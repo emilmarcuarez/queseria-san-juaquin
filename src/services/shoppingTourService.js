@@ -49,9 +49,7 @@ export const launchShoppingTour = ({ openCartDrawer }) => {
   };
 
   const getCartButtonElement = () =>
-    isMobile()
-      ? document.getElementById('mobile-floating-cart-button')
-      : document.getElementById('tour-cart-button');
+    document.getElementById('mobile-floating-cart-button');
 
   const handleCartScroll = () => {
     if (tourDriver?.isActive()) {

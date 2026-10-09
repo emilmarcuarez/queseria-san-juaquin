@@ -18,18 +18,32 @@ export const MobileBottomNavigationBar = ({
     togglePreferredCurrency
   } = useShoppingCart();
 
-  const [isDollarModalOpen, setIsDollarModalOpen] = useState(false);
-  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
+  const [isDollarModalMounted, setIsDollarModalMounted] = useState(false);
+  const [isDollarModalVisible, setIsDollarModalVisible] = useState(false);
+  const dollarCloseTimerReference = useRef(null);
+
+  const [isSearchModalMounted, setIsSearchModalMounted] = useState(false);
+  const [isSearchModalVisible, setIsSearchModalVisible] = useState(false);
+  const searchCloseTimerReference = useRef(null);
+
   const [mobileSearchQuery, setMobileSearchQuery] = useState('');
   const searchInputReference = useRef(null);
 
   useEffect(() => {
-    if (isSearchModalOpen && searchInputReference.current) {
-      setTimeout(() => {
+    if (isSearchModalVisible && searchInputReference.current) {
+      const focusTimer = setTimeout(() => {
         searchInputReference.current?.focus();
-      }, 150);
+      }, 160);
+      return () => clearTimeout(focusTimer);
     }
-  }, [isSearchModalOpen]);
+  }, [isSearchModalVisible]);
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(searchCloseTimerReference.current);
+      clearTimeout(dollarCloseTimerReference.current);
+    };
+  }, []);
 
   const handleNavigateHome = () => {
     onNavigateToPage('inicio');
@@ -42,20 +56,38 @@ export const MobileBottomNavigationBar = ({
   };
 
   const handleOpenSearch = () => {
-    setIsSearchModalOpen(true);
+    clearTimeout(searchCloseTimerReference.current);
+    setIsSearchModalMounted(true);
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setIsSearchModalVisible(true);
+      });
+    });
   };
 
   const handleCloseSearch = () => {
-    setIsSearchModalOpen(false);
-    setMobileSearchQuery('');
+    setIsSearchModalVisible(false);
+    searchCloseTimerReference.current = setTimeout(() => {
+      setIsSearchModalMounted(false);
+      setMobileSearchQuery('');
+    }, 280);
   };
 
   const handleOpenDollarModal = () => {
-    setIsDollarModalOpen(true);
+    clearTimeout(dollarCloseTimerReference.current);
+    setIsDollarModalMounted(true);
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setIsDollarModalVisible(true);
+      });
+    });
   };
 
   const handleCloseDollarModal = () => {
-    setIsDollarModalOpen(false);
+    setIsDollarModalVisible(false);
+    dollarCloseTimerReference.current = setTimeout(() => {
+      setIsDollarModalMounted(false);
+    }, 280);
   };
 
   const formattedExchangeRateBcv = typeof exchangeRateBcv === 'number'
@@ -104,35 +136,21 @@ export const MobileBottomNavigationBar = ({
     'Margarina'
   ];
 
-  const configuredPhoneNumber = import.meta.env.VITE_WHATSAPP_PHONE_NUMBER || '584146770016';
-  const cleanDestinationNumber = configuredPhoneNumber.replace(/[^\d]/g, '');
-  const directWhatsAppHelpUrl = `https://wa.me/${cleanDestinationNumber}?text=${encodeURIComponent('Hola Quesería San Joaquín! Necesito hacer una consulta sobre un pedido.')}`;
-
   return (
     <>
-      <a
-        href={directWhatsAppHelpUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="fixed bottom-[136px] right-4 z-35 lg:hidden w-11 h-11 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-lg active:scale-90 transition-transform"
-        aria-label="Contactar por WhatsApp"
-      >
-        <span className="material-symbols-outlined text-2xl">chat</span>
-      </a>
-
       <nav
         aria-label="Navegación principal para móviles"
-        className="fixed bottom-0 left-0 right-0 z-40 lg:hidden bg-[#0B3C1D] border-t border-[#062612] shadow-2xl px-2 pt-2 pb-[calc(0.5rem+env(safe-area-inset-bottom,0px))] flex items-center justify-around"
+        className="fixed bottom-0 left-0 right-0 z-40 lg:hidden bg-white border-t border-neutral-200/80 shadow-lg px-2 pt-1.5 pb-[calc(0.5rem+env(safe-area-inset-bottom,0px))] flex items-center justify-around"
       >
         <button
           type="button"
           onClick={handleNavigateHome}
           className={`flex flex-col items-center justify-center py-1 px-2.5 rounded-xl transition-colors cursor-pointer ${
-            activePageIdentifier === 'inicio' ? 'text-[#8DC63F]' : 'text-emerald-100/75 hover:text-white'
+            activePageIdentifier === 'inicio' ? 'text-[#3B7011]' : 'text-neutral-400 hover:text-neutral-600'
           }`}
         >
           <span className="material-symbols-outlined text-2xl leading-none">home</span>
-          <span className={`text-[10px] mt-1 ${activePageIdentifier === 'inicio' ? 'font-black' : 'font-medium'}`}>
+          <span className={`text-[10px] mt-0.5 ${activePageIdentifier === 'inicio' ? 'font-black' : 'font-medium'}`}>
             Inicio
           </span>
         </button>
@@ -141,17 +159,17 @@ export const MobileBottomNavigationBar = ({
           type="button"
           onClick={handleOpenDollarModal}
           className={`flex flex-col items-center justify-center py-1 px-2.5 rounded-xl transition-colors cursor-pointer ${
-            preferredCurrency === 'BS' ? 'text-[#8DC63F]' : 'text-emerald-100/75 hover:text-white'
+            preferredCurrency === 'BS' ? 'text-[#3B7011]' : 'text-neutral-400 hover:text-neutral-600'
           }`}
         >
-          <div className={`w-6 h-6 rounded-full flex items-center justify-center leading-none transition-colors ${
+          <div className={`w-5 h-5 rounded-full flex items-center justify-center leading-none transition-colors ${
             preferredCurrency === 'BS'
-              ? 'bg-[#8DC63F] text-[#062612] font-black shadow-xs'
-              : 'border border-white/70 text-white font-bold'
+              ? 'bg-[#8DC63F] text-[#062612] font-black shadow-2xs'
+              : 'border border-neutral-300 text-neutral-600 font-bold'
           }`}>
-            <span className="text-xs leading-none">{preferredCurrency === 'BS' ? 'Bs' : '$'}</span>
+            <span className="text-[10px] leading-none">{preferredCurrency === 'BS' ? 'Bs' : '$'}</span>
           </div>
-          <span className={`text-[10px] mt-1 ${preferredCurrency === 'BS' ? 'font-black' : 'font-medium'}`}>
+          <span className={`text-[10px] mt-0.5 ${preferredCurrency === 'BS' ? 'font-black' : 'font-medium'}`}>
             {preferredCurrency === 'BS' ? 'Moneda Bs' : 'Dólar'}
           </span>
         </button>
@@ -159,10 +177,10 @@ export const MobileBottomNavigationBar = ({
         <button
           type="button"
           onClick={handleOpenSearch}
-          className="flex flex-col items-center justify-center py-1 px-2.5 rounded-xl text-emerald-100/75 hover:text-white transition-colors cursor-pointer"
+          className="flex flex-col items-center justify-center py-1 px-2.5 rounded-xl text-neutral-400 hover:text-neutral-600 transition-colors cursor-pointer"
         >
           <span className="material-symbols-outlined text-2xl leading-none">search</span>
-          <span className="text-[10px] font-medium mt-1">
+          <span className="text-[10px] font-medium mt-0.5">
             Buscar
           </span>
         </button>
@@ -171,11 +189,11 @@ export const MobileBottomNavigationBar = ({
           type="button"
           onClick={handleNavigateStore}
           className={`flex flex-col items-center justify-center py-1 px-2.5 rounded-xl transition-colors cursor-pointer ${
-            activePageIdentifier === 'tienda' ? 'text-[#8DC63F]' : 'text-emerald-100/75 hover:text-white'
+            activePageIdentifier === 'tienda' ? 'text-[#3B7011]' : 'text-neutral-400 hover:text-neutral-600'
           }`}
         >
           <span className="material-symbols-outlined text-2xl leading-none">storefront</span>
-          <span className={`text-[10px] mt-1 ${activePageIdentifier === 'tienda' ? 'font-black' : 'font-medium'}`}>
+          <span className={`text-[10px] mt-0.5 ${activePageIdentifier === 'tienda' ? 'font-black' : 'font-medium'}`}>
             Catálogo
           </span>
         </button>
@@ -183,36 +201,42 @@ export const MobileBottomNavigationBar = ({
         <button
           type="button"
           onClick={openCartDrawer}
-          className="flex flex-col items-center justify-center py-1 px-2.5 rounded-xl text-emerald-100/75 hover:text-white transition-colors cursor-pointer relative"
+          className="flex flex-col items-center justify-center py-1 px-2.5 rounded-xl text-neutral-400 hover:text-neutral-600 transition-colors cursor-pointer relative"
         >
           <div className="relative leading-none">
             <span className="material-symbols-outlined text-2xl leading-none">shopping_cart</span>
             {totalItemsCount > 0 && (
-              <span className="absolute -top-1.5 -right-2 min-w-[18px] h-[18px] px-1 bg-[#8DC63F] text-[#062612] text-[9.5px] font-black rounded-full flex items-center justify-center shadow-xs">
+              <span className="absolute -top-1.5 -right-2 min-w-[17px] h-[17px] px-1 bg-[#8DC63F] text-[#062612] text-[9px] font-black rounded-full flex items-center justify-center shadow-xs">
                 {totalItemsCount}
               </span>
             )}
           </div>
-          <span className="text-[10px] font-medium mt-1">
-            Mi Lista
+          <span className="text-[10px] font-medium mt-0.5">
+            Carrito
           </span>
         </button>
       </nav>
 
-      {isDollarModalOpen && createPortal(
+      {isDollarModalMounted && createPortal(
         <div
           onClick={handleCloseDollarModal}
-          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/60 backdrop-blur-xs p-0 sm:p-4"
+          className={`fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-xs p-0 sm:p-4 transition-opacity duration-300 ${
+            isDollarModalVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          }`}
         >
           <div
             onClick={(clickEvent) => clickEvent.stopPropagation()}
-            className="w-full max-w-md bg-white rounded-t-3xl sm:rounded-2xl p-5 sm:p-6 shadow-2xl animate-slideDownDrawer sm:animate-none flex flex-col gap-4 max-h-[85vh] overflow-y-auto"
+            className={`w-full max-w-md bg-white rounded-t-3xl sm:rounded-2xl p-5 sm:p-6 shadow-2xl flex flex-col gap-4 max-h-[85vh] overflow-y-auto transition-all duration-300 ease-out transform ${
+              isDollarModalVisible
+                ? 'translate-y-0 opacity-100 scale-100'
+                : 'translate-y-12 sm:translate-y-6 opacity-0 scale-95'
+            }`}
           >
             <div className="w-12 h-1.5 bg-neutral-300 rounded-full mx-auto sm:hidden" />
 
             <div className="flex items-center justify-between pb-2 border-b border-neutral-100">
               <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-xl bg-[#F2F9E6] text-[#0B3C1D] flex items-center justify-center">
+                <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center">
                   <span className="material-symbols-outlined text-xl">payments</span>
                 </div>
                 <div>
@@ -246,7 +270,7 @@ export const MobileBottomNavigationBar = ({
                   onClick={() => togglePreferredCurrency('USD')}
                   className={`py-2.5 px-3 rounded-lg text-xs font-black flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
                     preferredCurrency === 'USD'
-                      ? 'bg-white text-[#0B3C1D] shadow-xs'
+                      ? 'bg-white text-emerald-800 shadow-xs'
                       : 'text-neutral-600 hover:text-neutral-900'
                   }`}
                 >
@@ -259,7 +283,7 @@ export const MobileBottomNavigationBar = ({
                   onClick={() => togglePreferredCurrency('BS')}
                   className={`py-2.5 px-3 rounded-lg text-xs font-black flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
                     preferredCurrency === 'BS'
-                      ? 'bg-[#0B3C1D] text-[#8DC63F] shadow-xs'
+                      ? 'bg-emerald-700 text-white shadow-xs'
                       : 'text-neutral-600 hover:text-neutral-900'
                   }`}
                 >
@@ -270,21 +294,21 @@ export const MobileBottomNavigationBar = ({
 
               <p className="text-[11px] text-neutral-500 font-medium mt-2.5 leading-tight">
                 {preferredCurrency === 'BS'
-                  ? '✓ Mostrando precios principales en Bolívares (Bs.) calculados a la tasa oficial del día.'
-                  : '✓ Mostrando precios principales en Dólares ($ USD) con referencia en Bolívares.'}
+                  ? '✓ Precios en Bolívares (Bs.) calculados a la tasa oficial BCV.'
+                  : '✓ Precios en Dólares ($ USD) con referencia en Bolívares.'}
               </p>
             </div>
 
-            <div className="bg-[#F2F9E6] p-3.5 rounded-2xl border border-[#8DC63F]/30 flex items-center justify-between">
+            <div className="bg-[#F2F9E6] p-3.5 rounded-2xl border border-[#8DC63F]/40 flex items-center justify-between">
               <div>
-                <span className="text-[10.5px] font-black text-[#0B3C1D] uppercase tracking-wider block">
+                <span className="text-[10.5px] font-black text-[#062612] uppercase tracking-wider block">
                   Tasa Oficial BCV
                 </span>
-                <span className="text-[10.5px] text-[#5a6b60] font-medium">
+                <span className="text-[10.5px] text-neutral-500 font-medium">
                   {formattedExchangeRateDate ? `Actualizada al ${formattedExchangeRateDate}` : 'Banco Central de Venezuela'}
                 </span>
               </div>
-              <div className="text-base sm:text-lg font-black text-[#0B3C1D]">
+              <div className="text-base sm:text-lg font-black text-[#062612]">
                 Bs. {formattedExchangeRateBcv}
               </div>
             </div>
@@ -292,7 +316,7 @@ export const MobileBottomNavigationBar = ({
             <button
               type="button"
               onClick={handleCloseDollarModal}
-              className="w-full py-3 rounded-xl bg-[#0B3C1D] hover:bg-[#062612] text-white font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer shadow-xs border border-[#8DC63F]/30"
+              className="w-full py-3 rounded-xl bg-[#8DC63F] hover:bg-[#78AD2F] text-[#062612] font-black text-xs uppercase tracking-wider transition-colors cursor-pointer shadow-xs border border-[#78AD2F]/30"
             >
               Listo
             </button>
@@ -301,14 +325,20 @@ export const MobileBottomNavigationBar = ({
         document.body
       )}
 
-      {isSearchModalOpen && createPortal(
+      {isSearchModalMounted && createPortal(
         <div
           onClick={handleCloseSearch}
-          className="fixed inset-0 z-50 flex items-start justify-center bg-black/60 backdrop-blur-xs p-0 sm:p-4"
+          className={`fixed inset-0 z-50 flex items-start justify-center bg-black/50 backdrop-blur-xs p-0 sm:p-4 transition-opacity duration-300 ${
+            isSearchModalVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          }`}
         >
           <div
             onClick={(clickEvent) => clickEvent.stopPropagation()}
-            className="w-full max-w-lg bg-white rounded-b-3xl sm:rounded-2xl p-4 sm:p-5 shadow-2xl flex flex-col gap-4 max-h-[85vh]"
+            className={`w-full max-w-lg bg-white rounded-b-3xl sm:rounded-2xl p-4 sm:p-5 shadow-2xl flex flex-col gap-4 max-h-[85vh] transition-all duration-300 ease-out transform ${
+              isSearchModalVisible
+                ? 'translate-y-0 opacity-100 scale-100'
+                : '-translate-y-10 opacity-0 scale-95'
+            }`}
           >
             <div className="flex items-center gap-2">
               <div className="relative flex-1 flex items-center">
@@ -320,7 +350,7 @@ export const MobileBottomNavigationBar = ({
                   type="text"
                   value={mobileSearchQuery}
                   onChange={(inputChangeEvent) => setMobileSearchQuery(inputChangeEvent.target.value)}
-                  placeholder="Buscar quesos, jamones, café, harinas..."
+                  placeholder="Buscar quesos, jamones, café, víveres..."
                   className="w-full bg-neutral-100 border-none rounded-xl pl-10 pr-9 py-2.5 text-sm text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#8DC63F]"
                 />
                 {mobileSearchQuery && (
@@ -405,10 +435,10 @@ export const MobileBottomNavigationBar = ({
                           clickEvent.stopPropagation();
                           addProductToCart(searchProductItem, 1, 1);
                         }}
-                        className="w-8 h-8 rounded-lg bg-[#0B3C1D] hover:bg-[#8DC63F] hover:text-[#062612] text-white transition-colors flex items-center justify-center shrink-0 cursor-pointer"
+                        className="w-8 h-8 rounded-lg border border-[#8DC63F] text-[#4C821D] hover:bg-[#F2F9E6] transition-colors flex items-center justify-center shrink-0 cursor-pointer"
                         aria-label="Agregar al carrito"
                       >
-                        <span className="material-symbols-outlined text-base">add</span>
+                        <span className="material-symbols-outlined text-base">add_shopping_cart</span>
                       </button>
                     </div>
                   ))

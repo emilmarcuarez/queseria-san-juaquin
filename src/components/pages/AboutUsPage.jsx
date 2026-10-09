@@ -6,7 +6,7 @@ export const AboutUsPage = ({ onNavigateToStore }) => {
   }, []);
 
   return (
-    <div className="w-full bg-[#fafafa] py-10 sm:py-16">
+    <div className="w-full bg-white py-10 sm:py-16">
       <div className="max-w-7xl mx-auto px-4 lg:px-8 space-y-16">
         <div className="text-center max-w-3xl mx-auto space-y-4" data-aos="fade-up">
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary-subtle text-primary text-xs font-extrabold tracking-wider uppercase">

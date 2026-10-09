@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getStoreCurrentScheduleStatus, STORE_OFFICIAL_DATA } from '../../services/storeScheduleService';
 import { useShoppingCart } from '../../hooks/useShoppingCart';
 
-export const TopAnnouncementBar = () => {
+export const TopAnnouncementBar = ({ onNavigateToPortal }) => {
   const { exchangeRateBcv, preferredCurrency, togglePreferredCurrency } = useShoppingCart();
   const [storeStatus, setStoreStatus] = useState(getStoreCurrentScheduleStatus());
 
@@ -37,6 +37,18 @@ export const TopAnnouncementBar = () => {
         </div>
 
         <div className="flex items-center gap-3 sm:gap-4 shrink-0">
+          {onNavigateToPortal && (
+            <button
+              type="button"
+              onClick={onNavigateToPortal}
+              className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 hover:text-white border border-emerald-500/40 text-[10.5px] font-bold transition-all cursor-pointer active:scale-95"
+              title="Abrir menú de Delivery y Enlaces"
+            >
+              <span className="material-symbols-outlined text-[13px]">moped</span>
+              <span>Delivery</span>
+            </button>
+          )}
+
           <div className="hidden lg:flex items-center gap-1.5 text-white/80 hover:text-white transition-colors truncate text-[11px]">
             <span className="material-symbols-outlined text-[14px] text-emerald-400 shrink-0">
               location_on

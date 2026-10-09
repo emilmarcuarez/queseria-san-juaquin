@@ -96,7 +96,7 @@ export const CartItemRow = ({ cartItemEntry }) => {
             {/* Badge de Peso / Porción */}
             {cartItemEntry.portionLabel && (
               <div className="mt-1">
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10.5px] font-black bg-emerald-50 text-emerald-800 border border-emerald-200">
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10.5px] font-black bg-[#F2F9E6] text-[#3B7011] border border-[#8DC63F]/40">
                   <span className="material-symbols-outlined text-[12px]">scale</span>
                   <span>Peso: {cartItemEntry.portionLabel}</span>
                 </span>
@@ -172,28 +172,28 @@ export const CartItemRow = ({ cartItemEntry }) => {
 
         <div className="pl-1">
           {cartItemEntry.customItemNote ? (
-            <div className="bg-emerald-50/70 border border-emerald-200/80 rounded-lg px-2.5 py-1.5 flex items-start justify-between gap-2 text-xs">
-              <div className="flex items-start gap-1.5 min-w-0 text-emerald-950">
-                <span className="material-symbols-outlined text-sm text-emerald-700 mt-0.5 shrink-0">
+            <div className="bg-[#F2F9E6] border border-[#8DC63F]/30 rounded-lg px-2.5 py-1.5 flex items-start justify-between gap-2 text-xs">
+              <div className="flex items-start gap-1.5 min-w-0 text-[#062612]">
+                <span className="material-symbols-outlined text-sm text-[#3B7011] mt-0.5 shrink-0">
                   sticky_note_2
                 </span>
                 <span className="text-[11px] font-medium break-words leading-tight">
-                  <strong className="font-bold text-emerald-900">Nota:</strong> {cartItemEntry.customItemNote}
+                  <strong className="font-bold text-[#062612]">Nota:</strong> {cartItemEntry.customItemNote}
                 </span>
               </div>
               <div className="flex items-center gap-1 shrink-0 ml-1">
                 <button
                   type="button"
                   onClick={handleOpenNoteModal}
-                  className="text-[10px] font-bold text-emerald-800 hover:text-emerald-950 hover:underline cursor-pointer"
+                  className="text-[10px] font-bold text-[#3B7011] hover:text-[#062612] hover:underline cursor-pointer"
                 >
                   Editar
                 </button>
-                <span className="text-emerald-300 text-[10px]">•</span>
+                <span className="text-neutral-300 text-[10px]">•</span>
                 <button
                   type="button"
                   onClick={handleClearNote}
-                  className="text-[10px] text-emerald-600 hover:text-red-600 cursor-pointer"
+                  className="text-[10px] text-neutral-400 hover:text-red-600 cursor-pointer"
                   aria-label="Eliminar nota del producto"
                 >
                   ✕
@@ -205,7 +205,7 @@ export const CartItemRow = ({ cartItemEntry }) => {
               type="button"
               data-tour="add-note-btn"
               onClick={handleOpenNoteModal}
-              className="inline-flex items-center gap-1 text-[11px] font-semibold text-neutral-500 hover:text-[#0B3C1D] hover:bg-neutral-100/80 px-2 py-1 rounded-md transition-all cursor-pointer"
+              className="inline-flex items-center gap-1 text-[11px] font-semibold text-neutral-500 hover:text-[#3B7011] hover:bg-neutral-100/80 px-2 py-1 rounded-md transition-all cursor-pointer"
             >
               <span className="material-symbols-outlined text-sm">edit_note</span>
               <span>Añadir nota o preferencia</span>
@@ -285,7 +285,7 @@ export const CartItemRow = ({ cartItemEntry }) => {
               <button
                 type="button"
                 onClick={handleSaveNote}
-                className="px-4 py-2 bg-primary hover:bg-primary-dark text-white text-xs font-bold rounded-xl shadow-xs transition-all cursor-pointer"
+                className="px-4 py-2 bg-[#8DC63F] hover:bg-[#78AD2F] text-[#062612] text-xs font-black uppercase tracking-wider rounded-xl shadow-xs transition-all cursor-pointer border border-[#78AD2F]/30"
               >
                 Guardar Nota
               </button>

@@ -3,7 +3,6 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { ShoppingCartProvider } from './context/ShoppingCartContext';
 import { useProductCatalogFilter } from './hooks/useProductCatalogFilter';
-import { TopAnnouncementBar } from './components/common/TopAnnouncementBar';
 import { MainHeaderNavigation } from './components/common/MainHeaderNavigation';
 import { MainFooterSection } from './components/common/MainFooterSection';
 import { MobileBottomNavigationBar } from './components/common/MobileBottomNavigationBar';
@@ -20,10 +19,12 @@ import { ProductDetailPage } from './components/pages/ProductDetailPage';
 import { CartDrawerModal } from './components/cart/CartDrawerModal';
 import { HowToBuyFloatingButton } from './components/common/HowToBuyFloatingButton';
 import { FloatingCartQuickButton } from './components/common/FloatingCartQuickButton';
+import { InitialPageLoadingSpinner } from './components/common/InitialPageLoadingSpinner';
+import { WelcomePortalPage } from './components/portal/WelcomePortalPage';
 import productsCatalogData from './data/productsCatalogData.json';
 
 const StorefrontContent = () => {
-  const [activePageIdentifier, setActivePageIdentifier] = useState('inicio');
+  const [activePageIdentifier, setActivePageIdentifier] = useState('portal');
   const [selectedProductDetail, setSelectedProductDetail] = useState(null);
   const [storeInitialDepartmentKey, setStoreInitialDepartmentKey] = useState('todos');
 
@@ -63,8 +64,14 @@ const StorefrontContent = () => {
       } else if (currentRawHash === 'contacto' || currentRawHash === 'contactanos') {
         setActivePageIdentifier('contacto');
         setSelectedProductDetail(null);
-      } else {
+      } else if (currentRawHash === 'inicio' || currentRawHash === 'web') {
         setActivePageIdentifier('inicio');
+        setSelectedProductDetail(null);
+      } else if (currentRawHash === 'portal' || currentRawHash === 'delivery' || currentRawHash === '') {
+        setActivePageIdentifier('portal');
+        setSelectedProductDetail(null);
+      } else {
+        setActivePageIdentifier('portal');
         setSelectedProductDetail(null);
       }
     };
@@ -83,7 +90,7 @@ const StorefrontContent = () => {
   const handleNavigateToPage = (targetPageKey) => {
     setSelectedProductDetail(null);
     setActivePageIdentifier(targetPageKey);
-    window.location.hash = targetPageKey === 'inicio' ? '' : targetPageKey;
+    window.location.hash = targetPageKey === 'portal' ? '' : targetPageKey;
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -104,14 +111,23 @@ const StorefrontContent = () => {
     window.location.hash = 'tienda';
   };
 
-  const mainTopPaddingClass = (activePageIdentifier === 'tienda' || activePageIdentifier === 'producto')
-    ? 'pt-[126px] sm:pt-[126px] lg:pt-[138px]'
-    : 'pt-[126px] sm:pt-[126px] lg:pt-[138px]';
+  if (activePageIdentifier === 'portal') {
+    return (
+      <>
+        <InitialPageLoadingSpinner />
+        <WelcomePortalPage
+          onEnterStore={() => handleNavigateToPage('inicio')}
+        />
+      </>
+    );
+  }
+
+  const mainTopPaddingClass = 'pt-14 lg:pt-[104px]';
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
+      <InitialPageLoadingSpinner />
       <header className="fixed top-0 left-0 w-full z-40 bg-white lg:shadow-none shadow-xs">
-        <TopAnnouncementBar />
         <MainHeaderNavigation
           searchQueryString={searchQueryString}
           onSearchChange={updateSearchQuery}

@@ -56,9 +56,6 @@ export const StoreCatalogPage = ({
       if (selectedSortingOption === 'precio-mayor') {
         return secondProductItem.productPriceUsd - firstProductItem.productPriceUsd;
       }
-      if (selectedSortingOption === 'alfabetico') {
-        return firstProductItem.productTitle.localeCompare(secondProductItem.productTitle);
-      }
       return (secondProductItem.isFeaturedProduct ? 1 : 0) - (firstProductItem.isFeaturedProduct ? 1 : 0);
     });
   }, [inPageSearchQuery, selectedDepartmentFilter, selectedSortingOption]);
@@ -172,73 +169,54 @@ export const StoreCatalogPage = ({
             productsCatalogList={productsCatalogData}
           />
 
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div className="flex flex-wrap items-center gap-2.5">
-              <button
-                type="button"
-                onClick={() => setIsFilterModalOpen(true)}
-                className={`h-9 px-3.5 rounded-xl text-xs font-bold transition-all cursor-pointer inline-flex items-center gap-2 border shadow-2xs active:scale-95 ${
-                  selectedDepartmentFilter !== 'todos'
-                    ? 'bg-[#F2F9E6] text-[#0B3C1D] border-[#8DC63F] shadow-xs font-black'
-                    : 'bg-white text-neutral-800 border-neutral-200 hover:bg-neutral-50 hover:border-neutral-300'
-                }`}
-                aria-label="Abrir filtros de categorías"
-              >
-                <span className="material-symbols-outlined text-base text-[#0B3C1D]">tune</span>
-                <span>Filtros</span>
-                {selectedDepartmentFilter !== 'todos' && (
-                  <span className="w-2 h-2 rounded-full bg-[#8DC63F]"></span>
-                )}
-                <span className="material-symbols-outlined text-xs text-neutral-400">expand_more</span>
-              </button>
-
-              {selectedDepartmentFilter !== 'todos' && (
-                <div className="h-9 inline-flex items-center gap-2 bg-neutral-100 text-neutral-800 text-xs px-3 rounded-xl font-semibold border border-neutral-200">
-                  <span>{activeDepartmentTitle}</span>
+          <div className="flex flex-wrap items-center justify-between gap-3 pt-1">
+            <div className="flex items-center gap-1.5 overflow-x-auto py-1 scrollbar-none max-w-full">
+              {[
+                { key: 'todos', label: '🛒 Todos' },
+                { key: 'quesos-lacteos', label: '🧀 Quesos' },
+                { key: 'jamones-charcuteria', label: '🥩 Charcutería' },
+                { key: 'viveres-despensa', label: '🥫 Víveres' },
+                { key: 'panaderia-desayuno', label: '🥖 Panadería' }
+              ].map((categoryTabItem) => {
+                const isSelected = selectedDepartmentFilter === categoryTabItem.key;
+                return (
                   <button
+                    key={categoryTabItem.key}
                     type="button"
-                    onClick={() => setSelectedDepartmentFilter('todos')}
-                    className="w-4 h-4 rounded-full bg-neutral-200 hover:bg-neutral-300 text-neutral-600 hover:text-neutral-900 inline-flex items-center justify-center text-[10px] transition-colors cursor-pointer"
-                    aria-label="Quitar filtro de categoría"
+                    onClick={() => setSelectedDepartmentFilter(categoryTabItem.key)}
+                    className={`px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all cursor-pointer shrink-0 ${
+                      isSelected
+                        ? 'bg-[#8DC63F] text-[#062612] font-black shadow-xs'
+                        : 'bg-neutral-100 hover:bg-neutral-200 text-neutral-700'
+                    }`}
                   >
-                    ✕
+                    {categoryTabItem.label}
                   </button>
-                </div>
-              )}
+                );
+              })}
+            </div>
 
-              <span className="text-xs font-semibold text-neutral-500 hidden sm:inline-flex items-center h-9">
-                Mostrando {filteredAndSortedProducts.length} producto{filteredAndSortedProducts.length === 1 ? '' : 's'}
-                {inPageSearchQuery && ` para "${inPageSearchQuery}"`}
-              </span>
+            <div className="flex items-center gap-2 shrink-0">
+              <select
+                value={selectedSortingOption}
+                onChange={(changeEvent) => setSelectedSortingOption(changeEvent.target.value)}
+                className="h-8 px-2.5 rounded-lg border border-neutral-200 bg-white text-xs font-semibold text-neutral-700 focus:outline-none focus:ring-1 focus:ring-[#8DC63F] cursor-pointer"
+              >
+                <option value="destacados">⭐ Destacados</option>
+                <option value="precio-menor">⬇️ Menor Precio</option>
+                <option value="precio-mayor">⬆️ Mayor Precio</option>
+              </select>
 
               {(inPageSearchQuery || selectedDepartmentFilter !== 'todos') && (
                 <button
                   type="button"
                   onClick={handleResetAllStoreFilters}
-                  className="h-9 px-2.5 rounded-xl text-xs font-bold text-red-600 hover:text-red-700 hover:bg-red-50/60 cursor-pointer inline-flex items-center gap-1 transition-colors"
+                  className="h-8 px-2 rounded-lg text-xs font-bold text-red-600 hover:bg-red-50 cursor-pointer inline-flex items-center gap-1 transition-colors"
                 >
                   <span className="material-symbols-outlined text-sm">restart_alt</span>
-                  <span>Restablecer</span>
+                  <span className="hidden sm:inline">Limpiar</span>
                 </button>
               )}
-            </div>
-
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={() => setIsGroupedByCategoryActive(!isGroupedByCategoryActive)}
-                className={`h-9 px-3.5 rounded-xl text-xs font-bold border transition-all cursor-pointer inline-flex items-center gap-2 whitespace-nowrap ${
-                  isGroupedByCategoryActive
-                    ? 'bg-[#F2F9E6] text-[#0B3C1D] border-[#8DC63F] font-black shadow-xs'
-                    : 'bg-white text-neutral-700 border-neutral-200 hover:bg-neutral-50 shadow-2xs'
-                }`}
-                aria-label="Alternar agrupación por categoría"
-              >
-                <span className="material-symbols-outlined text-base">
-                  {isGroupedByCategoryActive ? 'check_box' : 'check_box_outline_blank'}
-                </span>
-                <span>Agrupar por Categoría</span>
-              </button>
             </div>
           </div>
         </div>
@@ -260,7 +238,7 @@ export const StoreCatalogPage = ({
             <button
               type="button"
               onClick={handleResetAllStoreFilters}
-              className="px-6 py-3 bg-[#0B3C1D] hover:bg-[#8DC63F] hover:text-[#062612] text-white text-xs font-bold rounded-xl transition-all shadow-md cursor-pointer border border-[#8DC63F]/30"
+              className="px-6 py-3 bg-[#8DC63F] hover:bg-[#78AD2F] text-[#062612] text-xs font-black uppercase tracking-wider rounded-xl transition-all shadow-sm cursor-pointer border border-[#78AD2F]/40"
             >
               Ver Todos los Productos
             </button>
@@ -341,7 +319,7 @@ export const StoreCatalogPage = ({
                         }}
                         className={`w-9 h-9 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
                           isSelected
-                            ? 'bg-[#0B3C1D] text-white border border-[#8DC63F]/40 shadow-sm'
+                            ? 'bg-[#8DC63F] text-[#062612] font-black shadow-xs'
                             : 'bg-white border border-neutral-200 text-neutral-700 hover:bg-neutral-50'
                         }`}
                       >
@@ -370,169 +348,95 @@ export const StoreCatalogPage = ({
       </div>
 
       {isFilterModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-neutral-900/60 backdrop-blur-xs">
+        <div
+          onClick={() => setIsFilterModalOpen(false)}
+          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/50 backdrop-blur-xs"
+        >
           <div
-            className="w-full sm:max-w-md bg-white rounded-t-3xl sm:rounded-2xl shadow-2xl border border-neutral-200 max-h-[85vh] flex flex-col overflow-hidden animate-slideDownDrawer"
+            className="w-full sm:max-w-sm bg-white rounded-t-3xl sm:rounded-2xl shadow-2xl p-5 flex flex-col gap-4 animate-slideDownDrawer sm:animate-none"
             onClick={(clickEvent) => clickEvent.stopPropagation()}
           >
-            <div className="px-5 py-4 border-b border-neutral-100 flex items-center justify-between bg-neutral-50/70">
-              <div className="flex items-center gap-2.5 text-[#0B3C1D]">
-                <span className="material-symbols-outlined text-xl">tune</span>
-                <div>
-                  <h3 className="text-sm font-extrabold text-neutral-900 leading-tight">
-                    Filtros de Catálogo
-                  </h3>
-                  <p className="text-[11px] text-neutral-500 font-medium">
-                    Selecciona una categoría para explorar productos
-                  </p>
-                </div>
-              </div>
+            <div className="w-12 h-1.5 bg-neutral-300 rounded-full mx-auto sm:hidden" />
 
+            <div className="flex items-center justify-between pb-2 border-b border-neutral-100">
+              <h3 className="text-base font-black text-neutral-900 leading-tight">
+                Elige una Categoría
+              </h3>
               <button
                 type="button"
                 onClick={() => setIsFilterModalOpen(false)}
-                className="w-8 h-8 rounded-full bg-white hover:bg-neutral-100 border border-neutral-200 text-neutral-600 flex items-center justify-center cursor-pointer transition-colors"
-                aria-label="Cerrar menú de filtros"
+                className="w-8 h-8 rounded-full bg-neutral-100 text-neutral-600 hover:bg-neutral-200 flex items-center justify-center cursor-pointer"
+                aria-label="Cerrar filtros"
               >
                 <span className="material-symbols-outlined text-lg">close</span>
               </button>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-5 space-y-5 scrollbar-none">
-              <div>
-                <span className="text-[10px] font-extrabold uppercase tracking-wider text-neutral-400 block mb-2.5">
-                  Categorías disponibles
-                </span>
-
-                <div className="space-y-2">
+            <div className="space-y-2">
+              {[
+                { key: 'todos', label: 'Todos los Productos', icon: '🛒' },
+                { key: 'quesos-lacteos', label: 'Quesos y Lácteos', icon: '🧀' },
+                { key: 'jamones-charcuteria', label: 'Jamones y Charcutería', icon: '🥩' },
+                { key: 'viveres-despensa', label: 'Víveres y Despensa', icon: '🥫' },
+                { key: 'panaderia-desayuno', label: 'Panadería y Café', icon: '🥖' }
+              ].map((categoryOptionItem) => {
+                const isSelected = selectedDepartmentFilter === categoryOptionItem.key;
+                return (
                   <button
+                    key={categoryOptionItem.key}
                     type="button"
-                    onClick={() => setSelectedDepartmentFilter('todos')}
-                    className={`w-full p-3 rounded-xl border text-left flex items-center justify-between transition-all cursor-pointer ${
-                      selectedDepartmentFilter === 'todos'
-                        ? 'border-[#8DC63F] bg-[#F2F9E6] text-[#0B3C1D] font-bold shadow-xs'
-                        : 'border-neutral-200 hover:border-neutral-300 bg-white text-neutral-800'
+                    onClick={() => {
+                      setSelectedDepartmentFilter(categoryOptionItem.key);
+                      setIsFilterModalOpen(false);
+                    }}
+                    className={`w-full py-3 px-4 rounded-xl text-left flex items-center justify-between transition-all cursor-pointer ${
+                      isSelected
+                        ? 'bg-[#8DC63F] text-[#062612] font-black shadow-xs'
+                        : 'bg-neutral-50 hover:bg-neutral-100 text-neutral-800 font-semibold'
                     }`}
                   >
                     <div className="flex items-center gap-3">
-                      <span className={`material-symbols-outlined text-lg ${
-                        selectedDepartmentFilter === 'todos' ? 'text-[#0B3C1D]' : 'text-neutral-400'
-                      }`}>
-                        storefront
-                      </span>
-                      <span className="text-xs font-bold">Todas las Categorías</span>
+                      <span className="text-xl">{categoryOptionItem.icon}</span>
+                      <span className="text-sm">{categoryOptionItem.label}</span>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-[11px] font-semibold text-neutral-500 bg-neutral-100 px-2 py-0.5 rounded-full">
-                        {departmentCountLookup.todos}
-                      </span>
-                      <span className={`material-symbols-outlined text-base ${
-                        selectedDepartmentFilter === 'todos' ? 'text-[#0B3C1D]' : 'text-neutral-300'
-                      }`}>
-                        {selectedDepartmentFilter === 'todos' ? 'radio_button_checked' : 'radio_button_unchecked'}
-                      </span>
-                    </div>
+                    {isSelected && (
+                      <span className="material-symbols-outlined text-lg text-[#062612]">check</span>
+                    )}
                   </button>
-
-                  {departmentsCatalogData.map((departmentItem) => {
-                    const isSelected = selectedDepartmentFilter === departmentItem.departmentIdentifier;
-                    const productCount = departmentCountLookup[departmentItem.departmentIdentifier] || 0;
-
-                    return (
-                      <button
-                        key={departmentItem.departmentIdentifier}
-                        type="button"
-                        onClick={() => setSelectedDepartmentFilter(departmentItem.departmentIdentifier)}
-                        className={`w-full p-3 rounded-xl border text-left flex items-center justify-between transition-all cursor-pointer ${
-                          isSelected
-                            ? 'border-[#8DC63F] bg-[#F2F9E6] text-[#0B3C1D] font-bold shadow-xs'
-                            : 'border-neutral-200 hover:border-neutral-300 bg-white text-neutral-800'
-                        }`}
-                      >
-                        <div className="flex items-center gap-3">
-                          <span className={`material-symbols-outlined text-lg ${
-                            isSelected ? 'text-[#0B3C1D]' : 'text-neutral-400'
-                          }`}>
-                            category
-                          </span>
-                          <div>
-                            <span className="text-xs font-bold block leading-tight">
-                              {departmentItem.departmentTitle}
-                            </span>
-                            <span className="text-[10px] text-neutral-500 font-normal line-clamp-1 mt-0.5">
-                              {departmentItem.departmentDescription}
-                            </span>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-2 shrink-0 ml-2">
-                          <span className="text-[11px] font-semibold text-neutral-500 bg-neutral-100 px-2 py-0.5 rounded-full">
-                            {productCount}
-                          </span>
-                          <span className={`material-symbols-outlined text-base ${
-                            isSelected ? 'text-[#0B3C1D]' : 'text-neutral-300'
-                          }`}>
-                            {isSelected ? 'radio_button_checked' : 'radio_button_unchecked'}
-                          </span>
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              <div>
-                <span className="text-[10px] font-extrabold uppercase tracking-wider text-neutral-400 block mb-2.5">
-                  Ordenar por
-                </span>
-
-                <div className="grid grid-cols-2 gap-2">
-                  {[
-                    { key: 'destacados', label: 'Destacados', icon: 'star' },
-                    { key: 'precio-menor', label: 'Menor Precio', icon: 'trending_down' },
-                    { key: 'precio-mayor', label: 'Mayor Precio', icon: 'trending_up' },
-                    { key: 'alfabetico', label: 'Nombre (A-Z)', icon: 'sort_by_alpha' }
-                  ].map((sortingOptionItem) => {
-                    const isSortingActive = selectedSortingOption === sortingOptionItem.key;
-                    return (
-                      <button
-                        key={sortingOptionItem.key}
-                        type="button"
-                        onClick={() => setSelectedSortingOption(sortingOptionItem.key)}
-                        className={`p-2.5 rounded-xl border text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer ${
-                          isSortingActive
-                            ? 'border-[#8DC63F] bg-[#F2F9E6] text-[#0B3C1D] font-bold shadow-xs'
-                            : 'border-neutral-200 bg-white text-neutral-700 hover:bg-neutral-50'
-                        }`}
-                      >
-                        <span className={`material-symbols-outlined text-sm ${
-                          isSortingActive ? 'text-[#0B3C1D]' : 'text-neutral-400'
-                        }`}>
-                          {sortingOptionItem.icon}
-                        </span>
-                        <span>{sortingOptionItem.label}</span>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
+                );
+              })}
             </div>
 
-            <div className="p-4 border-t border-neutral-200 bg-neutral-50/80 flex items-center justify-between gap-3">
-              <button
-                type="button"
-                onClick={handleResetAllStoreFilters}
-                className="text-xs font-bold text-neutral-600 hover:text-red-600 transition-colors cursor-pointer px-2 py-1"
-              >
-                Restablecer
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setIsFilterModalOpen(false)}
-                className="px-5 py-2.5 bg-[#0B3C1D] hover:bg-[#8DC63F] hover:text-[#062612] text-white text-xs font-extrabold rounded-xl transition-all shadow-sm cursor-pointer active:scale-95 border border-[#8DC63F]/30"
-              >
-                Ver {filteredAndSortedProducts.length} Productos
-              </button>
+            <div className="pt-2 border-t border-neutral-100">
+              <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider block mb-2">
+                Ordenar por
+              </span>
+              <div className="grid grid-cols-3 gap-1.5">
+                {[
+                  { key: 'destacados', label: '⭐ Destacados' },
+                  { key: 'precio-menor', label: '⬇️ Menor' },
+                  { key: 'precio-mayor', label: '⬆️ Mayor' }
+                ].map((sortingOptionItem) => {
+                  const isSortingActive = selectedSortingOption === sortingOptionItem.key;
+                  return (
+                    <button
+                      key={sortingOptionItem.key}
+                      type="button"
+                      onClick={() => {
+                        setSelectedSortingOption(sortingOptionItem.key);
+                        setIsFilterModalOpen(false);
+                      }}
+                      className={`py-2 px-2 rounded-lg text-xs font-semibold text-center transition-all cursor-pointer ${
+                        isSortingActive
+                          ? 'bg-[#F2F9E6] text-[#062612] font-black border border-[#8DC63F]'
+                          : 'bg-neutral-50 hover:bg-neutral-100 text-neutral-700 border border-neutral-200'
+                      }`}
+                    >
+                      {sortingOptionItem.label}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>

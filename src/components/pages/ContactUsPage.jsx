@@ -25,7 +25,7 @@ export const ContactUsPage = () => {
   };
 
   return (
-    <div className="w-full bg-[#fafafa] py-10 sm:py-16">
+    <div className="w-full bg-white py-10 sm:py-16">
       <div className="max-w-7xl mx-auto px-4 lg:px-8 space-y-12 sm:space-y-16">
         {/* Encabezado Principal */}
         <div className="text-center max-w-3xl mx-auto space-y-4" data-aos="fade-up">
@@ -214,7 +214,6 @@ export const ContactUsPage = () => {
               </p>
             </div>
 
-            {/* Botones de navegación GPS */}
             <div className="flex items-center gap-2.5 flex-wrap">
               <a
                 href={STORE_OFFICIAL_DATA.googleMapsUrl}
@@ -224,16 +223,6 @@ export const ContactUsPage = () => {
               >
                 <span className="material-symbols-outlined text-base">directions</span>
                 <span>Abrir en Google Maps</span>
-              </a>
-
-              <a
-                href={STORE_OFFICIAL_DATA.wazeUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white text-xs font-bold shadow-xs transition-all cursor-pointer active:scale-95"
-              >
-                <span className="material-symbols-outlined text-base">navigation</span>
-                <span>Abrir en Waze</span>
               </a>
             </div>
           </div>

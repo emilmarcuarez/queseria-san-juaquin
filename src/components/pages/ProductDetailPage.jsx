@@ -276,26 +276,6 @@ export const ProductDetailPage = ({
                 <span className="material-symbols-outlined text-xl">fit_screen</span>
               </button>
             </div>
-
-            <div className="grid grid-cols-3 gap-2.5 pt-2">
-              <div className="p-2.5 rounded-xl bg-surface-alt border border-neutral-border text-center">
-                <span className="material-symbols-outlined text-primary text-xl block mb-0.5">scale</span>
-                <span className="text-[11px] font-bold text-neutral-dark block leading-tight">Pesaje Exacto</span>
-                <span className="text-[9px] text-neutral-muted">Gramo por gramo</span>
-              </div>
-
-              <div className="p-2.5 rounded-xl bg-surface-alt border border-neutral-border text-center">
-                <span className="material-symbols-outlined text-primary text-xl block mb-0.5">ac_unit</span>
-                <span className="text-[11px] font-bold text-neutral-dark block leading-tight">Cadena Fría</span>
-                <span className="text-[9px] text-neutral-muted">Frescura 100%</span>
-              </div>
-
-              <div className="p-2.5 rounded-xl bg-surface-alt border border-neutral-border text-center">
-                <span className="material-symbols-outlined text-primary text-xl block mb-0.5">moped</span>
-                <span className="text-[11px] font-bold text-neutral-dark block leading-tight">Express</span>
-                <span className="text-[9px] text-neutral-muted">En Maracaibo</span>
-              </div>
-            </div>
           </div>
 
           <div className="lg:col-span-6 flex flex-col space-y-5">
@@ -412,9 +392,9 @@ export const ProductDetailPage = ({
                           max="10000"
                           step="10"
                           value={customGramsInput}
-                          onChange={(e) => {
-                            const val = parseInt(e.target.value, 10);
-                            setCustomGramsInput(isNaN(val) ? '' : val);
+                          onChange={(inputChangeEvent) => {
+                            const parsedGramValue = parseInt(inputChangeEvent.target.value, 10);
+                            setCustomGramsInput(isNaN(parsedGramValue) ? '' : parsedGramValue);
                           }}
                           className="w-full bg-surface-alt border-2 border-emerald-400 rounded-xl py-2 px-3 text-center text-sm font-black text-neutral-900 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                           placeholder="350"
@@ -527,23 +507,23 @@ export const ProductDetailPage = ({
               <button
                 type="button"
                 onClick={handleAddToCart}
-                className={`w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-extrabold text-xs sm:text-sm shadow-md transition-all cursor-pointer active:scale-95 ${
+                className={`w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-black text-xs sm:text-sm shadow-md transition-all cursor-pointer active:scale-95 ${
                   addedFeedbackActive
-                    ? 'bg-accent-bright text-neutral-dark'
-                    : 'bg-primary hover:bg-primary-dark text-white'
+                    ? 'bg-amber-400 text-neutral-900'
+                    : 'bg-[#8DC63F] hover:bg-[#78AD2F] text-[#062612] border border-[#78AD2F]/40'
                 }`}
               >
                 <span className="material-symbols-outlined text-xl">
                   {addedFeedbackActive ? 'check_circle' : 'add_shopping_cart'}
                 </span>
-                <span>{addedFeedbackActive ? '¡Producto Agregado al Carrito!' : 'Agregar a Mi Lista de Compra'}</span>
+                <span>{addedFeedbackActive ? '¡Producto Agregado al Carrito!' : 'Agregar al Carrito'}</span>
               </button>
 
               <a
                 href={directProductWhatsAppUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs shadow-xs transition-all cursor-pointer active:scale-95"
+                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-[#25D366] hover:bg-[#20BA5A] text-white font-black text-xs uppercase tracking-wider shadow-xs transition-all cursor-pointer active:scale-95"
               >
                 <span className="material-symbols-outlined text-lg">chat</span>
                 <span>Pedir Directo por WhatsApp</span>

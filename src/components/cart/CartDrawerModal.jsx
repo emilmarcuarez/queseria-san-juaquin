@@ -1,12 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useShoppingCart } from '../../hooks/useShoppingCart';
 import { CartItemRow } from './CartItemRow';
-import {
-  buildWhatsAppOrderUrl,
-  MARACAIBO_DELIVERY_ZONES,
-  PICKUP_TIME_SLOTS
-} from '../../services/whatsappOrderService';
-import { STORE_OFFICIAL_DATA } from '../../services/storeScheduleService';
+import { buildWhatsAppOrderUrl } from '../../services/whatsappOrderService';
 
 export const CartDrawerModal = () => {
   const {
@@ -23,22 +18,11 @@ export const CartDrawerModal = () => {
     preferredCurrency
   } = useShoppingCart();
 
-  const [fulfillmentType, setFulfillmentType] = useState('delivery');
-  const [selectedZoneId, setSelectedZoneId] = useState(MARACAIBO_DELIVERY_ZONES[0].zoneId);
-  const [pickupEstimatedTime, setPickupEstimatedTime] = useState(PICKUP_TIME_SLOTS[0]);
-  const [customerFullName, setCustomerFullName] = useState('');
-  const [deliveryAddressText, setDeliveryAddressText] = useState('');
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
-  const [orderNotesText, setOrderNotesText] = useState('');
-  const [copiedDataMessage, setCopiedDataMessage] = useState(false);
-
-  const selectedZone = MARACAIBO_DELIVERY_ZONES.find((zone) => zone.zoneId === selectedZoneId) || MARACAIBO_DELIVERY_ZONES[0];
-  const deliveryCostUsd = fulfillmentType === 'delivery' ? selectedZone.deliveryCostUsd : 0;
-  const finalTotalUsd = totalCartAmountUsd + deliveryCostUsd;
+  const finalTotalUsd = totalCartAmountUsd;
   const finalTotalBcv = finalTotalUsd * exchangeRateBcv;
 
-  const handleSendOrderToWhatsApp = (submitEvent) => {
-    submitEvent.preventDefault();
+  const handleSendOrderToWhatsApp = (clickEvent) => {
+    clickEvent.preventDefault();
 
     if (cartItemList.length === 0) {
       return;
@@ -46,31 +30,20 @@ export const CartDrawerModal = () => {
 
     const targetWhatsAppUrl = buildWhatsAppOrderUrl({
       cartItemList,
-      customerFullName,
-      deliveryAddressText: fulfillmentType === 'delivery' ? deliveryAddressText : '',
-      selectedPaymentMethod,
+      customerFullName: '',
+      deliveryAddressText: '',
+      selectedPaymentMethod: '',
       exchangeRateBcv,
-      orderNotesText,
-      fulfillmentType,
-      selectedZone: fulfillmentType === 'delivery' ? selectedZone : null,
-      pickupEstimatedTime,
-      deliveryCostUsd,
+      orderNotesText: '',
+      fulfillmentType: 'none',
+      selectedZone: null,
+      pickupEstimatedTime: '',
+      deliveryCostUsd: 0,
       appliedCombosList,
       totalComboDiscountUsd
     });
 
     window.open(targetWhatsAppUrl, '_blank', 'noopener,noreferrer');
-  };
-
-  const handleCopyPaymentData = () => {
-    const paymentInfo = selectedPaymentMethod === 'Zelle'
-      ? 'Zelle: queseriasanjuoquin@gmail.com / Titular: Quesería San Joaquín'
-      : 'Pago Móvil: Banesco (0134) / CI: V-24.567.890 / Tlf: 0414-6770016';
-
-    navigator.clipboard.writeText(paymentInfo).then(() => {
-      setCopiedDataMessage(true);
-      setTimeout(() => setCopiedDataMessage(false), 2000);
-    }).catch(() => {});
   };
 
   const formattedTotalBcv = finalTotalBcv.toLocaleString('es-VE', {
@@ -90,7 +63,7 @@ export const CartDrawerModal = () => {
     >
       <div
         onClick={closeCartDrawer}
-        className={`absolute inset-0 bg-neutral-dark/60 backdrop-blur-xs transition-opacity duration-300 ${
+        className={`absolute inset-0 bg-neutral-900/50 backdrop-blur-xs transition-opacity duration-300 ${
           isCartDrawerOpen ? 'opacity-100' : 'opacity-0'
         }`}
       />
@@ -101,39 +74,37 @@ export const CartDrawerModal = () => {
             isCartDrawerOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
         >
-          {/* Header del Carrito */}
-          <div className="px-5 py-4 bg-primary text-white flex items-center justify-between shadow-xs">
-            <div className="flex items-center gap-2">
-              <span className="material-symbols-outlined text-2xl text-white">shopping_cart</span>
+          <div className="px-5 py-4 bg-white text-neutral-900 border-b border-neutral-100 flex items-center justify-between">
+            <div className="flex items-center gap-2.5">
+              <span className="material-symbols-outlined text-2xl text-[#3B7011]">shopping_cart</span>
               <div>
-                <h3 className="text-sm font-bold uppercase tracking-wider">Mi Lista de Compras</h3>
-                <span className="text-[11px] text-white/80">
-                  {totalItemsCount} {totalItemsCount === 1 ? 'ítem' : 'ítems'} seleccionados
+                <h3 className="text-sm font-black uppercase tracking-wider text-neutral-900">Mi Carrito</h3>
+                <span className="text-[11px] text-neutral-400 font-semibold">
+                  {totalItemsCount} {totalItemsCount === 1 ? 'producto' : 'productos'}
                 </span>
               </div>
             </div>
 
             <button
               onClick={closeCartDrawer}
-              className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors cursor-pointer"
+              className="w-8 h-8 rounded-full bg-neutral-100 hover:bg-neutral-200 flex items-center justify-center text-neutral-600 transition-colors cursor-pointer"
               aria-label="Cerrar carrito"
             >
               <span className="material-symbols-outlined text-lg">close</span>
             </button>
           </div>
 
-          {/* Cuerpo del Carrito */}
           <div id="tour-cart-scroll-container" className="flex-1 overflow-y-auto px-5 py-4 scrollbar-none">
             {cartItemList.length === 0 ? (
               <div className="text-center py-16">
-                <span className="material-symbols-outlined text-5xl text-neutral-muted mb-2">remove_shopping_cart</span>
-                <h4 className="text-sm font-bold text-neutral-dark">Tu carrito está vacío</h4>
-                <p className="text-xs text-neutral-muted mt-1 mb-6">
+                <span className="material-symbols-outlined text-5xl text-neutral-300 mb-2">remove_shopping_cart</span>
+                <h4 className="text-sm font-bold text-neutral-800">Tu carrito está vacío</h4>
+                <p className="text-xs text-neutral-400 mt-1 mb-6">
                   Agrega víveres frescos o charcutería al gusto para iniciar tu pedido.
                 </p>
                 <button
                   onClick={closeCartDrawer}
-                  className="px-5 py-2.5 bg-primary text-white text-xs font-bold rounded-lg hover:bg-primary-dark transition-all cursor-pointer"
+                  className="px-5 py-2.5 bg-[#8DC63F] hover:bg-[#78AD2F] text-[#062612] text-xs font-black uppercase tracking-wider rounded-xl transition-all cursor-pointer shadow-xs border border-[#78AD2F]/30"
                 >
                   Explorar Catálogo
                 </button>
@@ -145,10 +116,10 @@ export const CartDrawerModal = () => {
                     {appliedCombosList.map((appliedComboItem) => (
                       <div
                         key={appliedComboItem.promoIdentifier}
-                        className="p-3 bg-gradient-to-r from-emerald-50 via-teal-50 to-amber-50 border border-emerald-300 rounded-2xl flex items-center justify-between gap-3 shadow-2xs"
+                        className="p-3 bg-[#F2F9E6] border border-[#8DC63F]/40 rounded-2xl flex items-center justify-between gap-3 shadow-2xs"
                       >
                         <div className="flex items-center gap-2.5">
-                          <div className="w-8 h-8 rounded-xl bg-[#0B3C1D] text-white flex items-center justify-center shrink-0">
+                          <div className="w-8 h-8 rounded-xl bg-[#8DC63F] text-[#062612] flex items-center justify-center shrink-0 font-bold">
                             <span className="material-symbols-outlined text-lg">celebration</span>
                           </div>
                           <div>
@@ -157,15 +128,15 @@ export const CartDrawerModal = () => {
                                 ¡{appliedComboItem.promoTitle} detectado!
                               </span>
                               {appliedComboItem.completedCombos > 1 && (
-                                <span className="text-[10px] bg-[#0B3C1D] text-white font-extrabold px-1.5 py-0.5 rounded-full">
+                                <span className="text-[10px] bg-[#8DC63F] text-[#062612] font-black px-1.5 py-0.5 rounded-full">
                                   x{appliedComboItem.completedCombos}
                                 </span>
                               )}
                             </div>
                             <div className="text-[10px] text-neutral-600 mt-0.5 flex items-center gap-1.5 flex-wrap">
-                              <span>Suma regular: <span className="line-through font-semibold text-neutral-500">${appliedComboItem.regularBundlePrice.toFixed(2)}</span></span>
+                              <span>Suma regular: <span className="line-through font-semibold text-neutral-400">${appliedComboItem.regularBundlePrice.toFixed(2)}</span></span>
                               <span>•</span>
-                              <span className="text-emerald-800 font-extrabold bg-emerald-100/80 px-1.5 py-0.5 rounded">
+                              <span className="text-[#062612] font-black bg-white/90 border border-[#8DC63F]/40 px-1.5 py-0.5 rounded">
                                 Ahorras -${appliedComboItem.discountAmount.toFixed(2)}
                               </span>
                             </div>
@@ -173,7 +144,7 @@ export const CartDrawerModal = () => {
                         </div>
 
                         <div className="text-right shrink-0">
-                          <span className="text-xs font-black text-[#0B3C1D] block">
+                          <span className="text-xs font-black text-emerald-800 block">
                             ${appliedComboItem.finalComboPrice.toFixed(2)}
                           </span>
                           <span className="text-[10px] font-bold text-neutral-400 block">
@@ -185,18 +156,18 @@ export const CartDrawerModal = () => {
                   </div>
                 )}
 
-                <div id="tour-items-list-header" className="flex items-center justify-between pb-2 mb-2 border-b border-neutral-border">
-                  <span className="text-xs font-bold text-neutral-dark">Productos en lista</span>
+                <div id="tour-items-list-header" className="flex items-center justify-between pb-2 mb-2 border-b border-neutral-100">
+                  <span className="text-xs font-bold text-neutral-800">Productos en tu carrito</span>
                   <button
                     id="tour-clear-cart-btn"
                     onClick={clearCartItems}
-                    className="text-[11px] font-semibold text-red-600 hover:underline cursor-pointer"
+                    className="text-[11px] font-bold text-red-600 hover:underline cursor-pointer"
                   >
                     Vaciar todo
                   </button>
                 </div>
 
-                <div id="tour-cart-items-list" className="divide-y divide-neutral-border/60">
+                <div id="tour-cart-items-list" className="divide-y divide-neutral-100">
                   {cartItemList.map((cartEntryItem) => (
                     <CartItemRow
                       key={cartEntryItem.cartItemKey || cartEntryItem.productIdentifier}
@@ -204,243 +175,45 @@ export const CartDrawerModal = () => {
                     />
                   ))}
                 </div>
-
-                {/* Formulario de Checkout */}
-                <form onSubmit={handleSendOrderToWhatsApp} className="mt-6 pt-4 border-t border-neutral-border space-y-3.5">
-                  <div className="flex items-center justify-between">
-                    <h4 className="text-xs font-black uppercase tracking-wider text-primary">
-                      Modalidad y Despacho
-                    </h4>
-                    <span className="text-[10px] text-neutral-400 font-medium">Maracaibo</span>
-                  </div>
-
-                  {/* Interruptor: Delivery vs Retiro en Tienda */}
-                  <div id="tour-fulfillment-toggle" className="grid grid-cols-2 gap-1.5 p-1 bg-neutral-100 rounded-xl">
-                    <button
-                      type="button"
-                      onClick={() => setFulfillmentType('delivery')}
-                      className={`flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                        fulfillmentType === 'delivery'
-                          ? 'bg-white text-primary shadow-xs'
-                          : 'text-neutral-500 hover:text-neutral-800'
-                      }`}
-                    >
-                      <span className="material-symbols-outlined text-base">moped</span>
-                      <span>Delivery</span>
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={() => setFulfillmentType('pickup')}
-                      className={`flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                        fulfillmentType === 'pickup'
-                          ? 'bg-white text-primary shadow-xs'
-                          : 'text-neutral-500 hover:text-neutral-800'
-                      }`}
-                    >
-                      <span className="material-symbols-outlined text-base">storefront</span>
-                      <span>Retiro en Tienda</span>
-                    </button>
-                  </div>
-
-                  {fulfillmentType === 'delivery' ? (
-                    <div className="space-y-3 p-3 bg-emerald-50/50 border border-emerald-100 rounded-xl">
-                      <div>
-                        <label className="text-[11px] font-bold text-neutral-dark block mb-1">
-                          Zona / Parroquia de Entrega:
-                        </label>
-                        <select
-                          value={selectedZoneId}
-                          onChange={(changeEvent) => setSelectedZoneId(changeEvent.target.value)}
-                          className="w-full text-xs font-medium bg-white border border-neutral-300 rounded-lg px-2.5 py-2 text-neutral-800 focus:outline-none focus:ring-1 focus:ring-primary"
-                        >
-                          {MARACAIBO_DELIVERY_ZONES.map((zone) => (
-                            <option key={zone.zoneId} value={zone.zoneId}>
-                              {zone.zoneName} (+${zone.deliveryCostUsd.toFixed(2)})
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-
-                      <div>
-                        <label className="text-[11px] font-bold text-neutral-dark block mb-1">
-                          Dirección exacta & Punto de referencia:
-                        </label>
-                        <input
-                          type="text"
-                          required
-                          placeholder="Ej: Av. 5 de Julio, Res. Paraíso, Apto 4B"
-                          value={deliveryAddressText}
-                          onChange={(changeEvent) => setDeliveryAddressText(changeEvent.target.value)}
-                          className="w-full text-xs bg-white border border-neutral-300 rounded-lg px-3 py-2 text-neutral-dark focus:outline-none focus:ring-1 focus:ring-primary"
-                        />
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="space-y-3 p-3 bg-emerald-50/60 border border-emerald-200/80 rounded-xl">
-                      <div className="flex items-start gap-2 text-emerald-950">
-                        <span className="material-symbols-outlined text-lg text-emerald-700 mt-0.5 shrink-0">location_on</span>
-                        <div className="text-xs">
-                          <strong className="font-bold block text-neutral-900">Sede de Retiro (Gratis):</strong>
-                          <span className="text-neutral-700 leading-tight block">
-                            {STORE_OFFICIAL_DATA.shortAddress}
-                          </span>
-                          <span className="text-[10px] text-neutral-500 block mt-0.5">
-                            Horario: Lun-Vie 7am-7pm | Sáb 7am-6pm
-                          </span>
-                        </div>
-                      </div>
-
-                      <div>
-                        <label className="text-[11px] font-bold text-neutral-dark block mb-1">
-                          Hora Estimada de Retiro:
-                        </label>
-                        <select
-                          value={pickupEstimatedTime}
-                          onChange={(changeEvent) => setPickupEstimatedTime(changeEvent.target.value)}
-                          className="w-full text-xs font-medium bg-white border border-neutral-300 rounded-lg px-2.5 py-2 text-neutral-800 focus:outline-none focus:ring-1 focus:ring-primary"
-                        >
-                          {PICKUP_TIME_SLOTS.map((slot) => (
-                            <option key={slot} value={slot}>
-                              {slot}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-                  )}
-
-                  <div id="tour-customer-name-section">
-                    <label className="text-[11px] font-bold text-neutral-dark block mb-1">
-                      Tu Nombre y Apellido:
-                    </label>
-                    <input
-                      id="tour-customer-name-input"
-                      type="text"
-                      required
-                      placeholder="Ej: Carlos Silva"
-                      value={customerFullName}
-                      onChange={(inputEvent) => setCustomerFullName(inputEvent.target.value)}
-                      className="w-full text-xs bg-surface-alt border border-neutral-border rounded-lg px-3 py-2 text-neutral-dark focus:outline-none focus:ring-1 focus:ring-primary"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="text-[11px] font-bold text-neutral-dark block mb-1">
-                      Método de Pago Preferido:
-                    </label>
-                    <select
-                      value={selectedPaymentMethod}
-                      onChange={(selectEvent) => setSelectedPaymentMethod(selectEvent.target.value)}
-                      className="w-full text-xs font-semibold bg-surface-alt border border-neutral-border rounded-lg px-3 py-2 text-neutral-dark focus:outline-none focus:ring-1 focus:ring-primary"
-                    >
-                      <option value="">Seleccionar método (opcional)</option>
-                      <option value="Pago Móvil">Pago Móvil (Tasa Oficial BCV)</option>
-                      <option value="Zelle">Zelle (USD)</option>
-                      <option value="Efectivo USD">Efectivo USD (al recibir/retirar)</option>
-                      <option value="Punto de Venta">Punto de Venta en tienda o entrega</option>
-                    </select>
-                  </div>
-
-                  {/* Tarjeta de datos bancarios con botón copiar si selecciona Pago Móvil o Zelle */}
-                  {(selectedPaymentMethod === 'Pago Móvil' || selectedPaymentMethod === 'Zelle') && (
-                    <div className="p-2.5 rounded-lg bg-surface-alt border border-primary/20 flex items-center justify-between text-[11px]">
-                      <div>
-                        <span className="font-bold text-primary block">
-                          {selectedPaymentMethod === 'Zelle' ? 'Zelle San Joaquín' : 'Datos Pago Móvil'}
-                        </span>
-                        <span className="text-neutral-600 text-[10px]">
-                          {selectedPaymentMethod === 'Zelle' ? 'queseriasanjuoquin@gmail.com' : 'Banesco • 0414-6770016 • V-24.567.890'}
-                        </span>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={handleCopyPaymentData}
-                        className="px-2 py-1 bg-white border border-neutral-300 hover:bg-neutral-50 rounded text-[10px] font-bold text-neutral-700 cursor-pointer"
-                      >
-                        {copiedDataMessage ? '¡Copiado!' : 'Copiar'}
-                      </button>
-                    </div>
-                  )}
-
-                  <div>
-                    <label className="text-[11px] font-bold text-neutral-dark block mb-1">
-                      Instrucción Especial Adicional (Opcional):
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Ej: Empacar bolsas separadas / Timbre blanco"
-                      value={orderNotesText}
-                      onChange={(inputEvent) => setOrderNotesText(inputEvent.target.value)}
-                      className="w-full text-xs bg-surface-alt border border-neutral-border rounded-lg px-3 py-2 text-neutral-dark focus:outline-none focus:ring-1 focus:ring-primary"
-                    />
-                  </div>
-                </form>
               </div>
             )}
           </div>
 
-          {/* Footer del Carrito con Totales y Botón WhatsApp */}
           {cartItemList.length > 0 && (
-            <div className="p-5 border-t border-neutral-border bg-surface-alt space-y-3">
-              <div className="space-y-1">
-                <div className="flex items-center justify-between text-xs font-semibold text-neutral-muted">
-                  <span>Suma regular de productos:</span>
-                  <span className={`font-bold ${totalComboDiscountUsd > 0 ? 'line-through text-neutral-400' : 'text-neutral-dark'}`}>
+            <div className="p-5 border-t border-neutral-100 bg-white space-y-3.5">
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between text-xs font-semibold text-neutral-500">
+                  <span>Subtotal productos:</span>
+                  <span className={`font-bold ${totalComboDiscountUsd > 0 ? 'line-through text-neutral-400' : 'text-neutral-900'}`}>
                     ${rawSubtotalUsd.toFixed(2)}
                   </span>
                 </div>
 
                 {totalComboDiscountUsd > 0 && (
-                  <div className="flex items-center justify-between text-xs font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2.5 py-1.5 rounded-xl">
+                  <div className="flex items-center justify-between text-xs font-bold text-[#062612] bg-[#F2F9E6] border border-[#8DC63F]/40 px-2.5 py-1.5 rounded-xl">
                     <span className="flex items-center gap-1.5">
-                      <span className="material-symbols-outlined text-sm text-emerald-700">savings</span>
+                      <span className="material-symbols-outlined text-sm text-[#3B7011]">savings</span>
                       <span>Descuento por Combos:</span>
                     </span>
-                    <span className="font-black text-emerald-800">-${totalComboDiscountUsd.toFixed(2)}</span>
+                    <span className="font-black text-[#062612]">-${totalComboDiscountUsd.toFixed(2)}</span>
                   </div>
                 )}
 
-                {totalComboDiscountUsd > 0 && (
-                  <div className="flex items-center justify-between text-xs font-semibold text-neutral-muted">
-                    <span>Subtotal con descuento:</span>
-                    <span className="font-extrabold text-neutral-dark">${totalCartAmountUsd.toFixed(2)}</span>
-                  </div>
-                )}
-
-                {fulfillmentType === 'delivery' ? (
-                  <div className="flex items-center justify-between text-xs font-semibold text-neutral-muted">
-                    <span className="flex items-center gap-1">
-                      <span className="material-symbols-outlined text-sm">moped</span>
-                      <span>Delivery ({selectedZone.zoneName.split('/')[0].trim()}):</span>
-                    </span>
-                    <span className="font-bold text-emerald-800">+${deliveryCostUsd.toFixed(2)}</span>
-                  </div>
-                ) : (
-                  <div className="flex items-center justify-between text-xs font-semibold text-neutral-muted">
-                    <span className="flex items-center gap-1">
-                      <span className="material-symbols-outlined text-sm text-emerald-700">storefront</span>
-                      <span>Retiro en Tienda:</span>
-                    </span>
-                    <span className="font-bold text-emerald-700">GRATIS ($0.00)</span>
-                  </div>
-                )}
-
-                <div className="flex items-center justify-between text-xs font-semibold text-neutral-muted">
+                <div className="flex items-center justify-between text-xs font-semibold text-neutral-400">
                   <span>Tasa Oficial BCV:</span>
                   <span>Bs. {formattedExchangeRateBcv}</span>
                 </div>
 
-                <div className="flex items-center justify-between pt-2 border-t border-neutral-border/80">
+                <div className="flex items-center justify-between pt-2.5 border-t border-neutral-100">
                   <div>
-                    <span className="text-sm font-extrabold text-neutral-dark block leading-none">Total General</span>
+                    <span className="text-sm font-black text-neutral-900 block leading-none">Total General</span>
                     {preferredCurrency === 'BS' ? (
-                      <span className="text-[11px] text-neutral-500 font-bold">Ref. ${finalTotalUsd.toFixed(2)} USD</span>
+                      <span className="text-[11px] text-neutral-400 font-semibold mt-1 block">Ref. ${finalTotalUsd.toFixed(2)} USD</span>
                     ) : (
-                      <span className="text-[11px] text-emerald-800 font-bold">Bs. {formattedTotalBcv}</span>
+                      <span className="text-[11px] text-neutral-400 font-semibold mt-1 block">Bs. {formattedTotalBcv}</span>
                     )}
                   </div>
-                  <span className="text-xl font-black text-primary leading-none">
+                  <span className="text-xl font-black text-neutral-900 leading-none">
                     {preferredCurrency === 'BS' ? `Bs. ${formattedTotalBcv}` : `$${finalTotalUsd.toFixed(2)}`}
                   </span>
                 </div>
@@ -449,7 +222,7 @@ export const CartDrawerModal = () => {
               <button
                 id="tour-whatsapp-btn"
                 onClick={handleSendOrderToWhatsApp}
-                className="w-full py-3.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-extrabold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-md transition-all cursor-pointer active:scale-95"
+                className="w-full py-3.5 px-4 bg-[#25D366] hover:bg-[#20BA5A] text-white rounded-xl font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-xs transition-all cursor-pointer active:scale-95"
               >
                 <span className="material-symbols-outlined text-lg">chat</span>
                 <span>Enviar Pedido al WhatsApp</span>
