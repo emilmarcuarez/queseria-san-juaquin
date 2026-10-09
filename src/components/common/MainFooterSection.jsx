@@ -88,6 +88,14 @@ export const MainFooterSection = () => {
             <p className="font-semibold text-neutral-500">Hecho por <span className="font-bold text-neutral-800">EM Projects</span></p>
           </div>
           <div className="flex items-center gap-4">
+            <a
+              className="hover:text-primary transition-colors font-semibold"
+              href={STORE_OFFICIAL_DATA.instagramUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Instagram
+            </a>
             <a className="hover:text-primary transition-colors" href="#destacados">Precios &amp; BCV</a>
             <a className="hover:text-primary transition-colors" href="#destacados">Envíos y Cobertura</a>
             <a className="hover:text-primary transition-colors" href="#destacados">Términos del Servicio</a>

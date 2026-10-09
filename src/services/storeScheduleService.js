@@ -10,6 +10,8 @@ export const STORE_OFFICIAL_DATA = {
   country: 'Venezuela',
   zipCode: '4002',
   scheduleSummary: 'Lun a Vie: 7:00 AM - 7:00 PM | Sáb: 7:00 AM - 6:00 PM',
+  instagramUrl: 'https://www.instagram.com/sanjoaquinqueseria/',
+  instagramHandle: '@sanjoaquinqueseria',
   googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=Av.+10+con+Calle+66,+Maracaibo,+Venezuela',
   wazeUrl: 'https://waze.com/ul?q=Av.+10+con+Calle+66,+Maracaibo',
   embedMapQuery: 'Av.+10+con+Calle+66,+Maracaibo,+Zulia,+Venezuela'
