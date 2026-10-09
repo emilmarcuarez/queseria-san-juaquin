@@ -88,7 +88,7 @@ export const ProductCardItem = ({ productItem, onSelectProduct }) => {
       <div
         data-product-card="true"
         data-aos="fade-up"
-        className={`h-full bg-white rounded-2xl border border-neutral-100 shadow-xs hover:shadow-md p-3 sm:p-4 flex flex-col justify-between transition-all duration-200 relative group ${
+        className={`h-full bg-white rounded-2xl border border-neutral-200 shadow-md hover:shadow-xl hover:border-[#8DC63F]/60 p-3 sm:p-4 flex flex-col justify-between transition-all duration-200 relative group ${
           isOutOfStock ? 'opacity-60' : ''
         }`}
       >

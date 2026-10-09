@@ -20,7 +20,7 @@ export const DepartmentGridShowcase = ({ onSelectDepartment }) => {
                 key={categoryItem.categoryIdentifier}
                 type="button"
                 onClick={() => onSelectDepartment(categoryItem.categoryIdentifier)}
-                className="group p-4 sm:p-5 rounded-2xl bg-white border border-neutral-100 shadow-2xs hover:shadow-md transition-all duration-200 cursor-pointer flex flex-col items-center justify-center text-center"
+                className="group p-4 sm:p-5 rounded-2xl bg-white border border-neutral-200 shadow-sm hover:shadow-md hover:border-[#8DC63F]/50 transition-all duration-200 cursor-pointer flex flex-col items-center justify-center text-center"
                 aria-label={`Ver productos de ${categoryItem.categoryTitle}`}
               >
                 <div className="w-16 h-16 sm:w-20 sm:h-20 mb-2 sm:mb-3 flex items-center justify-center">
