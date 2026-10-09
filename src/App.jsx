@@ -180,7 +180,7 @@ const StorefrontContent = () => {
         )}
       </main>
 
-      <MainFooterSection />
+      <MainFooterSection onNavigateToPage={handleNavigateToPage} />
 
       <FlyingCartAnimationOverlay />
 
